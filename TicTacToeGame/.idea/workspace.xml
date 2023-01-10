@@ -5,19 +5,29 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e697bde-ed68-4dcf-ae5c-774d34f5675b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/database/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/application/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/main/java/com/rydzwr/tictactoe/application/DemoApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/com/rydzwr/tictactoe/application/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/Initiator.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/DatabaseInitiator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/Initiator.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/security/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/security/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/MyService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/ServiceProperties.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/configuration/CustomUsernamePasswordAuthenticationProvider.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/configuration/SecurityConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/constants/SecurityConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/constants/SecurityConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/exception/FilterErrorHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/AuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/AuthorizationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/AuthorizationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/JWTTokenRefreshFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/JWTTokenRefreshFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/LogoutFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/LogoutFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/RequestValidationBeforeFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/RequestValidationBeforeFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/configuration/CustomUsernamePasswordAuthenticationProvider.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/configuration/SecurityConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/constants/SecurityConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/constants/SecurityConstants.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/exception/FilterErrorHandler.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/AuthenticationFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/AuthenticationFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/AuthorizationFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/AuthorizationFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/JWTTokenRefreshFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/JWTTokenRefreshFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/LogoutFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/LogoutFilter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/RequestValidationBeforeFilter.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/RequestValidationBeforeFilter.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -63,20 +73,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "jdk.selected.JAVA_MODULE": "openjdk-18"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-18&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Programs\Projects\Sagiton Praktyki\TicTacToe Game\TicTacToeGame\application\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.DemoApplication">
+  <component name="RunManager" selected="Application.Application">
     <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.application.Application" />
       <module name="application" />
@@ -108,7 +118,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.DemoApplication" />
+        <item itemvalue="Application.Application" />
         <item itemvalue="JUnit.MyServiceTest.contextLoads" />
       </list>
     </recent_temporary>

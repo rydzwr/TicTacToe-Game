@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class Initiator implements ApplicationRunner {
+public class DatabaseInitiator implements ApplicationRunner {
 
     private final UserService userService;
     private final RoleService roleService;
@@ -38,6 +38,6 @@ public class Initiator implements ApplicationRunner {
         roleService.saveRole(adminRole);
 
         User user = userFactory.createUser("user", "user123");
-        userService.save(user);
+        userService.saveUser(user);
     }
 }
