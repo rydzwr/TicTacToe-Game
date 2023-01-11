@@ -1,9 +1,15 @@
 package com.rydzwr.tictactoe.database;
 
+import com.rydzwr.tictactoe.database.builder.GameBuilder;
+import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
 import com.rydzwr.tictactoe.database.factory.UserFactory;
 import com.rydzwr.tictactoe.database.factory.RoleFactory;
+import com.rydzwr.tictactoe.database.model.Game;
+import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.database.model.Role;
+import com.rydzwr.tictactoe.database.service.GameService;
+import com.rydzwr.tictactoe.database.service.PlayerService;
 import com.rydzwr.tictactoe.database.service.UserService;
 import com.rydzwr.tictactoe.database.service.RoleService;
 import lombok.RequiredArgsConstructor;
@@ -24,12 +30,19 @@ public class DatabaseInitiator implements ApplicationRunner {
     private final UserFactory userFactory;
     private final RoleFactory roleFactory;
 
+    // TEST INITIALIZATION
+    private final PlayerService playerService;
+    private final GameService gameService;
+
     @Override
     @Profile("dev")
     public void run(ApplicationArguments args) {
         log.info("DB INIT");
 
         roleService.deleteAll();
+        userService.deleteAll();
+
+        playerService.deleteAll();
         userService.deleteAll();
 
         Role userRole = roleFactory.createUserRole();
@@ -39,5 +52,15 @@ public class DatabaseInitiator implements ApplicationRunner {
 
         User user = userFactory.createUser("user", "user123");
         userService.saveUser(user);
+
+        // TEST INITIALIZATION
+        GameBuilder gameBuilder = new GameBuilder(3, 3);
+        Game game = gameBuilder.build();
+
+        PlayerBuilder playerBuilder = new PlayerBuilder(user);
+        Player player = playerBuilder.setPawn('X').setGame(game).build();
+
+        playerService.save(player);
+        gameService.save(game);
     }
 }
