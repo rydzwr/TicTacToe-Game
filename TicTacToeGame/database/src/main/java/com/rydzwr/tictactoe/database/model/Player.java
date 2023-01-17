@@ -1,7 +1,9 @@
 package com.rydzwr.tictactoe.database.model;
 
 import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
+import com.rydzwr.tictactoe.database.constants.PlayerType;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,18 +16,18 @@ public class Player{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private char pawn;
-    private int score;
-    private String name;
     @OneToOne
     private User user;
     @ManyToOne
     private Game game;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private PlayerType playerType;
 
     public Player(PlayerBuilder playerBuilder) {
         this.pawn = playerBuilder.getPawn();
-        this.score = playerBuilder.getScore();
-        this.name = playerBuilder.getName();
         this.user = playerBuilder.getUser();
         this.game = playerBuilder.getGame();
+        this.playerType = playerBuilder.getPlayerType();
     }
 }

@@ -10,15 +10,4 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class GameService {
     private final GameRepository repository;
-
-
-    @Transactional
-    public void save(Game game) {
-        repository.save(game);
-    }
-
-    @Transactional
-    public void deleteAll() {
-        repository.deleteAll();
-    }
 }

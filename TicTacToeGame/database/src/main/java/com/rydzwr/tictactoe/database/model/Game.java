@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,19 +20,23 @@ public class Game {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotNull
-    @Size(min = 3)
     private int gameSize;
     @NotNull
-    @Size(min = 3)
     private int difficulty;
+    @NotNull
+    private int currentPlayerTurn = 0;
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private GameState state = GameState.AWAITING_PLAYERS;
+    @Column(columnDefinition = "TEXT")
     private String gameBoard;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Player> players;
 
     public Game(GameBuilder gameBuilder) {
         this.gameSize = gameBuilder.getGameSize();
-        this.difficulty = gameBuilder.getDifficulty();
+        this.difficulty = gameBuilder.getGameDifficulty();
         this.gameBoard = gameBuilder.getGameBoard();
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -52,11 +53,14 @@ public class SecurityConfig {
     @Autowired
     private FilterErrorHandler errorHandler;
 
+    @Autowired
+    private CorsConfig corsConfig;
+
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors()
-                .configurationSource(corsConfigurationSource())
+                .configurationSource(corsConfig.corsConfigurationSource())
                 .and()
                 .csrf()
                 .disable().headers().frameOptions().sameOrigin();
@@ -66,10 +70,16 @@ public class SecurityConfig {
         http.authorizeHttpRequests().requestMatchers(
                 LOGIN_ENDPOINT,
                 TOKEN_REFRESH_ENDPOINT,
-                REGISTER_ENDPOINT
+                REGISTER_ENDPOINT,
+                WEB_SOCKET_HANDSHAKE_ENDPOINT
         ).permitAll();
 
         http.authorizeHttpRequests().anyRequest().authenticated();
+
+        http.addFilterBefore(
+                new JWTQueryParamAdapterFilter(jwtService),
+                BasicAuthenticationFilter.class
+        );
 
         http.addFilterBefore(
                 new RequestValidationBeforeFilter(extractor),
@@ -103,18 +113,6 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(asList(SecurityConstants.ANGULAR_LOCALHOST_PATH, SecurityConstants.ANGULAR_IP_PATH));
-        configuration.setAllowCredentials(true);
-        configuration.addAllowedHeader("*");
-        configuration.addAllowedMethod("*");
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
     }
 
 }

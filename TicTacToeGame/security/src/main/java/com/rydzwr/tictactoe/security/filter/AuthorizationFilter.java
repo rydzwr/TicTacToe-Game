@@ -1,5 +1,6 @@
 package com.rydzwr.tictactoe.security.filter;
 
+import com.rydzwr.tictactoe.security.constants.SecurityConstants;
 import com.rydzwr.tictactoe.security.service.JWTService;
 import com.rydzwr.tictactoe.security.service.TokenBlackList;
 import jakarta.servlet.FilterChain;
@@ -13,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,8 +46,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        final String pathRegister = "/api/user/register";
-        final String pathLogin = "/api/login";
-        return request.getServletPath().equals(pathRegister) || request.getServletPath().equals(pathLogin);
+        List<String> shouldNotFilter = List.of(SecurityConstants.LOGIN_ENDPOINT,
+              /*  SecurityConstants.WEB_SOCKET_HANDSHAKE_ENDPOINT,*/
+                SecurityConstants.REGISTER_ENDPOINT);
+        return shouldNotFilter.contains(request.getServletPath());
     }
 }

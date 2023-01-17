@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="security" />
         <module name="database" />
+        <module name="game" />
         <module name="application" />
         <module name="web" />
       </profile>
@@ -18,6 +19,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="application" options="-parameters" />
       <module name="database" options="-parameters" />
+      <module name="game" options="-parameters" />
       <module name="security" options="-parameters" />
       <module name="web" options="-parameters" />
     </option>

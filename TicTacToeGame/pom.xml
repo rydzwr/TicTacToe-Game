@@ -20,6 +20,7 @@
         <module>security</module>
         <module>database</module>
         <module>web</module>
+        <module>game</module>
     </modules>
 
     <properties>

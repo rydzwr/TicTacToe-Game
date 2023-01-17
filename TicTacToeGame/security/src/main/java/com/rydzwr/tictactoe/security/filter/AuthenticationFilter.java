@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.database.repository.UserRepository;
 import com.rydzwr.tictactoe.database.service.UserService;
+import com.rydzwr.tictactoe.security.constants.SecurityConstants;
 import com.rydzwr.tictactoe.security.service.CookieManager;
 import com.rydzwr.tictactoe.security.service.JWTService;
 import jakarta.servlet.FilterChain;
@@ -18,6 +19,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -65,7 +67,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        final String pathLogin = "/api/login";
-        return !request.getServletPath().equals(pathLogin);
+        List<String> shouldNotFilter = List.of(SecurityConstants.LOGIN_ENDPOINT/*, SecurityConstants.WEB_SOCKET_HANDSHAKE_ENDPOINT*/);
+        return !shouldNotFilter.contains(request.getServletPath());
     }
 }
