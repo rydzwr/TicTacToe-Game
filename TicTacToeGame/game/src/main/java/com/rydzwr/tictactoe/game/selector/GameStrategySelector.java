@@ -1,27 +1,27 @@
 package com.rydzwr.tictactoe.game.selector;
 
-import com.rydzwr.tictactoe.game.strategyforgame.*;
+import com.rydzwr.tictactoe.database.dto.GameDto;
+import com.rydzwr.tictactoe.game.strategy.BuildGameStrategy;
+import com.rydzwr.tictactoe.game.strategy.ErrorGameTypeStrategy;
+import com.rydzwr.tictactoe.game.strategy.LocalPlayerGameStrategy;
+import com.rydzwr.tictactoe.game.strategy.MultiPlayerGameStrategy;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
 
+@Service
 public class GameStrategySelector {
-    private static List<BuildGameStrategy> strategyList = asList(
-            new AIOpponentsGameStrategy(),
-            new MixedOpponentsGameStrategy(),
-            new MultiPlayerGameStrategy(),
-            new SinglePlayerGameStrategy()
+    private final List<BuildGameStrategy> strategyList = asList(
+           new LocalPlayerGameStrategy(),
+            new MultiPlayerGameStrategy()
     );
 
-    public BuildGameStrategy chooseStrategy(String gameType) {
-        if (gameType == null) {
-            return new ErrorGameTypeStrategy();
-        }
-
+    public BuildGameStrategy chooseStrategy(GameDto gameDto) {
         return strategyList
                 .stream()
-                .filter(s -> s.applies(gameType))
+                .filter(strategy -> strategy.applies(gameDto))
                 .findFirst()
                 .orElse(new ErrorGameTypeStrategy());
     }

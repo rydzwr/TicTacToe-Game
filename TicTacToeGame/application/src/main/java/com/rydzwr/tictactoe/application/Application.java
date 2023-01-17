@@ -11,11 +11,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 
 @Configuration
 @EnableMethodSecurity
-@SpringBootApplication
 @EnableAutoConfiguration
 @EntityScan(basePackages="com.rydzwr.tictactoe")
 @ComponentScan(basePackages="com.rydzwr.tictactoe")
 @EnableJpaRepositories(basePackages="com.rydzwr.tictactoe")
+@SpringBootApplication(scanBasePackages = "com.rydzwr.tictactoe")
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);

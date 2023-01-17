@@ -1,11 +1,11 @@
 package com.rydzwr.tictactoe.database;
 
-import com.rydzwr.tictactoe.database.factory.UserFactory;
 import com.rydzwr.tictactoe.database.factory.RoleFactory;
-import com.rydzwr.tictactoe.database.model.User;
+import com.rydzwr.tictactoe.database.factory.UserFactory;
 import com.rydzwr.tictactoe.database.model.Role;
-import com.rydzwr.tictactoe.database.service.UserService;
+import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.database.service.RoleService;
+import com.rydzwr.tictactoe.database.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;

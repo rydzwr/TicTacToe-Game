@@ -2,8 +2,13 @@ package com.rydzwr.tictactoe.security.config;
 
 import com.rydzwr.tictactoe.database.repository.UserRepository;
 import com.rydzwr.tictactoe.database.service.UserService;
-import com.rydzwr.tictactoe.security.constants.SecurityConstants;
-import com.rydzwr.tictactoe.security.filter.*;
+import com.rydzwr.tictactoe.security.filter.FilterErrorHandler;
+import com.rydzwr.tictactoe.security.filter.JWTQueryParamAdapterFilter;
+import com.rydzwr.tictactoe.security.filter.RequestValidationBeforeFilter;
+import com.rydzwr.tictactoe.security.filter.jwt.AuthenticationFilter;
+import com.rydzwr.tictactoe.security.filter.jwt.AuthorizationFilter;
+import com.rydzwr.tictactoe.security.filter.jwt.JWTTokenRefreshFilter;
+import com.rydzwr.tictactoe.security.filter.jwt.LogoutFilter;
 import com.rydzwr.tictactoe.security.service.AuthHeaderDataExtractor;
 import com.rydzwr.tictactoe.security.service.CookieManager;
 import com.rydzwr.tictactoe.security.service.JWTService;
@@ -12,20 +17,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import static com.rydzwr.tictactoe.security.constants.SecurityConstants.*;
-import static java.util.Arrays.asList;
 
 
 @Configuration

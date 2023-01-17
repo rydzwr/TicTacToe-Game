@@ -1,14 +1,12 @@
 package com.rydzwr.tictactoe.database.model;
 
 import com.rydzwr.tictactoe.database.builder.GameBuilder;
+import com.rydzwr.tictactoe.database.constants.GameState;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Data

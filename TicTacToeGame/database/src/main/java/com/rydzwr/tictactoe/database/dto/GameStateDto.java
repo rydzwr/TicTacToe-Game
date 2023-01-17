@@ -1,6 +1,5 @@
 package com.rydzwr.tictactoe.database.dto;
 
-import com.rydzwr.tictactoe.database.model.GameState;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

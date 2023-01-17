@@ -13,12 +13,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final UserRepository repository;
 
-    @Transactional
     public void saveUser(User appUser) {
         repository.save(appUser);
     }
 
-    @Transactional
+    public User findByName(String name) {
+        return repository.findByName(name);
+    }
+
     public void deleteAll() {
         repository.deleteAll();
     }

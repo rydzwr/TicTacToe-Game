@@ -24,11 +24,11 @@ public class JWTQueryParamAdapterFilter extends OncePerRequestFilter {
         String token = request.getParameter("token");
 
         if (token != null && !jwtService.validateAuthHeader(request)) {
-            final HttpServletRequest httpRequest = (HttpServletRequest) request;
+            final HttpServletRequest httpRequest = request;
             HttpServletRequestWrapper wrapper = new HttpServletRequestWrapper(httpRequest) {
                 @Override
                 public String getHeader(String name) {
-                    if (name == "Authorization")
+                    if (name.equals("Authorization"))
                         return "Bearer " + token;
                     return super.getHeader(name);
                 }
@@ -43,7 +43,7 @@ public class JWTQueryParamAdapterFilter extends OncePerRequestFilter {
                 @Override
                 public Enumeration getHeaders(String name) {
                     List<String> values = Collections.list(super.getHeaders(name));
-                    if (name == "Authorization")
+                    if (name.equals("Authorization"))
                         values.add("Bearer " + token);
                     return Collections.enumeration(values);
                 }
