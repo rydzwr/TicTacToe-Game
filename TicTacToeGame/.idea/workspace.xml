@@ -5,78 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e697bde-ed68-4dcf-ae5c-774d34f5675b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategy/ErrorGameTypeStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/application/src/main/java/com/rydzwr/tictactoe/application/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/com/rydzwr/tictactoe/application/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/main/java/com/rydzwr/tictactoe/application/excpetion/RestExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/java/com/rydzwr/tictactoe/application/excpetion/RestExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/src/main/resources/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/application/src/main/resources/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/target/classes/application-dev.yml" beforeDir="false" afterPath="$PROJECT_DIR$/application/target/classes/application-dev.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/target/classes/com/rydzwr/tictactoe/application/Application.class" beforeDir="false" afterPath="$PROJECT_DIR$/application/target/classes/com/rydzwr/tictactoe/application/Application.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/target/classes/com/rydzwr/tictactoe/application/excpetion/RestExceptionHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/application/target/classes/com/rydzwr/tictactoe/application/excpetion/RestExceptionHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/DatabaseInitiator.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/DatabaseInitiator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/builder/PlayerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/builder/PlayerBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/constants/DatabaseConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/constants/DatabaseConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/dto/GameStateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/dto/GameStateDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/factory/RoleFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/factory/UserFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/model/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/model/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/model/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/constants/GameState.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/repository/PlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/repository/PlayerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/GameService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/PlayerService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/RoleService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/UserService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/builder/PlayerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/builder/PlayerBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/constants/DatabaseConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/constants/DatabaseConstants.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/dto/GameStateDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/dto/GameStateDto.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/model/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/model/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/model/GameState.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/service/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/service/GameService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/service/PlayerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/service/PlayerService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/GameService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/selector/GameStrategySelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/selector/GameStrategySelector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/selector/PlayerStrategySelector.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/service/GameBuilderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/service/GameBuilderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategy/InitializePlayersStrategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategyforgame/AIOpponentsGameStrategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategyforgame/BuildGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategy/BuildGameStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategyforgame/ErrorGameTypeStrategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategyforgame/MixedOpponentsGameStrategy.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategyforgame/MultiPlayerGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategy/MultiPlayerGameStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategyforgame/SinglePlayerGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategy/LocalPlayerGameStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/selector/GameStrategySelector.class" beforeDir="false" afterPath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/selector/GameStrategySelector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/selector/PlayerStrategySelector.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/service/GameBuilderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/service/GameBuilderService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/strategy/InitializePlayersStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/strategyforgame/AIOpponentsGameStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/strategyforgame/BuildGameStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/strategyforgame/ErrorGameTypeStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/strategyforgame/MixedOpponentsGameStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/strategyforgame/MultiPlayerGameStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/strategyforgame/SinglePlayerGameStrategy.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/constants/SecurityConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/constants/SecurityConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/AuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/jwt/AuthenticationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/AuthorizationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/jwt/AuthorizationFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/JWTQueryParamAdapterFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/JWTQueryParamAdapterFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/JWTTokenRefreshFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/jwt/JWTTokenRefreshFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/LogoutFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/filter/jwt/LogoutFilter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/service/JWTService.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/service/JWTService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/test/java/com/rydzwr/tictactoe/security/MyServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/test/java/com/rydzwr/tictactoe/security/MyServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/config/SecurityConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/config/SecurityConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/constants/SecurityConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/constants/SecurityConstants.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/AuthenticationFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/AuthorizationFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/JWTQueryParamAdapterFilter$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/JWTQueryParamAdapterFilter$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/JWTTokenRefreshFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/filter/LogoutFilter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/service/JWTService.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/classes/com/rydzwr/tictactoe/security/service/JWTService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/GameSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/UserController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/GameController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/GameSocketController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/UserController.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategy/LocalPlayerGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/strategy/LocalPlayerGameStrategy.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,20 +60,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "jdk.selected.JAVA_MODULE": "corretto-18",
-    "last_opened_file_path": "C:/Users/jarek/Desktop/TicTacToe-Game-main/TicTacToeGame",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-18&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/jarek/Desktop/TicTacToe-Game-main/TicTacToeGame&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Programs\Projects\Sagiton Praktyki\TicTacToe Game\TicTacToeGame\application\src\main\resources" />

@@ -4,7 +4,6 @@ import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.game.selector.GameStrategySelector;
 import com.rydzwr.tictactoe.game.strategy.BuildGameStrategy;
 import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Service;
 
 @Service
