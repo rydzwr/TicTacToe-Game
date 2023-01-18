@@ -12,6 +12,7 @@ import com.rydzwr.tictactoe.database.repository.PlayerRepository;
 import com.rydzwr.tictactoe.database.repository.UserRepository;
 import com.rydzwr.tictactoe.game.exception.ExceptionModel;
 import com.rydzwr.tictactoe.game.service.GameService;
+import com.rydzwr.tictactoe.game.validator.PlayerMoveDtoValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -32,6 +33,7 @@ public class GameSocketController {
     private final PlayerRepository playerRepository;
     private final UserRepository userRepository;
     private final SimpMessagingTemplate template;
+    private final PlayerMoveDtoValidator playerMoveDtoValidator;
 
     @Transactional
     @MessageMapping("/gameMove")
@@ -41,7 +43,7 @@ public class GameSocketController {
         String username = Objects.requireNonNull(accessor.getUser()).getName();
         User user = userRepository.findByName(username);
 
-        // IT'S BARELY POSSIBLE< BUT CHECKING JUST IN CASE
+        // IT'S BARELY POSSIBLE BUT CHECKING JUST IN CASE
         assert user != null;
 
         // FINDING HIS (ONE -> TO -> ONE) PLAYER
@@ -51,6 +53,11 @@ public class GameSocketController {
             // TODO CREATE EXCEPTION ENDPOINT ON FRONTEND
             template.convertAndSend("/topic/exception", new ExceptionModel("Player Not Found, game has been finished"));
             throw new IllegalArgumentException("Player Not Found ( GAME HAS BEEN DELETED OR NEVER EXIST)");
+        }
+
+        // VALIDATING RECEIVED PLAYER MOVE
+        if (!playerMoveDtoValidator.isValid(playerMoveDto, player.getGame())) {
+            throw new IllegalArgumentException("Invalid Player Move ( OUT OF BOARD )");
         }
 
         // PROCESSING GAME MOVE

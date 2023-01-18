@@ -1,6 +1,6 @@
 package com.rydzwr.tictactoe.database.dto;
 
-import com.rydzwr.tictactoe.database.validator.UniqueLogin;
+import com.rydzwr.tictactoe.database.validator.user.UniqueLogin;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;

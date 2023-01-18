@@ -1,6 +1,7 @@
-package com.rydzwr.tictactoe.database.validator;
+package com.rydzwr.tictactoe.database.validator.user;
 
 import com.rydzwr.tictactoe.database.repository.UserRepository;
+import com.rydzwr.tictactoe.database.validator.user.UniqueLogin;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;

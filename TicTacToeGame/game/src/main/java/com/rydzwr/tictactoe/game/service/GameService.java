@@ -27,6 +27,7 @@ public class GameService {
     private final GameDatabaseService gameDatabaseService;
     private final UserDatabaseService userDatabaseService;
     private final PlayerDatabaseService playerDatabaseService;
+    private final CheckWinAlgorithm checkWinAlgorithm;
     public void buildGame(GameDto gameDto) {
         BuildGameStrategy strategy = selector.chooseStrategy(gameDto);
         strategy.buildGame(gameDto);
@@ -35,31 +36,41 @@ public class GameService {
     @Transactional
     public Game processPlayerMove(Game game, PlayerMoveDto playerMoveDto, SimpMessagingTemplate template) {
         String newGameBoard = game.getGameBoard();
-        if (newGameBoard.charAt(playerMoveDto.getI()) != '-') {
+
+        // IF PLAYER PRESSED OCCUPIED FIELD RETURNING SAME BOARD
+        if (newGameBoard.charAt(playerMoveDto.getGameBoardElementIndex()) != '-') {
             template.convertAndSend("/topic/gameBoard", new GameBoardDto(game.getGameBoard()));
+            return game;
         }
 
         List<Player> players = game.getPlayers();
 
+        // GETTING CURRENT PLAYER PAWN TO UPDATE GAME BOARD IN DATABASE
         int currentPlayerTurn = game.getCurrentPlayerTurn();
         char playerPawn = players.get(currentPlayerTurn).getPawn();
-        game.setCurrentPlayerTurn(currentPlayerTurn == players.size() - 1 ? 0 : currentPlayerTurn + 1);
 
+        // UPDATING PLAYER TURN IN DATABASE USING LOOP OF IT'S PLAYERS
+        int nextPlayerTurn = updateCurrentPlayerTurn(players, currentPlayerTurn);
+        game.setCurrentPlayerTurn(nextPlayerTurn);
+
+        // BUILDING UPDATED GAME BOARD
         StringBuilder stringBuilder = new StringBuilder(newGameBoard);
-        stringBuilder.setCharAt(playerMoveDto.getI(), playerPawn);
+        stringBuilder.setCharAt(playerMoveDto.getGameBoardElementIndex(), playerPawn);
         game.setGameBoard(stringBuilder.toString());
+
+        // SAVING
         gameDatabaseService.save(game);
         return game;
     }
 
     public boolean checkWin(Game game) {
-        CheckWinAlgorithm checkWinAlgorithm = new CheckWinAlgorithm();
         return checkWinAlgorithm.checkWin(game);
     }
 
     public char getWonPawn(Game game) {
-        // TODO NOT SURE IT'S GONNA WORK PROPERLY
-        Player player = game.getPlayers().get(game.getCurrentPlayerTurn() - 1);
+        // TODO NOT WORKING PROPERLY !!!!!!!!!!!!!!!!!
+        int playerIndex = game.getCurrentPlayerTurn();
+        Player player = game.getPlayers().get(playerIndex == 0 ? playerIndex : playerIndex -1);
         return player.getPawn();
     }
 
@@ -67,5 +78,9 @@ public class GameService {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User caller = userDatabaseService.findByName(userName);
         return playerDatabaseService.existsByUser(caller);
+    }
+
+    private int updateCurrentPlayerTurn(List<Player> players, int currentPlayerTurn) {
+        return currentPlayerTurn == players.size() - 1 ? 0 : currentPlayerTurn + 1;
     }
 }

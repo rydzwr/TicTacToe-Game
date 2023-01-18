@@ -1,7 +1,9 @@
 package com.rydzwr.tictactoe.game.service;
 
 import com.rydzwr.tictactoe.database.model.Game;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CheckWinAlgorithm {
 
     public boolean checkWin(Game game) {

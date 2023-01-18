@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlayerMoveDto {
-    private int i;
+    private int gameBoardElementIndex;
 }
