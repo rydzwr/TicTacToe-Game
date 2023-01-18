@@ -16,6 +16,6 @@ public class ErrorGameTypeStrategy implements BuildGameStrategy {
     @Override
     public boolean applies(GameDto gameDto) {
         List<String> playerTypes = gameDto.getPlayers().stream().map(PlayerDto::getPlayerType).toList();
-        return playerTypes.equals(DatabaseConstants.playerTypes);
+        return !playerTypes.equals(DatabaseConstants.playerTypes);
     }
 }

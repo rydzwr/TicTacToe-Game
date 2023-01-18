@@ -9,4 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class GameStateDto {
     private String gameState;
+    private char winnerPawn;
 }

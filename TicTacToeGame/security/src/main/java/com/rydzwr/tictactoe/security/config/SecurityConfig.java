@@ -1,7 +1,7 @@
 package com.rydzwr.tictactoe.security.config;
 
 import com.rydzwr.tictactoe.database.repository.UserRepository;
-import com.rydzwr.tictactoe.database.service.UserService;
+import com.rydzwr.tictactoe.database.service.UserDatabaseService;
 import com.rydzwr.tictactoe.security.filter.FilterErrorHandler;
 import com.rydzwr.tictactoe.security.filter.JWTQueryParamAdapterFilter;
 import com.rydzwr.tictactoe.security.filter.RequestValidationBeforeFilter;
@@ -35,7 +35,7 @@ public class SecurityConfig {
     private JWTService jwtService;
 
     @Autowired
-    private UserService service;
+    private UserDatabaseService service;
 
     @Autowired
     private UserRepository repository;

@@ -4,8 +4,8 @@ import com.rydzwr.tictactoe.database.factory.RoleFactory;
 import com.rydzwr.tictactoe.database.factory.UserFactory;
 import com.rydzwr.tictactoe.database.model.Role;
 import com.rydzwr.tictactoe.database.model.User;
-import com.rydzwr.tictactoe.database.service.RoleService;
-import com.rydzwr.tictactoe.database.service.UserService;
+import com.rydzwr.tictactoe.database.service.RoleDatabaseService;
+import com.rydzwr.tictactoe.database.service.UserDatabaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -18,8 +18,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DatabaseInitiator implements ApplicationRunner {
 
-    private final UserService userService;
-    private final RoleService roleService;
+    private final UserDatabaseService userDatabaseService;
+    private final RoleDatabaseService roleDatabaseService;
 
     private final UserFactory userFactory;
     private final RoleFactory roleFactory;
@@ -27,15 +27,15 @@ public class DatabaseInitiator implements ApplicationRunner {
     @Override
     @Profile("dev")
     public void run(ApplicationArguments args) {
-        roleService.deleteAll();
-        userService.deleteAll();
+        roleDatabaseService.deleteAll();
+        userDatabaseService.deleteAll();
 
         Role userRole = roleFactory.createUserRole();
         Role adminRole = roleFactory.createAdminRole();
-        roleService.saveRole(userRole);
-        roleService.saveRole(adminRole);
+        roleDatabaseService.saveRole(userRole);
+        roleDatabaseService.saveRole(adminRole);
 
         User user = userFactory.createUser("user", "user123");
-        userService.saveUser(user);
+        userDatabaseService.saveUser(user);
     }
 }

@@ -3,7 +3,7 @@ package com.rydzwr.tictactoe.web.controller.rest;
 import com.rydzwr.tictactoe.database.dto.UserDto;
 import com.rydzwr.tictactoe.database.factory.UserFactory;
 import com.rydzwr.tictactoe.database.model.User;
-import com.rydzwr.tictactoe.database.service.UserService;
+import com.rydzwr.tictactoe.database.service.UserDatabaseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 public class UserController {
-    private final UserService service;
+    private final UserDatabaseService service;
     private final UserFactory factory;
 
     @PostMapping("/register")
