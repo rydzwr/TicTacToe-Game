@@ -5,6 +5,8 @@ import com.rydzwr.tictactoe.database.dto.PlayerDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;
+import com.rydzwr.tictactoe.database.validator.player.ValidPlayerPawn;
+import jakarta.validation.Valid;
 import lombok.Getter;
 
 @Getter
@@ -26,10 +28,8 @@ public class PlayerBuilder {
         return this;
     }
 
-    public PlayerBuilder setPlayerDetails(PlayerDto playerDto) {
+    public PlayerBuilder setPlayerDetails(@Valid PlayerDto playerDto) {
         this.pawn = playerDto.getPlayerPawn();
-
-        // TODO validator
 
         this.playerType = PlayerType.valueOf(playerDto.getPlayerType());
         return this;

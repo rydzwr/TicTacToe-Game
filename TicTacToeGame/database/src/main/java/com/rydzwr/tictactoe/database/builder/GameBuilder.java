@@ -6,8 +6,8 @@ import lombok.Getter;
 
 @Getter
 public class GameBuilder {
-    private int gameSize;
-    private int gameDifficulty;
+    private final int gameSize;
+    private final int gameDifficulty;
     private int gameOpponents;
     private String gameBoard;
     public GameBuilder(int gameSize, int gameDifficulty) {

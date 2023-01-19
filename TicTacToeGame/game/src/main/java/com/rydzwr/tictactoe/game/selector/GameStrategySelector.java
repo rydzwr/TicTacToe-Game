@@ -15,16 +15,15 @@ import java.util.List;
 public class GameStrategySelector {
     private final LocalPlayerGameStrategy localPlayerGameStrategy;
     private final MultiPlayerGameStrategy multiPlayerGameStrategy;
+    private List<BuildGameStrategy> strategyList;
+    @PostConstruct
+    private void init() {
+        strategyList = initList();
+    }
 
     public GameStrategySelector(LocalPlayerGameStrategy localPlayerGameStrategy, MultiPlayerGameStrategy multiPlayerGameStrategy) {
         this.localPlayerGameStrategy = localPlayerGameStrategy;
         this.multiPlayerGameStrategy = multiPlayerGameStrategy;
-    }
-    private List<BuildGameStrategy> strategyList;
-
-    @PostConstruct
-    void init() {
-        strategyList = initList();
     }
 
     public BuildGameStrategy chooseStrategy(GameDto gameDto) {

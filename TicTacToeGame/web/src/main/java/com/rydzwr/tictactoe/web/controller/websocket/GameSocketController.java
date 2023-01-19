@@ -7,12 +7,14 @@ import com.rydzwr.tictactoe.database.dto.PlayerMoveDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;
-import com.rydzwr.tictactoe.database.repository.GameRepository;
 import com.rydzwr.tictactoe.database.repository.PlayerRepository;
 import com.rydzwr.tictactoe.database.repository.UserRepository;
-import com.rydzwr.tictactoe.game.exception.ExceptionModel;
+import com.rydzwr.tictactoe.database.service.GameDatabaseService;
+import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.game.service.GameService;
 import com.rydzwr.tictactoe.game.validator.PlayerMoveDtoValidator;
+import com.rydzwr.tictactoe.web.constants.WebConstants;
+import com.rydzwr.tictactoe.web.handler.WebSocketExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -21,7 +23,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -29,11 +30,12 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class GameSocketController {
     private final GameService gameService;
-    private final GameRepository gameRepository;
+    private final GameDatabaseService gameDatabaseService;
     private final PlayerRepository playerRepository;
     private final UserRepository userRepository;
     private final SimpMessagingTemplate template;
     private final PlayerMoveDtoValidator playerMoveDtoValidator;
+    private final WebSocketExceptionHandler exceptionHandler;
 
     @Transactional
     @MessageMapping("/gameMove")
@@ -51,32 +53,36 @@ public class GameSocketController {
 
         if (player == null) {
             // TODO CREATE EXCEPTION ENDPOINT ON FRONTEND
-            template.convertAndSend("/topic/exception", new ExceptionModel("Player Not Found, game has been finished"));
-            throw new IllegalArgumentException("Player Not Found ( GAME HAS BEEN DELETED OR NEVER EXIST)");
+            exceptionHandler.sendException(template, GameConstants.PLAYER_NOT_FOUND_EXCEPTION);
+            return;
         }
 
         // VALIDATING RECEIVED PLAYER MOVE
         if (!playerMoveDtoValidator.isValid(playerMoveDto, player.getGame())) {
-            throw new IllegalArgumentException("Invalid Player Move ( OUT OF BOARD )");
+            // TODO CREATE EXCEPTION ENDPOINT ON FRONTEND
+            exceptionHandler.sendException(template, GameConstants.PLAYER_MOVE_OUT_OF_BOARD_EXCEPTION);
+            return;
         }
+
+        // GETTING PLAYER CHAR BEFORE UPDATING GAME IN CASE OF WIN
+        char prevChar = gameService.getWonPawn(player.getGame());
 
         // PROCESSING GAME MOVE
         Game game =  gameService.processPlayerMove(player.getGame(), playerMoveDto, template);
 
         // SENDING UPDATED GAME BOARD TO FRONTEND
         String updatedGameBoard = game.getGameBoard();
-        template.convertAndSend("/topic/gameBoard", new GameBoardDto(updatedGameBoard));
+        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(updatedGameBoard));
 
         // CHECKING IF CURRENT PLAYER WON
         boolean gameOver = gameService.checkWin(game);
 
         // IF PLAYER WON SENDING RESULT TO OTHER ENDPOINT
         if (gameOver) {
-            char winnerPawn = gameService.getWonPawn(game);
-            gameRepository.delete(game);
+            gameDatabaseService.delete(game);
 
             // TODO JUST AFTER RECEIVE FINISHED GAME STATE CHANGE COMPONENT AND SET ROUTE GUARD ON FRONTEND
-            template.convertAndSend("/topic/gameState", new GameStateDto(GameState.FINISHED.name(), winnerPawn));
+            template.convertAndSend("/topic/gameState", new GameStateDto(GameState.FINISHED.name(), prevChar));
         }
     }
 }

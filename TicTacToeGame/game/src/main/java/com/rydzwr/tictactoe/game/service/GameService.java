@@ -38,7 +38,7 @@ public class GameService {
         String newGameBoard = game.getGameBoard();
 
         // IF PLAYER PRESSED OCCUPIED FIELD RETURNING SAME BOARD
-        if (newGameBoard.charAt(playerMoveDto.getGameBoardElementIndex()) != '-') {
+        if (!validatePlayerMove(newGameBoard, playerMoveDto)) {
             template.convertAndSend("/topic/gameBoard", new GameBoardDto(game.getGameBoard()));
             return game;
         }
@@ -68,16 +68,18 @@ public class GameService {
     }
 
     public char getWonPawn(Game game) {
-        // TODO NOT WORKING PROPERLY !!!!!!!!!!!!!!!!!
-        int playerIndex = game.getCurrentPlayerTurn();
-        Player player = game.getPlayers().get(playerIndex == 0 ? playerIndex : playerIndex -1);
-        return player.getPawn();
+        List<Player> players = game.getPlayers();
+        return players.get(game.getCurrentPlayerTurn()).getPawn();
     }
 
     public boolean isUserInGame() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User caller = userDatabaseService.findByName(userName);
         return playerDatabaseService.existsByUser(caller);
+    }
+
+    private boolean validatePlayerMove(String newGameBoard, PlayerMoveDto playerMoveDto) {
+        return newGameBoard.charAt(playerMoveDto.getGameBoardElementIndex()) == '-';
     }
 
     private int updateCurrentPlayerTurn(List<Player> players, int currentPlayerTurn) {
