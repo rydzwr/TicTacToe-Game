@@ -7,10 +7,22 @@
     <list default="true" id="8e697bde-ed68-4dcf-ae5c-774d34f5675b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/constants/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/constants/GameState.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/dto/GameBoardDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/dto/GameBoardDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/dto/GameStateDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/dto/GameStateDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/constants/GameState.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/constants/GameState.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/dto/GameBoardDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/dto/GameBoardDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/dto/GameStateDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/dto/GameStateDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/service/CheckWinAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/service/CheckWinAlgorithm.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/service/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/service/CheckWinAlgorithm.class" beforeDir="false" afterPath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/service/CheckWinAlgorithm.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/service/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/service/GameService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/constants/WebConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/constants/WebConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/constants/WebConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/constants/WebConstants.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/rest/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/rest/GameController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,20 +73,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "jdk.selected.JAVA_MODULE": "corretto-18",
-    "last_opened_file_path": "C:/Users/jarek/Desktop/TicTacToe-Game-main/TicTacToeGame",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.keymap"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-18&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/jarek/Desktop/TicTacToe-Game-main/TicTacToeGame&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Programs\Projects\Sagiton Praktyki\TicTacToe Game\TicTacToeGame\application\src\main\resources" />

@@ -2,6 +2,7 @@ package com.rydzwr.tictactoe.game.service;
 
 import com.rydzwr.tictactoe.database.dto.GameBoardDto;
 import com.rydzwr.tictactoe.database.dto.GameDto;
+import com.rydzwr.tictactoe.database.dto.LoadGameDto;
 import com.rydzwr.tictactoe.database.dto.PlayerMoveDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
@@ -68,7 +69,7 @@ public class GameService {
         return checkWinAlgorithm.checkWin(game);
     }
 
-    public char getWonPawn(Game game) {
+    public char getCurrentPawn(Game game) {
         List<Player> players = game.getPlayers();
         return players.get(game.getCurrentPlayerTurn()).getPawn();
     }
@@ -85,5 +86,20 @@ public class GameService {
 
     private int updateCurrentPlayerTurn(List<Player> players, int currentPlayerTurn) {
         return currentPlayerTurn == players.size() - 1 ? 0 : currentPlayerTurn + 1;
+    }
+
+    public LoadGameDto loadPreviousPlayerGame() {
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User caller = userDatabaseService.findByName(userName);
+        Player player = playerDatabaseService.findFirstByUser(caller);
+        Game game = player.getGame();
+        return new LoadGameDto(game.getGameBoard(), getCurrentPawn(game), game.getGameSize());
+    }
+
+    @Transactional
+    public void removePrevUserGame(String username) {
+        User caller = userDatabaseService.findByName(username);
+        Player player = playerDatabaseService.findFirstByUser(caller);
+        gameDatabaseService.delete(player.getGame());
     }
 }

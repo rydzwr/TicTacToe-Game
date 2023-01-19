@@ -11,6 +11,10 @@ public class CheckWinAlgorithm {
         int gameDifficulty = game.getDifficulty();
         String gameBoard = game.getGameBoard();
 
+        if (!gameBoard.contains("-")) {
+            return true;
+        }
+
         // CHECK HORIZONTAL WIN
         for (int row = 0; row < gameSize; row++) {
             char candidate = getPawnAtCoords(gameBoard, gameSize, row, 0);

@@ -57,6 +57,8 @@ public class GameSocketController {
             return;
         }
 
+        // ToDO: CHECK IF EP CALLER USER IS THE CURRENT PLAYER IN GAME
+
         // VALIDATING RECEIVED PLAYER MOVE
         if (!playerMoveDtoValidator.isValid(playerMoveDto, player.getGame())) {
             // TODO CREATE EXCEPTION ENDPOINT ON FRONTEND
@@ -65,14 +67,15 @@ public class GameSocketController {
         }
 
         // GETTING PLAYER CHAR BEFORE UPDATING GAME IN CASE OF WIN
-        char prevChar = gameService.getWonPawn(player.getGame());
+        char prevChar = gameService.getCurrentPawn(player.getGame());
 
         // PROCESSING GAME MOVE
         Game game =  gameService.processPlayerMove(player.getGame(), playerMoveDto, template);
 
         // SENDING UPDATED GAME BOARD TO FRONTEND
         String updatedGameBoard = game.getGameBoard();
-        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(updatedGameBoard));
+        char nextPlayerPawn = gameService.getCurrentPawn(player.getGame());
+        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(updatedGameBoard, nextPlayerPawn));
 
         // CHECKING IF CURRENT PLAYER WON
         boolean gameOver = gameService.checkWin(game);
@@ -80,6 +83,8 @@ public class GameSocketController {
         // IF PLAYER WON SENDING RESULT TO OTHER ENDPOINT
         if (gameOver) {
             gameDatabaseService.delete(game);
+
+            // TODO SEND PROPER MESSAGE IF DRAW
 
             // TODO JUST AFTER RECEIVE FINISHED GAME STATE CHANGE COMPONENT AND SET ROUTE GUARD ON FRONTEND
             template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED.name(), prevChar));
