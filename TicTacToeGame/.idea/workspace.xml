@@ -7,19 +7,10 @@
     <list default="true" id="8e697bde-ed68-4dcf-ae5c-774d34f5675b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/database/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/builder/GameBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/builder/GameBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/builder/PlayerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/builder/PlayerBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/constants/DatabaseConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/constants/DatabaseConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/dto/PlayerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/dto/PlayerDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/GameDatabaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/service/GameDatabaseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/game/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/constants/GameConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/constants/GameConstants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/selector/GameStrategySelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/selector/GameStrategySelector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/service/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/service/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/service/GameService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/constants/WebConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/constants/WebConstants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,20 +61,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-18&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/jarek/Desktop/TicTacToe-Game-main/TicTacToeGame&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "jdk.selected.JAVA_MODULE": "corretto-18",
+    "last_opened_file_path": "C:/Users/jarek/Desktop/TicTacToe-Game-main/TicTacToeGame",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.keymap"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Programs\Projects\Sagiton Praktyki\TicTacToe Game\TicTacToeGame\application\src\main\resources" />

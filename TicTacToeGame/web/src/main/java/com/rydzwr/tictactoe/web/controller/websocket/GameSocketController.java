@@ -82,7 +82,7 @@ public class GameSocketController {
             gameDatabaseService.delete(game);
 
             // TODO JUST AFTER RECEIVE FINISHED GAME STATE CHANGE COMPONENT AND SET ROUTE GUARD ON FRONTEND
-            template.convertAndSend("/topic/gameState", new GameStateDto(GameState.FINISHED.name(), prevChar));
+            template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED.name(), prevChar));
         }
     }
 }

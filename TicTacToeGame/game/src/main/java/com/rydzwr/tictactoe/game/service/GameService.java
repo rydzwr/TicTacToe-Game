@@ -35,11 +35,12 @@ public class GameService {
 
     @Transactional
     public Game processPlayerMove(Game game, PlayerMoveDto playerMoveDto, SimpMessagingTemplate template) {
+        final String WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT = "/topic/gameBoard";
         String newGameBoard = game.getGameBoard();
 
         // IF PLAYER PRESSED OCCUPIED FIELD RETURNING SAME BOARD
         if (!validatePlayerMove(newGameBoard, playerMoveDto)) {
-            template.convertAndSend("/topic/gameBoard", new GameBoardDto(game.getGameBoard()));
+            template.convertAndSend(WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(game.getGameBoard()));
             return game;
         }
 

@@ -3,6 +3,7 @@ package com.rydzwr.tictactoe.web.controller.rest;
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.game.service.GameService;
 import com.rydzwr.tictactoe.game.validator.GameDtoValidator;
+import com.rydzwr.tictactoe.web.constants.WebConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +30,7 @@ public class GameController {
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> createNewGame(@Valid @RequestBody GameDto gameDto) {
         if (!validator.validateReceivedData(gameDto)) {
-            return new ResponseEntity<>("Invalid Data Received", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.NOT_ACCEPTABLE);
         }
         gameService.buildGame(gameDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
