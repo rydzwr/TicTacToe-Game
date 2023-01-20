@@ -1,9 +1,7 @@
-package com.rydzwr.tictactoe.game.strategy;
+package com.rydzwr.tictactoe.game.strategy.gameBuilder;
 
 import com.rydzwr.tictactoe.database.builder.GameBuilder;
 import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
-import com.rydzwr.tictactoe.database.constants.GameState;
-import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.database.dto.PlayerDto;
 import com.rydzwr.tictactoe.database.model.Game;
@@ -12,17 +10,21 @@ import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.database.repository.GameRepository;
 import com.rydzwr.tictactoe.database.repository.PlayerRepository;
 import com.rydzwr.tictactoe.database.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-@RequiredArgsConstructor
-public class LocalPlayerGameStrategy implements BuildGameStrategy {
-    private final GameRepository gameRepository;
-    private final UserRepository userRepository;
-    private final PlayerRepository playerRepository;
+public class MultiPlayerGameStrategy implements BuildGameStrategy {
+    @Autowired
+    private GameRepository gameRepository;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PlayerRepository playerRepository;
+
+    // TODO CLASS NOT IMPLEMENTED PROPERLY!
 
     @Override
     @Transactional
@@ -38,14 +40,15 @@ public class LocalPlayerGameStrategy implements BuildGameStrategy {
             playerRepository.save(player);
         }
 
-        game.setState(GameState.IN_PROGRESS);
+        // TODO NEED TO IMPLEMENT AWAITING FOR ONLINE PLAYERS ACCEPTING INVITATIONS
+
+        //game.setState(GameState.IN_PROGRESS);
 
         gameRepository.save(game);
     }
 
-
     @Override
     public boolean applies(GameDto gameDto) {
-        return gameDto.getPlayers().stream().allMatch(p -> p.getPlayerType().equals(PlayerType.LOCAL.name()));
+        return false;
     }
 }

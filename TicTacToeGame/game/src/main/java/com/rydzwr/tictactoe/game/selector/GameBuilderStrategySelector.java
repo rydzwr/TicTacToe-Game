@@ -1,10 +1,10 @@
 package com.rydzwr.tictactoe.game.selector;
 
 import com.rydzwr.tictactoe.database.dto.GameDto;
-import com.rydzwr.tictactoe.game.strategy.BuildGameStrategy;
-import com.rydzwr.tictactoe.game.strategy.ErrorGameTypeStrategy;
-import com.rydzwr.tictactoe.game.strategy.LocalPlayerGameStrategy;
-import com.rydzwr.tictactoe.game.strategy.MultiPlayerGameStrategy;
+import com.rydzwr.tictactoe.game.strategy.gameBuilder.BuildGameStrategy;
+import com.rydzwr.tictactoe.game.strategy.gameBuilder.ErrorGameTypeStrategy;
+import com.rydzwr.tictactoe.game.strategy.gameBuilder.LocalPlayerGameStrategy;
+import com.rydzwr.tictactoe.game.strategy.gameBuilder.MultiPlayerGameStrategy;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class GameStrategySelector {
+public class GameBuilderStrategySelector {
     private final LocalPlayerGameStrategy localPlayerGameStrategy;
     private final MultiPlayerGameStrategy multiPlayerGameStrategy;
     private List<BuildGameStrategy> strategyList;
@@ -21,7 +21,7 @@ public class GameStrategySelector {
         strategyList = initList();
     }
 
-    public GameStrategySelector(LocalPlayerGameStrategy localPlayerGameStrategy, MultiPlayerGameStrategy multiPlayerGameStrategy) {
+    public GameBuilderStrategySelector(LocalPlayerGameStrategy localPlayerGameStrategy, MultiPlayerGameStrategy multiPlayerGameStrategy) {
         this.localPlayerGameStrategy = localPlayerGameStrategy;
         this.multiPlayerGameStrategy = multiPlayerGameStrategy;
     }

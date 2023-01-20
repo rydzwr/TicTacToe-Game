@@ -1,5 +1,6 @@
 package com.rydzwr.tictactoe.game.service;
 
+import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.GameBoardDto;
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.database.dto.LoadGameDto;
@@ -10,8 +11,9 @@ import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.database.service.GameDatabaseService;
 import com.rydzwr.tictactoe.database.service.PlayerDatabaseService;
 import com.rydzwr.tictactoe.database.service.UserDatabaseService;
-import com.rydzwr.tictactoe.game.selector.GameStrategySelector;
-import com.rydzwr.tictactoe.game.strategy.BuildGameStrategy;
+import com.rydzwr.tictactoe.game.constants.GameConstants;
+import com.rydzwr.tictactoe.game.selector.GameBuilderStrategySelector;
+import com.rydzwr.tictactoe.game.strategy.gameBuilder.BuildGameStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -24,7 +26,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GameService {
-    private final GameStrategySelector selector;
+    private final GameBuilderStrategySelector selector;
     private final GameDatabaseService gameDatabaseService;
     private final UserDatabaseService userDatabaseService;
     private final PlayerDatabaseService playerDatabaseService;
@@ -32,37 +34,6 @@ public class GameService {
     public void buildGame(GameDto gameDto) {
         BuildGameStrategy strategy = selector.chooseStrategy(gameDto);
         strategy.buildGame(gameDto);
-    }
-
-    @Transactional
-    public Game processPlayerMove(Game game, PlayerMoveDto playerMoveDto, SimpMessagingTemplate template) {
-        final String WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT = "/topic/gameBoard";
-        String newGameBoard = game.getGameBoard();
-
-        // IF PLAYER PRESSED OCCUPIED FIELD RETURNING SAME BOARD
-        if (!validatePlayerMove(newGameBoard, playerMoveDto)) {
-            template.convertAndSend(WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(game.getGameBoard()));
-            return game;
-        }
-
-        List<Player> players = game.getPlayers();
-
-        // GETTING CURRENT PLAYER PAWN TO UPDATE GAME BOARD IN DATABASE
-        int currentPlayerTurn = game.getCurrentPlayerTurn();
-        char playerPawn = players.get(currentPlayerTurn).getPawn();
-
-        // UPDATING PLAYER TURN IN DATABASE USING LOOP OF IT'S PLAYERS
-        int nextPlayerTurn = updateCurrentPlayerTurn(players, currentPlayerTurn);
-        game.setCurrentPlayerTurn(nextPlayerTurn);
-
-        // BUILDING UPDATED GAME BOARD
-        StringBuilder stringBuilder = new StringBuilder(newGameBoard);
-        stringBuilder.setCharAt(playerMoveDto.getGameBoardElementIndex(), playerPawn);
-        game.setGameBoard(stringBuilder.toString());
-
-        // SAVING
-        gameDatabaseService.save(game);
-        return game;
     }
 
     public boolean checkWin(Game game) {
@@ -74,17 +45,32 @@ public class GameService {
         return players.get(game.getCurrentPlayerTurn()).getPawn();
     }
 
+    public boolean nextPlayerIsAI(Game game) {
+        char pawn = getCurrentPawn(game);
+        Player nextPlayer = game.getPlayers().stream().filter((p) -> p.getPawn() == pawn).findAny().get();
+        return nextPlayer.getPlayerType().equals(PlayerType.AI);
+    }
+
+    public Player getNextPlayer(Game game) {
+        char pawn = getCurrentPawn(game);
+        return game.getPlayers().stream().filter((p) -> p.getPawn() == pawn).findAny().get();
+    }
+
     public boolean isUserInGame() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User caller = userDatabaseService.findByName(userName);
         return playerDatabaseService.existsByUser(caller);
     }
 
-    private boolean validatePlayerMove(String newGameBoard, PlayerMoveDto playerMoveDto) {
+    public boolean validatePlayerMove(String newGameBoard, PlayerMoveDto playerMoveDto) {
+        if (playerMoveDto.getGameBoardElementIndex() > newGameBoard.length()) {
+            throw new IllegalArgumentException(GameConstants.PLAYER_MOVE_OUT_OF_BOARD_EXCEPTION);
+        }
+
         return newGameBoard.charAt(playerMoveDto.getGameBoardElementIndex()) == '-';
     }
 
-    private int updateCurrentPlayerTurn(List<Player> players, int currentPlayerTurn) {
+    public int updateCurrentPlayerTurn(List<Player> players, int currentPlayerTurn) {
         return currentPlayerTurn == players.size() - 1 ? 0 : currentPlayerTurn + 1;
     }
 

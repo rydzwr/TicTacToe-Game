@@ -1,4 +1,4 @@
-package com.rydzwr.tictactoe.game.strategy;
+package com.rydzwr.tictactoe.game.strategy.gameBuilder;
 
 import com.rydzwr.tictactoe.database.dto.GameDto;
 

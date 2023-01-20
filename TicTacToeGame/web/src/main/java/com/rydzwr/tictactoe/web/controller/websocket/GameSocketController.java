@@ -1,6 +1,7 @@
 package com.rydzwr.tictactoe.web.controller.websocket;
 
 import com.rydzwr.tictactoe.database.constants.GameState;
+import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.GameBoardDto;
 import com.rydzwr.tictactoe.database.dto.GameStateDto;
 import com.rydzwr.tictactoe.database.dto.PlayerMoveDto;
@@ -10,8 +11,11 @@ import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.database.repository.PlayerRepository;
 import com.rydzwr.tictactoe.database.repository.UserRepository;
 import com.rydzwr.tictactoe.database.service.GameDatabaseService;
+import com.rydzwr.tictactoe.game.algorithm.MinimaxAlgorithm;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
+import com.rydzwr.tictactoe.game.selector.PlayerMoveStrategySelector;
 import com.rydzwr.tictactoe.game.service.GameService;
+import com.rydzwr.tictactoe.game.strategy.moveProcessor.ProcessMoveStrategy;
 import com.rydzwr.tictactoe.game.validator.PlayerMoveDtoValidator;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
 import com.rydzwr.tictactoe.web.handler.WebSocketExceptionHandler;
@@ -34,8 +38,8 @@ public class GameSocketController {
     private final PlayerRepository playerRepository;
     private final UserRepository userRepository;
     private final SimpMessagingTemplate template;
-    private final PlayerMoveDtoValidator playerMoveDtoValidator;
     private final WebSocketExceptionHandler exceptionHandler;
+    private final PlayerMoveStrategySelector playerMoveStrategySelector;
 
     @Transactional
     @MessageMapping("/gameMove")
@@ -59,30 +63,37 @@ public class GameSocketController {
 
         // ToDO: CHECK IF EP CALLER USER IS THE CURRENT PLAYER IN GAME
 
-        // VALIDATING RECEIVED PLAYER MOVE
-        if (!playerMoveDtoValidator.isValid(playerMoveDto, player.getGame())) {
-            // TODO CREATE EXCEPTION ENDPOINT ON FRONTEND
-            exceptionHandler.sendException(template, GameConstants.PLAYER_MOVE_OUT_OF_BOARD_EXCEPTION);
-            return;
-        }
-
         // GETTING PLAYER CHAR BEFORE UPDATING GAME IN CASE OF WIN
         char prevChar = gameService.getCurrentPawn(player.getGame());
 
+        Game game = player.getGame();
+        Player currentPlayer = game.getPlayers().stream().filter((type) -> type.getPawn() == prevChar).findFirst().get();
+        ProcessMoveStrategy processMoveStrategy = playerMoveStrategySelector.chooseStrategy(currentPlayer.getPlayerType());
+
         // PROCESSING GAME MOVE
-        Game game =  gameService.processPlayerMove(player.getGame(), playerMoveDto, template);
+        Game updatedGame = processMoveStrategy.processPlayerMove(player.getGame(), playerMoveDto);
+
+        // IF NEXT PLAYER IS AI PLAYER, PROCESSING HIS MOVE ALREADY
+        if (gameService.nextPlayerIsAI(game)) {
+            Player nextPlayer = gameService.getNextPlayer(game);
+            ProcessMoveStrategy processMoveStrategyForAI = playerMoveStrategySelector.chooseStrategy(nextPlayer.getPlayerType());
+            Game gameWithAIMovedAlready = processMoveStrategyForAI.processPlayerMove(game, playerMoveDto);
+            char playerAfterAI = gameService.getCurrentPawn(gameWithAIMovedAlready);
+            String gameBoardWithAIMove = gameWithAIMovedAlready.getGameBoard();
+            template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(gameBoardWithAIMove, playerAfterAI));
+        }
 
         // SENDING UPDATED GAME BOARD TO FRONTEND
-        String updatedGameBoard = game.getGameBoard();
-        char nextPlayerPawn = gameService.getCurrentPawn(player.getGame());
+        String updatedGameBoard = updatedGame.getGameBoard();
+        char nextPlayerPawn = gameService.getCurrentPawn(updatedGame);
         template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(updatedGameBoard, nextPlayerPawn));
 
         // CHECKING IF CURRENT PLAYER WON
-        boolean gameOver = gameService.checkWin(game);
+        boolean gameOver = gameService.checkWin(updatedGame);
 
         // IF PLAYER WON SENDING RESULT TO OTHER ENDPOINT
         if (gameOver) {
-            gameDatabaseService.delete(game);
+            gameDatabaseService.delete(updatedGame);
 
             // TODO SEND PROPER MESSAGE IF DRAW
 

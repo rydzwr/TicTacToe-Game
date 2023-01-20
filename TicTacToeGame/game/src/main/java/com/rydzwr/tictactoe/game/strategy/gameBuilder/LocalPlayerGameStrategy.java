@@ -1,7 +1,8 @@
-package com.rydzwr.tictactoe.game.strategy;
+package com.rydzwr.tictactoe.game.strategy.gameBuilder;
 
 import com.rydzwr.tictactoe.database.builder.GameBuilder;
 import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
+import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.database.dto.PlayerDto;
@@ -11,21 +12,17 @@ import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.database.repository.GameRepository;
 import com.rydzwr.tictactoe.database.repository.PlayerRepository;
 import com.rydzwr.tictactoe.database.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 @Component
-public class MultiPlayerGameStrategy implements BuildGameStrategy {
-    @Autowired
-    private GameRepository gameRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private PlayerRepository playerRepository;
-
-    // TODO CLASS NOT IMPLEMENTED PROPERLY!
+@RequiredArgsConstructor
+public class LocalPlayerGameStrategy implements BuildGameStrategy {
+    private final GameRepository gameRepository;
+    private final UserRepository userRepository;
+    private final PlayerRepository playerRepository;
 
     @Override
     @Transactional
@@ -41,15 +38,14 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
             playerRepository.save(player);
         }
 
-        // TODO NEED TO IMPLEMENT AWAITING FOR ONLINE PLAYERS ACCEPTING INVITATIONS
-
-        //game.setState(GameState.IN_PROGRESS);
+        game.setState(GameState.IN_PROGRESS);
 
         gameRepository.save(game);
     }
 
+
     @Override
     public boolean applies(GameDto gameDto) {
-        return gameDto.getPlayers().stream().anyMatch(p -> p.getPlayerType().equals(PlayerType.ONLINE.name()));
+        return true;
     }
 }
