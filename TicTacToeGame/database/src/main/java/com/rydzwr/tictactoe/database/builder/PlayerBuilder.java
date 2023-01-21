@@ -28,10 +28,18 @@ public class PlayerBuilder {
         return this;
     }
 
-    public PlayerBuilder setPlayerDetails(@Valid PlayerDto playerDto) {
-        this.pawn = playerDto.getPlayerPawn();
-
+    public PlayerBuilder setPlayerType(@Valid PlayerDto playerDto) {
         this.playerType = PlayerType.valueOf(playerDto.getPlayerType());
+        return this;
+    }
+
+    public PlayerBuilder setPlayerType(PlayerType playerType) {
+        this.playerType = playerType;
+        return this;
+    }
+
+    public PlayerBuilder setPlayerPawn(char pawn) {
+        this.pawn = pawn;
         return this;
     }
 

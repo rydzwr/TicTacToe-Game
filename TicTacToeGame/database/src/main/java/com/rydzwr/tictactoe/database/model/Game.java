@@ -23,6 +23,7 @@ public class Game {
     private int difficulty;
     @NotNull
     private int currentPlayerTurn = 0;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private GameState state = GameState.AWAITING_PLAYERS;
@@ -32,9 +33,15 @@ public class Game {
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Player> players;
 
+    private String inviteCode = null;
+
     public Game(GameBuilder gameBuilder) {
         this.gameSize = gameBuilder.getGameSize();
         this.difficulty = gameBuilder.getGameDifficulty();
         this.gameBoard = gameBuilder.getGameBoard();
+
+        if (gameBuilder.getInviteCode() != null) {
+            this.inviteCode = gameBuilder.getInviteCode();
+        } else this.inviteCode = null;
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class WebSocketExceptionHandler {
     public void sendException(SimpMessagingTemplate template, String message) {
         template.convertAndSend(
-                message,
+                WebConstants.WEB_SOCKET_TOPIC_EXCEPTION_ENDPOINT,
                  new ExceptionModel(message)
         );
         throw new IllegalArgumentException(message);

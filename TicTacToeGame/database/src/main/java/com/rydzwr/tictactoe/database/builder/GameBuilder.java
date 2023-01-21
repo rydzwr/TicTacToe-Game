@@ -10,6 +10,8 @@ public class GameBuilder {
     private final int gameDifficulty;
     private int gameOpponents;
     private String gameBoard;
+
+    private String inviteCode;
     public GameBuilder(int gameSize, int gameDifficulty) {
         if (gameDifficulty > gameSize) {
             throw new IllegalArgumentException(DatabaseConstants.GAME_DIFFICULTY_IS_GRATER_THAN_GAME_SIZE);
@@ -21,6 +23,11 @@ public class GameBuilder {
     }
     public GameBuilder setGameOpponents(int opponentsCount) {
         this.gameOpponents = opponentsCount;
+        return this;
+    }
+
+    public GameBuilder setInviteCode(String inviteCode) {
+        this.inviteCode = inviteCode;
         return this;
     }
     public Game build() {

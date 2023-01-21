@@ -11,6 +11,13 @@ public class GameDtoValidator {
         final int gameDifficulty = gameDto.getGameDifficulty();
         final int playersCount = gameDto.getPlayers().size();
 
-        return gameDifficulty <= gameSize && playersCount <= gameDifficulty;
+        if (gameDifficulty > gameSize) {
+            return false;
+        }
+        if (playersCount > gameDifficulty) {
+            return false;
+        }
+
+        return true;
     }
 }

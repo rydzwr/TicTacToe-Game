@@ -1,8 +1,10 @@
-package com.rydzwr.tictactoe.game.service;
+package com.rydzwr.tictactoe.game.algorithm;
 
 import com.rydzwr.tictactoe.database.model.Game;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 public class CheckWinAlgorithm {
 
@@ -18,19 +20,18 @@ public class CheckWinAlgorithm {
         // CHECK HORIZONTAL WIN
         for (int row = 0; row < gameSize; row++) {
             char candidate = getPawnAtCoords(gameBoard, gameSize, row, 0);
-            int counter = 0;
+            int counter = 1;
             for (int column = 0; column < gameSize; column++) {
                 char pawn = getPawnAtCoords(gameBoard, gameSize, row, column);
 
                 if ((pawn == candidate) && (pawn != '-')) {
                     counter++;
                 } else {
-                    counter = 0;
+                    counter = 1;
                     candidate = pawn;
                 }
 
                 if (counter == gameDifficulty) {
-
                     return true;
                 }
             }
@@ -39,14 +40,14 @@ public class CheckWinAlgorithm {
         // CHECK VERTICAL WIN
         for (int column = 0; column < gameSize; column++) {
             char candidate = getPawnAtCoords(gameBoard, gameSize, 0, column);
-            int counter = 0;
+            int counter = 1;
             for (int row = 0; row < gameSize; row++) {
                 char pawn = getPawnAtCoords(gameBoard, gameSize, row, column);
 
                 if ((pawn == candidate) && (pawn != '-')) {
                     counter++;
                 } else {
-                    counter = 0;
+                    counter = 1;
                     candidate = pawn;
                 }
 

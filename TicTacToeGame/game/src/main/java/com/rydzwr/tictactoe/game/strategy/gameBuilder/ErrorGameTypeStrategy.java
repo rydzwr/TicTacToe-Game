@@ -1,7 +1,10 @@
 package com.rydzwr.tictactoe.game.strategy.gameBuilder;
 
 import com.rydzwr.tictactoe.database.dto.GameDto;
+import com.rydzwr.tictactoe.database.dto.PlayerDto;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
+
+import java.util.List;
 
 public class ErrorGameTypeStrategy implements BuildGameStrategy {
     @Override
@@ -11,6 +14,7 @@ public class ErrorGameTypeStrategy implements BuildGameStrategy {
 
     @Override
     public boolean applies(GameDto gameDto) {
-        return false;
+        List<String> playerTypes = gameDto.getPlayers().stream().map(PlayerDto::getPlayerType).toList();
+        return !playerTypes.contains("ONLINE") || !playerTypes.contains("LOCAL");
     }
 }

@@ -9,10 +9,13 @@ import com.rydzwr.tictactoe.game.algorithm.MinimaxAlgorithm;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.game.service.GameService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class AIPlayerMoveStrategy implements ProcessMoveStrategy{
@@ -22,6 +25,7 @@ public class AIPlayerMoveStrategy implements ProcessMoveStrategy{
     private final MinimaxAlgorithm minimaxAlgorithm;
     @Override
     public Game processPlayerMove(Game game, PlayerMoveDto playerMoveDto) {
+        log.info("AI PLAYER MOVE STRATEGY: --> Processing AI Move");
         String newGameBoard = game.getGameBoard();
 
         List<Player> players = game.getPlayers();
@@ -45,6 +49,7 @@ public class AIPlayerMoveStrategy implements ProcessMoveStrategy{
 
         // SAVING
         gameDatabaseService.save(game);
+        log.info("AI PLAYER MOVE STRATEGY: --> Move Has Been Proceed");
         return game;
     }
 

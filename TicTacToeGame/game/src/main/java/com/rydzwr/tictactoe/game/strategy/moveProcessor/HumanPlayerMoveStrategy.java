@@ -23,6 +23,7 @@ public class HumanPlayerMoveStrategy implements ProcessMoveStrategy{
 
     @Override
     public Game processPlayerMove(Game game, PlayerMoveDto playerMoveDto) {
+        log.info("HUMAN PLAYER MOVE STRATEGY: --> Processing HUMAN Move");
         String newGameBoard = game.getGameBoard();
 
         // IF PLAYER PRESSED OCCUPIED FIELD RETURNING SAME BOARD
@@ -48,6 +49,7 @@ public class HumanPlayerMoveStrategy implements ProcessMoveStrategy{
 
         // SAVING
         gameDatabaseService.save(game);
+        log.info("HUMAN PLAYER MOVE STRATEGY: --> Human Move Has Been Proceed");
         return game;
     }
 
