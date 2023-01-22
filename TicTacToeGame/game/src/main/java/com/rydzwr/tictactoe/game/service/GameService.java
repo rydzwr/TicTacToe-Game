@@ -1,5 +1,6 @@
 package com.rydzwr.tictactoe.game.service;
 
+import com.rydzwr.tictactoe.database.builder.GameBuilder;
 import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.GameDto;
@@ -14,11 +15,13 @@ import com.rydzwr.tictactoe.database.service.UserDatabaseService;
 import com.rydzwr.tictactoe.game.algorithm.CheckWinAlgorithm;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.game.selector.GameBuilderStrategySelector;
+import com.rydzwr.tictactoe.game.selector.PlayerPawnRandomSelector;
 import com.rydzwr.tictactoe.game.strategy.gameBuilder.BuildGameStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -111,5 +114,81 @@ public class GameService {
         gameDatabaseService.delete(player.getGame());
     }
 
+    @Transactional
+    public void addPlayerToOnlineGame(String callerName, String inviteCode) {
+        PlayerPawnRandomSelector playerPawnRandomSelector = new PlayerPawnRandomSelector();
+        User caller = userDatabaseService.findByName(callerName);
 
+        if (!gameDatabaseService.existsByInviteCode(inviteCode)) {
+            throw new IllegalArgumentException(GameConstants.GAME_WITH_GIVEN_CODE_NOT_FOUND_EXCEPTION);
+        }
+
+        Game game = gameDatabaseService.findByInviteCode(inviteCode);
+        char availablePawn = playerPawnRandomSelector.selectAvailablePawn(game);
+
+        int availableGameSlots = countEmptyGameSlots(game);
+
+        if (availableGameSlots == 0) {
+            throw new IllegalArgumentException(GameConstants.ALL_GAME_SLOTS_OCCUPIED_EXCEPTION);
+        }
+
+        Player newPlayer = new PlayerBuilder()
+                .setPlayerType(PlayerType.ONLINE)
+                .setPlayerPawn(availablePawn)
+                .setUser(caller)
+                .setGame(game)
+                .build();
+
+        playerDatabaseService.save(newPlayer);
+    }
+
+    public int getEmptyGameSlots(String callerName) {
+        User caller = userDatabaseService.findByName(callerName);
+        Player player = playerDatabaseService.findFirstByUser(caller);
+        Game game = player.getGame();
+
+        log.info("----------------------------------------");
+        log.info("GAME SERVICE: --> (getEmptyGameSlots)");
+        log.info("CALLER: --> {}", caller.getName());
+        log.info("PLAYER: --> {}", player.getPawn());
+        log.info("GAME: --> {}", game.getId());
+        log.info("----------------------------------------");
+
+        int allGameSlots = game.getPlayersCount();
+
+        int onlinePlayersCount = getOnlinePlayersCount(game);
+        int aIPlayersCount = getAIPlayersCount(game);
+
+        int occupiedSlots = onlinePlayersCount + aIPlayersCount;
+
+        int emptyGameSlots = allGameSlots - occupiedSlots;
+
+        log.info("----------------------------------------");
+        log.info("GAME SERVICE: --> (getEmptyGameSlots)");
+        log.info("ALL GAME SLOTS: --> {}", allGameSlots);
+        log.info("AI PLAYERS COUNT IN GAME DTO: --> {}", aIPlayersCount);
+        log.info("ONLINE PLAYERS COUNT IN GAME DTO: --> {}", onlinePlayersCount);
+        log.info("RETURNS EMPTY GAME SLOTS COUNT: --> {}", emptyGameSlots);
+        log.info("----------------------------------------");
+
+        return emptyGameSlots;
+    }
+
+    private int getOnlinePlayersCount(Game game) {
+        return  (int) game.getPlayers().stream()
+                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.ONLINE)))
+                .count();
+    }
+
+    private int getAIPlayersCount(Game game) {
+        return  (int) game.getPlayers().stream()
+                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI)))
+                .count();
+    }
+
+    private int countEmptyGameSlots(Game game) {
+        int gamePlayerCount = game.getPlayersCount();
+        int occupiedSlotsCount = game.getPlayers().size();
+        return gamePlayerCount - occupiedSlotsCount;
+    }
 }

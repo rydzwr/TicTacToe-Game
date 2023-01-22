@@ -21,4 +21,8 @@ public class GameDatabaseService {
     public Game findByInviteCode(String inviteCode) {
         return gameRepository.findByInviteCode(inviteCode);
     }
+
+    public boolean existsByInviteCode(String inviteCode) {
+        return gameRepository.existsByInviteCode(inviteCode);
+    }
 }

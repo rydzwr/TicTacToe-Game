@@ -8,23 +8,18 @@ import com.rydzwr.tictactoe.database.dto.PlayerDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;
-import com.rydzwr.tictactoe.database.repository.GameRepository;
-import com.rydzwr.tictactoe.database.repository.PlayerRepository;
-import com.rydzwr.tictactoe.database.repository.UserRepository;
 import com.rydzwr.tictactoe.database.service.GameDatabaseService;
 import com.rydzwr.tictactoe.database.service.PlayerDatabaseService;
 import com.rydzwr.tictactoe.database.service.UserDatabaseService;
 import com.rydzwr.tictactoe.game.algorithm.InviteCodeGenerator;
+import com.rydzwr.tictactoe.game.selector.PlayerPawnRandomSelector;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Component
@@ -33,7 +28,6 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
     private final GameDatabaseService gameDatabaseService;
     private final UserDatabaseService userDatabaseService;
     private final PlayerDatabaseService playerDatabaseService;
-
     private final InviteCodeGenerator inviteCodeGenerator;
 
     // TODO CLASS NOT IMPLEMENTED PROPERLY!
@@ -49,6 +43,7 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
         String inviteCode = inviteCodeGenerator.generateCode();
 
         Game game = new GameBuilder(gameDto.getGameSize(), gameDto.getGameDifficulty())
+                .setPlayersCount(gameDto.getPlayers().size())
                 .setInviteCode(inviteCode)
                 .build();
 
@@ -56,6 +51,32 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
 
         User caller = userDatabaseService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
         assert caller != null;
+
+        int aiPlayersCount = (int) gameDto.getPlayers().stream()
+                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI.name())))
+                .count();
+
+        int onlinePlayersCount = (int) gameDto.getPlayers().stream()
+                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.ONLINE.name())))
+                .count();
+
+
+        log.info("----------------------------------------");
+        log.info("ALL GAME SLOTS: --> {}", gameDto.getPlayers().size());
+        log.info("AI PLAYERS COUNT IN GAME DTO: --> {}", aiPlayersCount);
+        log.info("ONLINE PLAYERS COUNT IN GAME DTO: --> {}", onlinePlayersCount);
+        log.info("----------------------------------------");
+
+        PlayerPawnRandomSelector pawnSelector = new PlayerPawnRandomSelector();
+        for (int i = 0; i < aiPlayersCount; i++) {
+            Player aiPlayer = new PlayerBuilder()
+                    .setPlayerPawn(pawnSelector.selectPawn())
+                    .setPlayerType(PlayerType.AI)
+                    .setUser(caller)
+                    .setGame(game)
+                    .build();
+            playerDatabaseService.save(aiPlayer);
+        }
 
         Player callerPlayer = new PlayerBuilder()
                 .setPlayerType(PlayerType.ONLINE)

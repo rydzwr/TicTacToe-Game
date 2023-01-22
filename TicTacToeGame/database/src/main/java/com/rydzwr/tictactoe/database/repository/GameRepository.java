@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface GameRepository extends CrudRepository<Game, Integer> {
     Game findByInviteCode(String inviteCode);
+
+    boolean existsByInviteCode(String inviteCode);
 }

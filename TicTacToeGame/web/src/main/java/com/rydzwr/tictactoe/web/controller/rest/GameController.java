@@ -1,6 +1,5 @@
 package com.rydzwr.tictactoe.web.controller.rest;
 
-import com.rydzwr.tictactoe.database.dto.GameBoardDto;
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.database.dto.LoadGameDto;
 import com.rydzwr.tictactoe.game.service.GameService;
@@ -39,16 +38,33 @@ public class GameController {
         return inviteCode;
     }
 
+    @GetMapping("/emptyGameSlots")
+    @PreAuthorize("hasAuthority('USER')")
+    public ResponseEntity<Object> getEmptyGameSlots() {
+        String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!gameService.isUserInGame()) {
+            return new ResponseEntity<>(WebConstants.USER_IS_NOT_ASSIGNED_TO_GAME_EXCEPTION, HttpStatus.BAD_REQUEST);
+        }
+
+        int playersCount = gameService.getEmptyGameSlots(callerName);
+
+        return new ResponseEntity<>(playersCount, HttpStatus.OK);
+    }
+
     @GetMapping("/joinGame")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> joinGame(@Valid @RequestBody InviteCodeDto inviteCode) {
         String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
-
         if (gameService.isUserInGame()) {
             gameService.removePrevUserGame(callerName);
         }
 
-        //gameService.addPlayerToOnlineGame(callerName, inviteCode);
+        try {
+            gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode());
+        }catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(WebConstants.COULD_NOT_JOIN_GAME, HttpStatus.BAD_REQUEST);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -78,7 +94,7 @@ public class GameController {
         }
 
         if (!validator.validateReceivedData(gameDto)) {
-            return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
         gameService.buildGame(gameDto);
         return new ResponseEntity<>(HttpStatus.CREATED);

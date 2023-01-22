@@ -35,6 +35,8 @@ public class Game {
 
     private String inviteCode = null;
 
+    private int playersCount;
+
     public Game(GameBuilder gameBuilder) {
         this.gameSize = gameBuilder.getGameSize();
         this.difficulty = gameBuilder.getGameDifficulty();
@@ -43,5 +45,7 @@ public class Game {
         if (gameBuilder.getInviteCode() != null) {
             this.inviteCode = gameBuilder.getInviteCode();
         } else this.inviteCode = null;
+
+        this.playersCount = gameBuilder.getPlayersCount();
     }
 }
