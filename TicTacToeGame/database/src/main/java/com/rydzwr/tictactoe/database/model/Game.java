@@ -21,6 +21,7 @@ public class Game {
     private int gameSize;
     @NotNull
     private int difficulty;
+
     @NotNull
     private int currentPlayerTurn = 0;
 

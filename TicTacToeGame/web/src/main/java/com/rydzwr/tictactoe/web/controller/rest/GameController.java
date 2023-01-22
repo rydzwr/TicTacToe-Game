@@ -2,6 +2,9 @@ package com.rydzwr.tictactoe.web.controller.rest;
 
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.database.dto.LoadGameDto;
+import com.rydzwr.tictactoe.database.model.Game;
+import com.rydzwr.tictactoe.database.model.Player;
+import com.rydzwr.tictactoe.database.service.PlayerDatabaseService;
 import com.rydzwr.tictactoe.game.service.GameService;
 import com.rydzwr.tictactoe.game.validator.GameDtoValidator;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
@@ -22,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 public class GameController {
     private final GameService gameService;
     private final GameDtoValidator validator;
+
+    private final PlayerDatabaseService playerDatabaseService;
 
     @GetMapping("/canResumeGame")
     @PreAuthorize("hasAuthority('USER')")
@@ -51,7 +56,7 @@ public class GameController {
         return new ResponseEntity<>(playersCount, HttpStatus.OK);
     }
 
-    @GetMapping("/joinGame")
+    @PostMapping("/joinGame")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> joinGame(@Valid @RequestBody InviteCodeDto inviteCode) {
         String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -59,13 +64,14 @@ public class GameController {
             gameService.removePrevUserGame(callerName);
         }
 
+        LoadGameDto loadGameDto;
         try {
-            gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode());
+            loadGameDto = gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode());
         }catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(WebConstants.COULD_NOT_JOIN_GAME, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(loadGameDto, HttpStatus.OK);
     }
 
     @GetMapping("/continueGame")
@@ -96,7 +102,8 @@ public class GameController {
         if (!validator.validateReceivedData(gameDto)) {
             return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
-        gameService.buildGame(gameDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+
+        Game game = gameService.buildGame(gameDto);
+        return new ResponseEntity<>(new LoadGameDto(game.getGameSize(), 'X'), HttpStatus.CREATED);
     }
 }

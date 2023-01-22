@@ -55,6 +55,6 @@ public class HumanPlayerMoveStrategy implements ProcessMoveStrategy{
 
     @Override
     public boolean applies(PlayerType playerType) {
-        return playerType.equals(PlayerType.LOCAL);
+        return playerType.equals(PlayerType.LOCAL) || playerType.equals(PlayerType.ONLINE);
     }
 }

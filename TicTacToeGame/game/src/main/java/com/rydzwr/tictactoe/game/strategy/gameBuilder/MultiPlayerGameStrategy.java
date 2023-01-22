@@ -34,7 +34,7 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
 
     @Override
     @Transactional
-    public void buildGame(GameDto gameDto) {
+    public Game buildGame(GameDto gameDto) {
 
         log.info("----------------------------------------");
         log.info("MULTI PLAYER GAME STRATEGY HAS BEEN USED");
@@ -87,6 +87,7 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
 
         playerDatabaseService.save(callerPlayer);
         gameDatabaseService.save(game);
+        return game;
     }
 
     @Override

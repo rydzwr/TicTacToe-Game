@@ -33,7 +33,7 @@ public class LocalPlayerGameStrategy implements BuildGameStrategy {
 
     @Override
     @Transactional
-    public void buildGame(GameDto gameDto) {
+    public Game buildGame(GameDto gameDto) {
         log.info("----------------------------------------");
         log.info("LOCAL PLAYER GAME STRATEGY HAS BEEN USED");
         log.info("----------------------------------------");
@@ -53,6 +53,7 @@ public class LocalPlayerGameStrategy implements BuildGameStrategy {
         game.setState(GameState.IN_PROGRESS);
 
         gameDatabaseService.save(game);
+        return game;
     }
 
 

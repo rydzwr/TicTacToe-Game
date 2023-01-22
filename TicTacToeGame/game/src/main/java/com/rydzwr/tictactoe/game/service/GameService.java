@@ -38,9 +38,9 @@ public class GameService {
     private final UserDatabaseService userDatabaseService;
     private final PlayerDatabaseService playerDatabaseService;
     private final CheckWinAlgorithm checkWinAlgorithm;
-    public void buildGame(GameDto gameDto) {
+    public Game buildGame(GameDto gameDto) {
         BuildGameStrategy strategy = selector.chooseStrategy(gameDto);
-        strategy.buildGame(gameDto);
+        return strategy.buildGame(gameDto);
     }
 
     public String getInviteCode(String callerName) {
@@ -49,7 +49,12 @@ public class GameService {
         return player.getGame().getInviteCode();
     }
 
-    public Player retrieveCaller(SimpMessageHeaderAccessor accessor) {
+    public User retrieveCallerUser(SimpMessageHeaderAccessor accessor) {
+        String username = Objects.requireNonNull(accessor.getUser()).getName();
+        return userDatabaseService.findByName(username);
+    }
+
+    public Player retrieveCallerPlayer(SimpMessageHeaderAccessor accessor) {
         // GETTING USER FROM SECURITY CONTEXT
         String username = Objects.requireNonNull(accessor.getUser()).getName();
         User user = userDatabaseService.findByName(username);
@@ -115,7 +120,14 @@ public class GameService {
     }
 
     @Transactional
-    public void addPlayerToOnlineGame(String callerName, String inviteCode) {
+    public LoadGameDto addPlayerToOnlineGame(String callerName, String inviteCode) {
+
+        log.info("------------------------------------------------");
+        log.info("ADD PLAYER TO ONLINE GAME: --> ");
+        log.info("CALLER NAME: --> {} ", callerName);
+        log.info("INVITE CODE: --> {} ", inviteCode);
+
+
         PlayerPawnRandomSelector playerPawnRandomSelector = new PlayerPawnRandomSelector();
         User caller = userDatabaseService.findByName(callerName);
 
@@ -140,19 +152,14 @@ public class GameService {
                 .build();
 
         playerDatabaseService.save(newPlayer);
+        log.info("------------------------------------------------");
+        return new LoadGameDto(game.getGameSize(), availablePawn);
     }
 
     public int getEmptyGameSlots(String callerName) {
         User caller = userDatabaseService.findByName(callerName);
         Player player = playerDatabaseService.findFirstByUser(caller);
         Game game = player.getGame();
-
-        log.info("----------------------------------------");
-        log.info("GAME SERVICE: --> (getEmptyGameSlots)");
-        log.info("CALLER: --> {}", caller.getName());
-        log.info("PLAYER: --> {}", player.getPawn());
-        log.info("GAME: --> {}", game.getId());
-        log.info("----------------------------------------");
 
         int allGameSlots = game.getPlayersCount();
 
@@ -161,17 +168,7 @@ public class GameService {
 
         int occupiedSlots = onlinePlayersCount + aIPlayersCount;
 
-        int emptyGameSlots = allGameSlots - occupiedSlots;
-
-        log.info("----------------------------------------");
-        log.info("GAME SERVICE: --> (getEmptyGameSlots)");
-        log.info("ALL GAME SLOTS: --> {}", allGameSlots);
-        log.info("AI PLAYERS COUNT IN GAME DTO: --> {}", aIPlayersCount);
-        log.info("ONLINE PLAYERS COUNT IN GAME DTO: --> {}", onlinePlayersCount);
-        log.info("RETURNS EMPTY GAME SLOTS COUNT: --> {}", emptyGameSlots);
-        log.info("----------------------------------------");
-
-        return emptyGameSlots;
+        return allGameSlots - occupiedSlots;
     }
 
     private int getOnlinePlayersCount(Game game) {
