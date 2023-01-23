@@ -49,7 +49,6 @@ public class GameController {
         }
 
         int playersCount = gameService.getEmptyGameSlots(callerName);
-
         return new ResponseEntity<>(playersCount, HttpStatus.OK);
     }
 
@@ -67,7 +66,6 @@ public class GameController {
         }catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
-
         return new ResponseEntity<>(loadGameDto, HttpStatus.OK);
     }
 

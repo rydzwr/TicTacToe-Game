@@ -116,6 +116,9 @@ public class GameService {
 
     @Transactional
     public LoadGameDto addPlayerToOnlineGame(String callerName, String inviteCode, SimpMessagingTemplate template) {
+        final String AWAITING_PLAYERS_ENDPOINT = "/topic/awaitingPlayers";
+        final String GAME_STATE_ENDPOINT = "/topic/gameState";
+
         PlayerPawnRandomSelector playerPawnRandomSelector = new PlayerPawnRandomSelector();
         User caller = userDatabaseService.findByName(callerName);
 
@@ -141,12 +144,12 @@ public class GameService {
         availableGameSlots--;
 
         playerDatabaseService.save(newPlayer);
-        template.convertAndSend("/topic/awaitingPlayers", availableGameSlots);
+        template.convertAndSend(AWAITING_PLAYERS_ENDPOINT, availableGameSlots);
 
         if (availableGameSlots == 0) {
             game.setState(GameState.IN_PROGRESS);
             gameDatabaseService.save(game);
-            template.convertAndSend("/topic/gameState", new GameStateDto(GameState.IN_PROGRESS.name(), 'X'));
+            template.convertAndSend(GAME_STATE_ENDPOINT, new GameStateDto(GameState.IN_PROGRESS.name(), 'X'));
         }
         return new LoadGameDto(game, availablePawn, 'X');
     }
