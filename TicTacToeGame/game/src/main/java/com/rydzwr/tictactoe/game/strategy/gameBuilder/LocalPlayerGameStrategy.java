@@ -3,6 +3,7 @@ package com.rydzwr.tictactoe.game.strategy.gameBuilder;
 import com.rydzwr.tictactoe.database.builder.GameBuilder;
 import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
 import com.rydzwr.tictactoe.database.constants.GameState;
+import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.database.dto.PlayerDto;
 import com.rydzwr.tictactoe.database.model.Game;
@@ -34,23 +35,36 @@ public class LocalPlayerGameStrategy implements BuildGameStrategy {
     @Override
     @Transactional
     public Game buildGame(GameDto gameDto) {
-        log.info("----------------------------------------");
-        log.info("LOCAL PLAYER GAME STRATEGY HAS BEEN USED");
-        log.info("----------------------------------------");
-        Game game = new GameBuilder(gameDto.getGameSize(), gameDto.getGameDifficulty()).build();
+        Game game = new GameBuilder(gameDto.getGameSize(), gameDto.getGameDifficulty())
+                .setGameState(GameState.IN_PROGRESS)
+                .build();
+
         gameDatabaseService.save(game);
 
         User caller = userDatabaseService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
         assert caller != null;
 
+        Player callerPlayer = new PlayerBuilder()
+                .setPlayerType(PlayerType.LOCAL)
+                .setPlayerPawn('X')
+                .setUser(caller)
+                .setGame(game)
+                .build();
+
+        playerDatabaseService.save(callerPlayer);
+
         PlayerPawnRandomSelector playerPawnRandomSelector = new PlayerPawnRandomSelector();
         for (PlayerDto playerDto : gameDto.getPlayers()) {
             char pawn = playerPawnRandomSelector.selectPawn();
-            Player player = new PlayerBuilder().setGame(game).setUser(caller).setPlayerType(playerDto).setPlayerPawn(pawn).build();
+            Player player = new PlayerBuilder()
+                    .setPlayerType(playerDto)
+                    .setPlayerPawn(pawn)
+                    .setUser(caller)
+                    .setGame(game)
+                    .build();
             playerDatabaseService.save(player);
         }
-
-        game.setState(GameState.IN_PROGRESS);
+        gameDatabaseService.save(game);
         return game;
     }
 
@@ -58,6 +72,6 @@ public class LocalPlayerGameStrategy implements BuildGameStrategy {
     @Override
     public boolean applies(GameDto gameDto) {
         List<String> playerTypes = gameDto.getPlayers().stream().map(PlayerDto::getPlayerType).toList();
-        return playerTypes.contains("LOCAL");
+        return playerTypes.contains("LOCAL") || playerTypes.contains("AI") && !playerTypes.contains("ONLINE");
     }
 }

@@ -1,11 +1,8 @@
 package com.rydzwr.tictactoe.web.controller.rest;
 
-import com.rydzwr.tictactoe.database.dto.GameBoardDto;
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.database.dto.LoadGameDto;
 import com.rydzwr.tictactoe.database.model.Game;
-import com.rydzwr.tictactoe.database.model.Player;
-import com.rydzwr.tictactoe.database.service.PlayerDatabaseService;
 import com.rydzwr.tictactoe.game.service.GameService;
 import com.rydzwr.tictactoe.game.validator.GameDtoValidator;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
@@ -40,9 +37,7 @@ public class GameController {
     @PreAuthorize("hasAuthority('USER')")
     public String getInviteCode() {
         String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
-        String inviteCode = gameService.getInviteCode(callerName);
-        log.info("SENDING INVITE CODE: --> {}", inviteCode);
-        return inviteCode;
+        return gameService.getInviteCode(callerName);
     }
 
     @GetMapping("/emptyGameSlots")
@@ -80,22 +75,16 @@ public class GameController {
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> continueGame() {
         if (!gameService.isUserInGame()) {
-            return new ResponseEntity<>(WebConstants.PREV_GAME_NOT_FOUND, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(WebConstants.PREV_GAME_NOT_FOUND_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
 
         LoadGameDto loadedGame = gameService.loadPreviousPlayerGame();
-        log.info("LOADED GAME: --> {}", loadedGame);
         return new ResponseEntity<>(loadedGame, HttpStatus.OK);
     }
 
     @PostMapping("/createGame")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> createNewGame(@Valid @RequestBody GameDto gameDto) {
-        log.info("CREATING NEW GAME:");
-        log.info("GAME SIZE: --> {}", gameDto.getGameSize());
-        log.info("GAME DIFFICULTY: --> {}", gameDto.getGameDifficulty());
-        log.info("GAME PLAYERS COUNT: --> {}", gameDto.getPlayers().size());
-
         if (gameService.isUserInGame()) {
             String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
             gameService.removePrevUserGame(callerName);
@@ -105,7 +94,8 @@ public class GameController {
             return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
 
+        final char X_PAWN = 'X';
         Game game = gameService.buildGame(gameDto);
-        return new ResponseEntity<>(new LoadGameDto(game, 'X'), HttpStatus.CREATED);
+        return new ResponseEntity<>(new LoadGameDto(game, X_PAWN, X_PAWN), HttpStatus.CREATED);
     }
 }

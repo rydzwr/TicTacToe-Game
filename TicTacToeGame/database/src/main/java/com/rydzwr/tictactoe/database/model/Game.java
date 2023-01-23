@@ -48,5 +48,6 @@ public class Game {
         } else this.inviteCode = null;
 
         this.playersCount = gameBuilder.getPlayersCount();
+        this.state = gameBuilder.getGameState();
     }
 }

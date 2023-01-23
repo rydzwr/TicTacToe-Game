@@ -31,26 +31,16 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
     private final PlayerDatabaseService playerDatabaseService;
     private final InviteCodeGenerator inviteCodeGenerator;
 
-    // TODO CLASS NOT IMPLEMENTED PROPERLY!
-
     @Override
     @Transactional
     public Game buildGame(GameDto gameDto) {
-
-        log.info("----------------------------------------");
-        log.info("MULTI PLAYER GAME STRATEGY HAS BEEN USED");
-        log.info("----------------------------------------");
-
         String inviteCode = inviteCodeGenerator.generateCode();
-
-        // TODO ADD SET STATE TO BUILDER
 
         Game game = new GameBuilder(gameDto.getGameSize(), gameDto.getGameDifficulty())
                 .setPlayersCount(gameDto.getPlayers().size())
+                .setGameState(GameState.AWAITING_PLAYERS)
                 .setInviteCode(inviteCode)
                 .build();
-
-        game.setState(GameState.AWAITING_PLAYERS);
 
         gameDatabaseService.save(game);
 
@@ -60,17 +50,6 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
         int aiPlayersCount = (int) gameDto.getPlayers().stream()
                 .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI.name())))
                 .count();
-
-        int onlinePlayersCount = (int) gameDto.getPlayers().stream()
-                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.ONLINE.name())))
-                .count();
-
-
-        log.info("----------------------------------------");
-        log.info("ALL GAME SLOTS: --> {}", gameDto.getPlayers().size());
-        log.info("AI PLAYERS COUNT IN GAME DTO: --> {}", aiPlayersCount);
-        log.info("ONLINE PLAYERS COUNT IN GAME DTO: --> {}", onlinePlayersCount);
-        log.info("----------------------------------------");
 
         Player callerPlayer = new PlayerBuilder()
                 .setPlayerType(PlayerType.ONLINE)

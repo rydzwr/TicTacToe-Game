@@ -1,6 +1,7 @@
 package com.rydzwr.tictactoe.database.builder;
 
 import com.rydzwr.tictactoe.database.constants.DatabaseConstants;
+import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.model.Game;
 import lombok.Getter;
 
@@ -12,6 +13,8 @@ public class GameBuilder {
     private String gameBoard;
     private String inviteCode;
     private int playersCount;
+
+    private GameState gameState;
     public GameBuilder(int gameSize, int gameDifficulty) {
         if (gameDifficulty > gameSize) {
             throw new IllegalArgumentException(DatabaseConstants.GAME_DIFFICULTY_IS_GRATER_THAN_GAME_SIZE);
@@ -33,6 +36,11 @@ public class GameBuilder {
 
     public GameBuilder setPlayersCount(int playersCount) {
         this.playersCount = playersCount;
+        return this;
+    }
+
+    public GameBuilder setGameState(GameState gameState) {
+        this.gameState = gameState;
         return this;
     }
 

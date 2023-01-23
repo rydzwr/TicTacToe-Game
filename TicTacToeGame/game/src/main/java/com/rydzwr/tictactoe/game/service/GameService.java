@@ -39,6 +39,7 @@ public class GameService {
     private final UserDatabaseService userDatabaseService;
     private final PlayerDatabaseService playerDatabaseService;
     private final CheckWinAlgorithm checkWinAlgorithm;
+
     public Game buildGame(GameDto gameDto) {
         BuildGameStrategy strategy = selector.chooseStrategy(gameDto);
         Game game = strategy.buildGame(gameDto);
@@ -52,20 +53,9 @@ public class GameService {
         return player.getGame().getInviteCode();
     }
 
-    public User retrieveCallerUser(SimpMessageHeaderAccessor accessor) {
-        String username = Objects.requireNonNull(accessor.getUser()).getName();
-        return userDatabaseService.findByName(username);
-    }
-
-    public Player retrieveCallerPlayer(SimpMessageHeaderAccessor accessor) {
-        // GETTING USER FROM SECURITY CONTEXT
+    public Player retrieveAnyPlayerFromUser(SimpMessageHeaderAccessor accessor) {
         String username = Objects.requireNonNull(accessor.getUser()).getName();
         User user = userDatabaseService.findByName(username);
-
-        // IT'S BARELY POSSIBLE BUT CHECKING JUST IN CASE
-        assert user != null;
-
-        // FINDING HIS (ONE -> TO -> ONE) PLAYER
         return playerDatabaseService.findFirstByUser(user);
     }
 
@@ -74,7 +64,6 @@ public class GameService {
     }
 
     public void processGameWinning(Game game) {
-        log.info("GAME SERVICE: --> Game Has Been Won, Processing Delete Entity");
         gameDatabaseService.delete(game);
     }
 
@@ -83,9 +72,7 @@ public class GameService {
     }
 
     public boolean isPlayerAIType(Game game) {
-        boolean isAi = getCurrentPlayer(game).getPlayerType().equals(PlayerType.AI);
-        log.info("GAME SERVICE: --> Is Player AI: {}", isAi);
-        return isAi;
+        return getCurrentPlayer(game).getPlayerType().equals(PlayerType.AI);
     }
 
     public boolean isUserInGame() {
@@ -98,21 +85,26 @@ public class GameService {
         if (playerMoveDto.getGameBoardElementIndex() > newGameBoard.length()) {
             throw new IllegalArgumentException(GameConstants.PLAYER_MOVE_OUT_OF_BOARD_EXCEPTION);
         }
-
-        return newGameBoard.charAt(playerMoveDto.getGameBoardElementIndex()) == '-';
+        return newGameBoard.charAt(playerMoveDto.getGameBoardElementIndex()) != '-';
     }
 
     public int updateCurrentPlayerTurn(List<Player> players, int currentPlayerTurn) {
-        log.info("GAME SERVICE: --> Updating Current Player Turn In Entity");
         return currentPlayerTurn == players.size() - 1 ? 0 : currentPlayerTurn + 1;
     }
+
+    public boolean validateCurrentPlayerTurn(Game game, SimpMessageHeaderAccessor accessor) {
+        Player currentPlayer = getCurrentPlayer(game);
+        Player callerPlayer = retrieveAnyPlayerFromUser(accessor);
+        return callerPlayer.getPawn() == currentPlayer.getPawn();
+    }
+
 
     public LoadGameDto loadPreviousPlayerGame() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User caller = userDatabaseService.findByName(userName);
         Player player = playerDatabaseService.findFirstByUser(caller);
         Game game = player.getGame();
-        return new LoadGameDto(game, player.getPawn());
+        return new LoadGameDto(game, player.getPawn(), getCurrentPlayer(game).getPawn());
     }
 
     @Transactional
@@ -124,13 +116,6 @@ public class GameService {
 
     @Transactional
     public LoadGameDto addPlayerToOnlineGame(String callerName, String inviteCode, SimpMessagingTemplate template) {
-
-        log.info("------------------------------------------------");
-        log.info("ADD PLAYER TO ONLINE GAME: --> ");
-        log.info("CALLER NAME: --> {} ", callerName);
-        log.info("INVITE CODE: --> {} ", inviteCode);
-
-
         PlayerPawnRandomSelector playerPawnRandomSelector = new PlayerPawnRandomSelector();
         User caller = userDatabaseService.findByName(callerName);
 
@@ -163,9 +148,7 @@ public class GameService {
             gameDatabaseService.save(game);
             template.convertAndSend("/topic/gameState", new GameStateDto(GameState.IN_PROGRESS.name(), 'X'));
         }
-
-        log.info("------------------------------------------------");
-        return new LoadGameDto(game, availablePawn);
+        return new LoadGameDto(game, availablePawn, 'X');
     }
 
     public int getEmptyGameSlots(String callerName) {
@@ -184,13 +167,13 @@ public class GameService {
     }
 
     private int getOnlinePlayersCount(Game game) {
-        return  (int) game.getPlayers().stream()
+        return (int) game.getPlayers().stream()
                 .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.ONLINE)))
                 .count();
     }
 
     private int getAIPlayersCount(Game game) {
-        return  (int) game.getPlayers().stream()
+        return (int) game.getPlayers().stream()
                 .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI)))
                 .count();
     }
