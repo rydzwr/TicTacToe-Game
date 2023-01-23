@@ -41,6 +41,11 @@ public class GameSocketController {
 
         Player currentPlayer = gameService.getCurrentPlayer(callerPlayer.getGame());
 
+        if (!gameService.emptySpacesLeft(currentPlayer.getGame())) {
+            template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED_DRAW.name(), currentPlayer.getPawn()));
+            return;
+        }
+
         // PROCESSING CALLER MOVE
         ProcessMoveStrategy processMoveStrategy = playerMoveStrategySelector.chooseStrategy(currentPlayer.getPlayerType());
         Game updatedGame;
@@ -56,7 +61,14 @@ public class GameSocketController {
             do {
                 Player aiPlayer = gameService.getCurrentPlayer(updatedGame);
                 ProcessMoveStrategy processMoveStrategyForAI = playerMoveStrategySelector.chooseStrategy(aiPlayer.getPlayerType());
-                Game gameAfterAiMove = processMoveStrategyForAI.processPlayerMove(updatedGame, accessor, playerMoveDto);
+                Game gameAfterAiMove;
+                try {
+                    gameAfterAiMove = processMoveStrategyForAI.processPlayerMove(updatedGame, accessor, playerMoveDto);
+                } catch (IllegalArgumentException e) {
+                    template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED_DRAW.name(), currentPlayer.getPawn()));
+                    return;
+                }
+
 
                 char playerAfterAI = gameService.getCurrentPlayer(gameAfterAiMove).getPawn();
                 String gameBoardWithAIMove = gameAfterAiMove.getGameBoard();
@@ -75,7 +87,11 @@ public class GameSocketController {
         if (gameService.checkWin(updatedGame)) {
             gameService.processGameWinning(updatedGame);
 
-            // TODO SEND PROPER MESSAGE IF DRAW
+            if (!updatedGame.getGameBoard().contains("-")) {
+                template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED_DRAW.name(), currentPlayer.getPawn()));
+                return;
+            }
+
             template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED.name(), currentPlayer.getPawn()));
             return;
         }

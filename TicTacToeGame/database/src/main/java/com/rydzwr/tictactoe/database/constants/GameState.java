@@ -1,5 +1,5 @@
 package com.rydzwr.tictactoe.database.constants;
 
 public enum GameState {
-    AWAITING_PLAYERS, IN_PROGRESS, FINISHED, DRAW
+    AWAITING_PLAYERS, IN_PROGRESS, FINISHED, FINISHED_DRAW
 }

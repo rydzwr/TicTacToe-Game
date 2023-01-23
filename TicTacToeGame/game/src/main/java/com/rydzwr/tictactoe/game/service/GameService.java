@@ -59,6 +59,14 @@ public class GameService {
         return playerDatabaseService.findFirstByUser(user);
     }
 
+    public boolean emptySpacesLeft(Game game) {
+        String str = game.getGameBoard();
+        char letter = '-';
+        int count = str.length() - str.replace(Character.toString(letter), "").length();
+        log.info("COUNT: --> {}", count);
+        return count != 1;
+    }
+
     public boolean checkWin(Game game) {
         return checkWinAlgorithm.checkWin(game);
     }
