@@ -2,6 +2,7 @@ package com.rydzwr.tictactoe.game.strategy.gameBuilder;
 
 import com.rydzwr.tictactoe.database.builder.GameBuilder;
 import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
+import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.database.dto.PlayerDto;
@@ -42,10 +43,14 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
 
         String inviteCode = inviteCodeGenerator.generateCode();
 
+        // TODO ADD SET STATE TO BUILDER
+
         Game game = new GameBuilder(gameDto.getGameSize(), gameDto.getGameDifficulty())
                 .setPlayersCount(gameDto.getPlayers().size())
                 .setInviteCode(inviteCode)
                 .build();
+
+        game.setState(GameState.AWAITING_PLAYERS);
 
         gameDatabaseService.save(game);
 
@@ -67,17 +72,6 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
         log.info("ONLINE PLAYERS COUNT IN GAME DTO: --> {}", onlinePlayersCount);
         log.info("----------------------------------------");
 
-        PlayerPawnRandomSelector pawnSelector = new PlayerPawnRandomSelector();
-        for (int i = 0; i < aiPlayersCount; i++) {
-            Player aiPlayer = new PlayerBuilder()
-                    .setPlayerPawn(pawnSelector.selectPawn())
-                    .setPlayerType(PlayerType.AI)
-                    .setUser(caller)
-                    .setGame(game)
-                    .build();
-            playerDatabaseService.save(aiPlayer);
-        }
-
         Player callerPlayer = new PlayerBuilder()
                 .setPlayerType(PlayerType.ONLINE)
                 .setPlayerPawn('X')
@@ -86,6 +80,17 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
                 .build();
 
         playerDatabaseService.save(callerPlayer);
+
+        PlayerPawnRandomSelector pawnSelector = new PlayerPawnRandomSelector();
+        for (int i = 0; i < aiPlayersCount; i++) {
+            Player aiPlayer = new PlayerBuilder()
+                    .setPlayerPawn(pawnSelector.selectPawn())
+                    .setPlayerType(PlayerType.AI)
+                    .setGame(game)
+                    .build();
+            playerDatabaseService.save(aiPlayer);
+        }
+
         gameDatabaseService.save(game);
         return game;
     }

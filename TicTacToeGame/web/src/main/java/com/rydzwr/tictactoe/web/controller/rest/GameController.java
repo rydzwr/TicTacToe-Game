@@ -1,5 +1,6 @@
 package com.rydzwr.tictactoe.web.controller.rest;
 
+import com.rydzwr.tictactoe.database.dto.GameBoardDto;
 import com.rydzwr.tictactoe.database.dto.GameDto;
 import com.rydzwr.tictactoe.database.dto.LoadGameDto;
 import com.rydzwr.tictactoe.database.model.Game;
@@ -14,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +28,7 @@ public class GameController {
     private final GameService gameService;
     private final GameDtoValidator validator;
 
-    private final PlayerDatabaseService playerDatabaseService;
+    private final SimpMessagingTemplate template;
 
     @GetMapping("/canResumeGame")
     @PreAuthorize("hasAuthority('USER')")
@@ -66,7 +68,7 @@ public class GameController {
 
         LoadGameDto loadGameDto;
         try {
-            loadGameDto = gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode());
+            loadGameDto = gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode(), template);
         }catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
         }
@@ -104,6 +106,6 @@ public class GameController {
         }
 
         Game game = gameService.buildGame(gameDto);
-        return new ResponseEntity<>(new LoadGameDto(game.getGameSize(), 'X'), HttpStatus.CREATED);
+        return new ResponseEntity<>(new LoadGameDto(game, 'X'), HttpStatus.CREATED);
     }
 }

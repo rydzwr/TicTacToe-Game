@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 public class GameDatabaseService {
     private final GameRepository gameRepository;
 
+    public Game findById(int id) {
+        return gameRepository.findById(id).get();
+    }
     public void save(Game game) {
         gameRepository.save(game);
     }

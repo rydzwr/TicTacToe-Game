@@ -51,8 +51,6 @@ public class LocalPlayerGameStrategy implements BuildGameStrategy {
         }
 
         game.setState(GameState.IN_PROGRESS);
-
-        gameDatabaseService.save(game);
         return game;
     }
 

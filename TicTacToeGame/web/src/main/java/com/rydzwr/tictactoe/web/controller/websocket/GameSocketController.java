@@ -45,24 +45,24 @@ public class GameSocketController {
     @MessageMapping("/gameMove")
     public void send(PlayerMoveDto playerMoveDto, SimpMessageHeaderAccessor accessor) {
 
-        Player caller = gameService.retrieveCallerPlayer(accessor);
+        Player callerPlayer = gameService.retrieveCallerPlayer(accessor);
 
-        if (caller == null) {
+        if (callerPlayer == null) {
             // TODO CREATE EXCEPTION ENDPOINT ON FRONTEND
             exceptionHandler.sendException(template, GameConstants.PLAYER_NOT_FOUND_EXCEPTION);
             return;
         }
 
-        List<Character> occupiedPawns = caller.getGame().getPlayers().stream().map(Player::getPawn).toList();
+        List<Character> occupiedPawns = callerPlayer.getGame().getPlayers().stream().map(Player::getPawn).toList();
         log.info("ALL PAWNS IN GAME: --> ");
         log.info(occupiedPawns.toString());
 
-        Player currentPlayer = gameService.getCurrentPlayer(caller.getGame());
+        Player currentPlayer = gameService.getCurrentPlayer(callerPlayer.getGame());
 
         User callerUser = gameService.retrieveCallerUser(accessor);
-        Player callerPlayer = playerDatabaseService.findFirstByUser(callerUser);
+       // Player callerPlayer = playerDatabaseService.findFirstByUser(callerUser);
 
-        if (callerPlayer.getPlayerType().equals(PlayerType.ONLINE) && callerPlayer.getPawn() != currentPlayer.getPawn()) {
+        if (callerPlayer.getPawn() != currentPlayer.getPawn()) {
             log.info("REJECTING CALL");
             log.info("CURRENT PLAYER PAWN: --> {}", currentPlayer.getPawn());
             log.info("CALLER PLAYER PAWN: --> {}", callerPlayer.getPawn());

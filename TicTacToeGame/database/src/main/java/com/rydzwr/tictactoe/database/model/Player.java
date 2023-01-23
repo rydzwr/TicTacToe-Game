@@ -26,8 +26,11 @@ public class Player{
 
     public Player(PlayerBuilder playerBuilder) {
         this.pawn = playerBuilder.getPawn();
-        this.user = playerBuilder.getUser();
         this.game = playerBuilder.getGame();
         this.playerType = playerBuilder.getPlayerType();
+
+        if (playerBuilder.getUser() != null) {
+            this.user = playerBuilder.getUser();
+        }
     }
 }

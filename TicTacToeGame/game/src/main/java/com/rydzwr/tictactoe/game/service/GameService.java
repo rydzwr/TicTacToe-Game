@@ -1,9 +1,10 @@
 package com.rydzwr.tictactoe.game.service;
 
-import com.rydzwr.tictactoe.database.builder.GameBuilder;
 import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
+import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.GameDto;
+import com.rydzwr.tictactoe.database.dto.GameStateDto;
 import com.rydzwr.tictactoe.database.dto.LoadGameDto;
 import com.rydzwr.tictactoe.database.dto.PlayerMoveDto;
 import com.rydzwr.tictactoe.database.model.Game;
@@ -20,8 +21,8 @@ import com.rydzwr.tictactoe.game.strategy.gameBuilder.BuildGameStrategy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
@@ -40,7 +41,9 @@ public class GameService {
     private final CheckWinAlgorithm checkWinAlgorithm;
     public Game buildGame(GameDto gameDto) {
         BuildGameStrategy strategy = selector.chooseStrategy(gameDto);
-        return strategy.buildGame(gameDto);
+        Game game = strategy.buildGame(gameDto);
+        gameDatabaseService.save(game);
+        return gameDatabaseService.findById(game.getId());
     }
 
     public String getInviteCode(String callerName) {
@@ -109,7 +112,7 @@ public class GameService {
         User caller = userDatabaseService.findByName(userName);
         Player player = playerDatabaseService.findFirstByUser(caller);
         Game game = player.getGame();
-        return new LoadGameDto(game.getGameBoard(), getCurrentPlayer(game).getPawn(), game.getGameSize());
+        return new LoadGameDto(game, player.getPawn());
     }
 
     @Transactional
@@ -120,7 +123,7 @@ public class GameService {
     }
 
     @Transactional
-    public LoadGameDto addPlayerToOnlineGame(String callerName, String inviteCode) {
+    public LoadGameDto addPlayerToOnlineGame(String callerName, String inviteCode, SimpMessagingTemplate template) {
 
         log.info("------------------------------------------------");
         log.info("ADD PLAYER TO ONLINE GAME: --> ");
@@ -150,10 +153,19 @@ public class GameService {
                 .setUser(caller)
                 .setGame(game)
                 .build();
+        availableGameSlots--;
 
         playerDatabaseService.save(newPlayer);
+        template.convertAndSend("/topic/awaitingPlayers", availableGameSlots);
+
+        if (availableGameSlots == 0) {
+            game.setState(GameState.IN_PROGRESS);
+            gameDatabaseService.save(game);
+            template.convertAndSend("/topic/gameState", new GameStateDto(GameState.IN_PROGRESS.name(), 'X'));
+        }
+
         log.info("------------------------------------------------");
-        return new LoadGameDto(game.getGameSize(), availablePawn);
+        return new LoadGameDto(game, availablePawn);
     }
 
     public int getEmptyGameSlots(String callerName) {
@@ -183,7 +195,7 @@ public class GameService {
                 .count();
     }
 
-    private int countEmptyGameSlots(Game game) {
+    public int countEmptyGameSlots(Game game) {
         int gamePlayerCount = game.getPlayersCount();
         int occupiedSlotsCount = game.getPlayers().size();
         return gamePlayerCount - occupiedSlotsCount;
