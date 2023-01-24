@@ -130,37 +130,21 @@ public class GameService {
         if (availableGameSlots == 0) {
             game.setState(GameState.IN_PROGRESS);
             gameDatabaseService.save(game);
-            template.convertAndSend(GAME_STATE_ENDPOINT, new GameStateDto(GameState.IN_PROGRESS.name(), X_PAWN));
+            template.convertAndSend(GAME_STATE_ENDPOINT, new GameStateDto(GameState.IN_PROGRESS.name()));
         }
 
-        return new LoadGameDto(game, availablePawn, X_PAWN);
+        return new LoadGameDto(game, availablePawn, X_PAWN, availableGameSlots);
     }
 
-    public int getEmptyGameSlots(String callerName) {
-        User caller = userDatabaseService.findByName(callerName);
-        Player player = playerDatabaseService.findFirstByUser(caller);
-        Game game = player.getGame();
+    public int getHumanGameSlots(GameDto game) {
 
-        int allGameSlots = game.getPlayersCount();
+        int allGameSlots = game.getPlayers().size();
 
-        int onlinePlayersCount = getOnlinePlayersCount(game);
-        int aIPlayersCount = getAIPlayersCount(game);
-
-        int occupiedSlots = onlinePlayersCount + aIPlayersCount;
-
-        return allGameSlots - occupiedSlots;
-    }
-
-    private int getOnlinePlayersCount(Game game) {
-        return (int) game.getPlayers().stream()
-                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.ONLINE)))
+        int aIPlayersCount = (int) game.getPlayers().stream()
+                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI.name())))
                 .count();
-    }
 
-    private int getAIPlayersCount(Game game) {
-        return (int) game.getPlayers().stream()
-                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI)))
-                .count();
+        return allGameSlots - aIPlayersCount;
     }
 
     public int countEmptyGameSlots(Game game) {

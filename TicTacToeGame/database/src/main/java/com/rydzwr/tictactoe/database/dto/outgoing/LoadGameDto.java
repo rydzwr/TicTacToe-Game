@@ -15,6 +15,7 @@ public class LoadGameDto {
     private int difficulty;
     private int size;
     private char playerPawn;
+    private Integer awaitingPlayers;
 
     public LoadGameDto(Game game, char playerPawn, char currentPlayerMove) {
         this.state = game.getState().name();
@@ -23,13 +24,11 @@ public class LoadGameDto {
         this.difficulty = game.getDifficulty();
         this.size = game.getGameSize();
         this.playerPawn = playerPawn;
+        this.awaitingPlayers = null;
     }
 
-    public LoadGameDto(Game game, char playerPawn) {
-        this.state = game.getState().name();
-        this.board = game.getGameBoard();
-        this.difficulty = game.getDifficulty();
-        this.size = game.getGameSize();
-        this.playerPawn = playerPawn;
+    public LoadGameDto(Game game, char playerPawn, char currentPlayerMove, Integer awaitingPlayers) {
+        this(game, playerPawn, currentPlayerMove);
+        this.awaitingPlayers = awaitingPlayers;
     }
 }

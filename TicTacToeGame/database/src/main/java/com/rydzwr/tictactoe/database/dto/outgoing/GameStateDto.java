@@ -2,20 +2,15 @@ package com.rydzwr.tictactoe.database.dto.outgoing;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
+@AllArgsConstructor
 public class GameStateDto {
     private String gameState;
-    private char winnerPawn;
+    private GameResultDto gameResult;
 
     public GameStateDto(String gameState) {
         this.gameState = gameState;
-    }
-
-    public GameStateDto(String gameState, char winnerPawn) {
-        this.gameState = gameState;
-        this.winnerPawn = winnerPawn;
+        this.gameResult = null;
     }
 }

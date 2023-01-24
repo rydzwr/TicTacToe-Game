@@ -2,6 +2,7 @@ package com.rydzwr.tictactoe.web.service;
 
 import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.dto.outgoing.GameBoardDto;
+import com.rydzwr.tictactoe.database.dto.outgoing.GameResultDto;
 import com.rydzwr.tictactoe.database.dto.outgoing.GameStateDto;
 import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.database.model.Game;
@@ -46,7 +47,8 @@ public class WebSocketService {
 
                 checkWin(gameAfterAi, playerAfterAI);
 
-                template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(gameBoardWithAIMove, playerAfterAI.getPawn()));
+                var gameStateDto = new GameBoardDto(gameBoardWithAIMove, playerAfterAI.getPawn());
+                template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, gameStateDto);
             } while (gameService.isNextPlayerAIType(game));
         }
         return game;
@@ -59,7 +61,9 @@ public class WebSocketService {
             if (!gameService.containsEmptyFields(game)) {
                processDraw();
             }
-            template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED.name(), winner.getPawn()));
+
+            var gameStateDto = new GameStateDto(GameState.FINISHED.name(), new GameResultDto("WIN", winner.getPawn()));
+            template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, gameStateDto);
         }
     }
 
@@ -70,6 +74,7 @@ public class WebSocketService {
     }
 
     private void processDraw() {
-        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED_DRAW.name()));
+        var gameStateDto = new GameStateDto(GameState.FINISHED.name(), new GameResultDto("DRAW", null));
+        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, gameStateDto);
     }
 }

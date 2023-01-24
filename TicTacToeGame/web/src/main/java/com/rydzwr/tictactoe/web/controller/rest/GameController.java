@@ -40,18 +40,6 @@ public class GameController {
         return gameService.getInviteCode(callerName);
     }
 
-    @GetMapping("/emptyGameSlots")
-    @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<Object> getEmptyGameSlots() {
-        String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (!gameService.isUserInGame()) {
-            return new ResponseEntity<>(WebConstants.USER_IS_NOT_ASSIGNED_TO_GAME_EXCEPTION, HttpStatus.BAD_REQUEST);
-        }
-
-        int playersCount = gameService.getEmptyGameSlots(callerName);
-        return new ResponseEntity<>(playersCount, HttpStatus.OK);
-    }
-
     @PostMapping("/joinGame")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> joinGame(@Valid @RequestBody InviteCodeDto inviteCode) {
@@ -92,8 +80,9 @@ public class GameController {
             return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
 
-        final char X_PAWN = 'X';
+        final char DEFAULT_HOST_PLAYER_PAWN = 'X';
+        var playersToJoin = gameService.getHumanGameSlots(gameDto) - 1;
         Game game = gameService.buildGame(gameDto);
-        return new ResponseEntity<>(new LoadGameDto(game, X_PAWN, X_PAWN), HttpStatus.CREATED);
+        return new ResponseEntity<>(new LoadGameDto(game, DEFAULT_HOST_PLAYER_PAWN, DEFAULT_HOST_PLAYER_PAWN, playersToJoin), HttpStatus.CREATED);
     }
 }
