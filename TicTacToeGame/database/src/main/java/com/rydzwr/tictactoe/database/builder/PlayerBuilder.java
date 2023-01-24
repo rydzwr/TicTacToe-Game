@@ -5,7 +5,6 @@ import com.rydzwr.tictactoe.database.dto.PlayerDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;
-import com.rydzwr.tictactoe.database.validator.player.ValidPlayerPawn;
 import jakarta.validation.Valid;
 import lombok.Getter;
 

@@ -41,11 +41,6 @@ public class GameSocketController {
 
         Player currentPlayer = gameService.getCurrentPlayer(callerPlayer.getGame());
 
-        if (!gameService.emptySpacesLeft(currentPlayer.getGame())) {
-            template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED_DRAW.name(), currentPlayer.getPawn()));
-            return;
-        }
-
         // PROCESSING CALLER MOVE
         ProcessMoveStrategy processMoveStrategy = playerMoveStrategySelector.chooseStrategy(currentPlayer.getPlayerType());
         Game updatedGame;
@@ -65,7 +60,7 @@ public class GameSocketController {
                 try {
                     gameAfterAiMove = processMoveStrategyForAI.processPlayerMove(updatedGame, accessor, playerMoveDto);
                 } catch (IllegalArgumentException e) {
-                    template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED_DRAW.name(), currentPlayer.getPawn()));
+                    template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED_DRAW.name()));
                     return;
                 }
 
@@ -88,7 +83,7 @@ public class GameSocketController {
             gameService.processGameWinning(updatedGame);
 
             if (!updatedGame.getGameBoard().contains("-")) {
-                template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED_DRAW.name(), currentPlayer.getPawn()));
+                template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED_DRAW.name()));
                 return;
             }
 

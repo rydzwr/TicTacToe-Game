@@ -64,7 +64,7 @@ public class GameController {
         try {
             loadGameDto = gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode(), template);
         }catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(loadGameDto, HttpStatus.OK);
     }

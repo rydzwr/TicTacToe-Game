@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PlayerDto {
-
     @NotNull
     @ValidPlayerType
     private String playerType;
