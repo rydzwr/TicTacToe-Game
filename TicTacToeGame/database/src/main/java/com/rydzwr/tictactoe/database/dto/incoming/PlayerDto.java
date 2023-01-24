@@ -1,4 +1,4 @@
-package com.rydzwr.tictactoe.database.dto;
+package com.rydzwr.tictactoe.database.dto.incoming;
 
 import com.rydzwr.tictactoe.database.validator.player.ValidPlayerType;
 import jakarta.validation.constraints.NotNull;

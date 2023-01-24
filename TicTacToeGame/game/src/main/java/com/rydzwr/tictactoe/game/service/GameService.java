@@ -3,10 +3,9 @@ package com.rydzwr.tictactoe.game.service;
 import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
 import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
-import com.rydzwr.tictactoe.database.dto.GameDto;
-import com.rydzwr.tictactoe.database.dto.GameStateDto;
-import com.rydzwr.tictactoe.database.dto.LoadGameDto;
-import com.rydzwr.tictactoe.database.dto.PlayerMoveDto;
+import com.rydzwr.tictactoe.database.dto.incoming.GameDto;
+import com.rydzwr.tictactoe.database.dto.outgoing.GameStateDto;
+import com.rydzwr.tictactoe.database.dto.outgoing.LoadGameDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;
@@ -27,7 +26,6 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -71,7 +69,7 @@ public class GameService {
         return game.getPlayers().get(game.getCurrentPlayerTurn());
     }
 
-    public boolean isPlayerAIType(Game game) {
+    public boolean isNextPlayerAIType(Game game) {
         return getCurrentPlayer(game).getPlayerType().equals(PlayerType.AI);
     }
 
@@ -100,6 +98,7 @@ public class GameService {
     public LoadGameDto addPlayerToOnlineGame(String callerName, String inviteCode, SimpMessagingTemplate template) {
         final String AWAITING_PLAYERS_ENDPOINT = "/topic/awaitingPlayers";
         final String GAME_STATE_ENDPOINT = "/topic/gameState";
+        final char X_PAWN = 'X';
 
         PlayerPawnRandomSelector playerPawnRandomSelector = new PlayerPawnRandomSelector();
         User caller = userDatabaseService.findByName(callerName);
@@ -131,9 +130,10 @@ public class GameService {
         if (availableGameSlots == 0) {
             game.setState(GameState.IN_PROGRESS);
             gameDatabaseService.save(game);
-            template.convertAndSend(GAME_STATE_ENDPOINT, new GameStateDto(GameState.IN_PROGRESS.name(), 'X'));
+            template.convertAndSend(GAME_STATE_ENDPOINT, new GameStateDto(GameState.IN_PROGRESS.name(), X_PAWN));
         }
-        return new LoadGameDto(game, availablePawn, 'X');
+
+        return new LoadGameDto(game, availablePawn, X_PAWN);
     }
 
     public int getEmptyGameSlots(String callerName) {
@@ -167,5 +167,9 @@ public class GameService {
         int gamePlayerCount = game.getPlayersCount();
         int occupiedSlotsCount = game.getPlayers().size();
         return gamePlayerCount - occupiedSlotsCount;
+    }
+
+    public boolean containsEmptyFields(Game game) {
+        return !game.getGameBoard().contains("-");
     }
 }

@@ -1,9 +1,8 @@
 package com.rydzwr.tictactoe.game.strategy.moveProcessor;
 
 import com.rydzwr.tictactoe.database.constants.PlayerType;
-import com.rydzwr.tictactoe.database.dto.PlayerMoveDto;
+import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.database.model.Game;
-import com.rydzwr.tictactoe.database.model.Player;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 public interface ProcessMoveStrategy {

@@ -1,6 +1,6 @@
 package com.rydzwr.tictactoe.web.controller.rest;
 
-import com.rydzwr.tictactoe.database.dto.UserDto;
+import com.rydzwr.tictactoe.database.dto.incoming.UserDto;
 import com.rydzwr.tictactoe.database.factory.UserFactory;
 import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.database.service.UserDatabaseService;

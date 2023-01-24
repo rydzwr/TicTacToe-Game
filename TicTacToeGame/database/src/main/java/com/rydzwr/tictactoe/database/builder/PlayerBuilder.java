@@ -1,7 +1,7 @@
 package com.rydzwr.tictactoe.database.builder;
 
 import com.rydzwr.tictactoe.database.constants.PlayerType;
-import com.rydzwr.tictactoe.database.dto.PlayerDto;
+import com.rydzwr.tictactoe.database.dto.incoming.PlayerDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;

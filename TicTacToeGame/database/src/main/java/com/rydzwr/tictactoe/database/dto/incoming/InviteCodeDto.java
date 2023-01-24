@@ -1,4 +1,4 @@
-package com.rydzwr.tictactoe.web.dto;
+package com.rydzwr.tictactoe.database.dto.incoming;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

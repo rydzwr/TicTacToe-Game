@@ -1,7 +1,6 @@
 package com.rydzwr.tictactoe.game.validator;
 
-import com.rydzwr.tictactoe.database.constants.GameState;
-import com.rydzwr.tictactoe.database.dto.PlayerMoveDto;
+import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.game.constants.GameConstants;

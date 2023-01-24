@@ -3,12 +3,15 @@ package com.rydzwr.tictactoe.web.handler;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.game.exception.ExceptionModel;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
+import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
+@RequiredArgsConstructor
 public class WebSocketExceptionHandler {
-    public void sendException(SimpMessagingTemplate template, String message) {
+    private final SimpMessagingTemplate template;
+    public void sendException(String message) {
         template.convertAndSend(
                 WebConstants.WEB_SOCKET_TOPIC_ERROR_ENDPOINT,
                  new ExceptionModel(message)

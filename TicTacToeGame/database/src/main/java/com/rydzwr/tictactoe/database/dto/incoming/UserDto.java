@@ -1,4 +1,4 @@
-package com.rydzwr.tictactoe.database.dto;
+package com.rydzwr.tictactoe.database.dto.incoming;
 
 import com.rydzwr.tictactoe.database.validator.user.UniqueLogin;
 import jakarta.validation.constraints.Size;

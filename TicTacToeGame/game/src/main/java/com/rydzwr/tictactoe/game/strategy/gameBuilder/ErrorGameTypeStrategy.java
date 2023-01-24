@@ -1,7 +1,7 @@
 package com.rydzwr.tictactoe.game.strategy.gameBuilder;
 
-import com.rydzwr.tictactoe.database.dto.GameDto;
-import com.rydzwr.tictactoe.database.dto.PlayerDto;
+import com.rydzwr.tictactoe.database.dto.incoming.GameDto;
+import com.rydzwr.tictactoe.database.dto.incoming.PlayerDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
 

@@ -1,6 +1,6 @@
 package com.rydzwr.tictactoe.game.selector;
 
-import com.rydzwr.tictactoe.database.dto.GameDto;
+import com.rydzwr.tictactoe.database.dto.incoming.GameDto;
 import com.rydzwr.tictactoe.game.strategy.gameBuilder.BuildGameStrategy;
 import com.rydzwr.tictactoe.game.strategy.gameBuilder.ErrorGameTypeStrategy;
 import com.rydzwr.tictactoe.game.strategy.gameBuilder.LocalPlayerGameStrategy;

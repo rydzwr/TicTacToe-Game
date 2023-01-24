@@ -1,4 +1,4 @@
-package com.rydzwr.tictactoe.database.dto;
+package com.rydzwr.tictactoe.database.dto.outgoing;
 
 import com.rydzwr.tictactoe.database.model.Game;
 import lombok.AllArgsConstructor;

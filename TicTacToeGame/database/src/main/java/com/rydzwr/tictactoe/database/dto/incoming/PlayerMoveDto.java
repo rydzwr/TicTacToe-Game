@@ -1,4 +1,4 @@
-package com.rydzwr.tictactoe.database.dto;
+package com.rydzwr.tictactoe.database.dto.incoming;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

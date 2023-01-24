@@ -1,6 +1,6 @@
 package com.rydzwr.tictactoe.game.service;
 
-import com.rydzwr.tictactoe.database.dto.PlayerMoveDto;
+import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.service.GameDatabaseService;

@@ -1,6 +1,6 @@
 package com.rydzwr.tictactoe.database.validator.game;
 
-import com.rydzwr.tictactoe.database.dto.PlayerDto;
+import com.rydzwr.tictactoe.database.dto.incoming.PlayerDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

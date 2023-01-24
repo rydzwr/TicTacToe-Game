@@ -1,6 +1,6 @@
 package com.rydzwr.tictactoe.game.validator;
 
-import com.rydzwr.tictactoe.database.dto.GameDto;
+import com.rydzwr.tictactoe.database.dto.incoming.GameDto;
 import org.springframework.stereotype.Component;
 
 @Component
