@@ -27,7 +27,8 @@ public class LocalPlayerMoveStrategy implements ProcessMoveStrategy{
 
         // IF PLAYER PRESSED OCCUPIED FIELD
         if (playerMoveValidator.validatePlayerMove(game.getGameBoard(), playerMoveDto)) {
-            throw new IllegalArgumentException(GameConstants.PLAYER_PRESSED_OCCUPIED_FIELD_EXCEPTION);
+            log.warn("LOCAL PLAYER MOVE STRATEGY: --> " + GameConstants.PLAYER_PRESSED_OCCUPIED_FIELD_EXCEPTION);
+            return game;
         }
 
         char playerPawn = gameService.getCurrentPlayer(game).getPawn();

@@ -170,6 +170,6 @@ public class GameService {
     }
 
     public boolean containsEmptyFields(Game game) {
-        return !game.getGameBoard().contains("-");
+        return game.getGameBoard().contains("-");
     }
 }

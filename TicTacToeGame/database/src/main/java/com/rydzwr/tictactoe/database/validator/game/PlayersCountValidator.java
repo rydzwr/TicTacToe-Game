@@ -9,6 +9,6 @@ import java.util.List;
 public class PlayersCountValidator implements ConstraintValidator<ValidPlayersCount, List<PlayerDto>> {
     @Override
     public boolean isValid(List<PlayerDto> players, ConstraintValidatorContext constraintValidatorContext) {
-        return players.size() >= 2;
+        return players.size() >= 1;
     }
 }

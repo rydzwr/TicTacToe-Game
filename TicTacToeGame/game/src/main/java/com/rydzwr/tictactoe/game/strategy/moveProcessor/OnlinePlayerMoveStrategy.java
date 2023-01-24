@@ -26,12 +26,14 @@ public class OnlinePlayerMoveStrategy implements ProcessMoveStrategy{
 
         // NEED TO VALIDATE IF IT'S CALLER TURN
         if (!playerMoveValidator.validateCurrentPlayerTurn(game, accessor)) {
-            throw new IllegalArgumentException(GameConstants.NOT_CALLER_TURN_EXCEPTION);
+            log.warn("ONLINE PLAYER MOVE STRATEGY: --> " + GameConstants.NOT_CALLER_TURN_EXCEPTION);
+            return game;
         }
 
         // IF PLAYER PRESSED OCCUPIED FIELD
         if (playerMoveValidator.validatePlayerMove(game.getGameBoard(), playerMoveDto)) {
-            throw new IllegalArgumentException(GameConstants.PLAYER_PRESSED_OCCUPIED_FIELD_EXCEPTION);
+            log.warn("ONLINE PLAYER MOVE STRATEGY: --> " + GameConstants.PLAYER_PRESSED_OCCUPIED_FIELD_EXCEPTION);
+            return game;
         }
 
         char playerPawn = gameService.getCurrentPlayer(game).getPawn();

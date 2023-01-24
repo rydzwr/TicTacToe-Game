@@ -27,7 +27,7 @@ public class AIPlayerMoveStrategy implements ProcessMoveStrategy{
     public Game processPlayerMove(Game game, SimpMessageHeaderAccessor accessor, PlayerMoveDto playerMoveDto) {
 
         if (!playerMoveValidator.containsEmptyFields(game)) {
-            throw new IllegalArgumentException(GameConstants.ALL_FIELDS_ON_BOARD_OCCUPIED_EXCEPTION);
+            log.warn("AI PLAYER MOVE STRATEGY: --> " + GameConstants.ALL_FIELDS_ON_BOARD_OCCUPIED_EXCEPTION);
         }
 
         PlayerMoveDto minimaxMove = new PlayerMoveDto();

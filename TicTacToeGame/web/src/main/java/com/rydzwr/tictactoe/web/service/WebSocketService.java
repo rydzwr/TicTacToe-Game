@@ -41,33 +41,29 @@ public class WebSocketService {
             do {
                 Game gameAfterAi = processPlayerMove(accessor, playerMoveDto, gameService.getCurrentPlayer(game));
 
-                char playerAfterAI = gameService.getCurrentPlayer(gameAfterAi).getPawn();
+                Player playerAfterAI = gameService.getCurrentPlayer(gameAfterAi);
                 String gameBoardWithAIMove = gameAfterAi.getGameBoard();
 
-                if (gameService.containsEmptyFields(game)) {
-                    processDraw();
-                }
+                checkWin(gameAfterAi, playerAfterAI);
 
-                template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(gameBoardWithAIMove, playerAfterAI));
+                template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(gameBoardWithAIMove, playerAfterAI.getPawn()));
             } while (gameService.isNextPlayerAIType(game));
         }
         return game;
     }
 
-    public void checkWin(Game game) {
+    public void checkWin(Game game, Player winner) {
         if (gameService.checkWin(game)) {
             gameService.processGameWinning(game);
 
-            if (gameService.containsEmptyFields(game)) {
+            if (!gameService.containsEmptyFields(game)) {
                processDraw();
             }
-            Player winner = gameService.getCurrentPlayer(game);
             template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.FINISHED.name(), winner.getPawn()));
         }
     }
 
     public void sendUpdatedGame(Game game) {
-        // SENDING UPDATED GAME BOARD TO FRONTEND
         String updatedGameBoard = game.getGameBoard();
         char nextPlayerPawn = gameService.getCurrentPlayer(game).getPawn();
         template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(updatedGameBoard, nextPlayerPawn));

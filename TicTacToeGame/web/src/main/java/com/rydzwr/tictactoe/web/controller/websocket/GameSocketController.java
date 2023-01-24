@@ -33,7 +33,7 @@ public class GameSocketController {
 
         Game gameAfterAIMove = webSocketService.processAIPlayers(accessor, gameAfterCallerMove, playerMoveDto);
 
-        webSocketService.checkWin(gameAfterAIMove);
+        webSocketService.checkWin(gameAfterAIMove, currentPlayer);
         webSocketService.sendUpdatedGame(gameAfterAIMove);
     }
 }
