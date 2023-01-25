@@ -38,6 +38,6 @@ public class GameSocketController {
         }
 
         assert gameAfterAIMove != null;
-        webSocketService.processGameStatus(gameAfterAIMove, currentPlayer);
+        webSocketService.processGameStatus(gameAfterAIMove, currentPlayer, playerMoveDto.getGameBoardElementIndex());
     }
 }

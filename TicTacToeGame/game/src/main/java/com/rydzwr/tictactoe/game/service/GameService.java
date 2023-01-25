@@ -4,6 +4,7 @@ import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
 import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.incoming.GameDto;
+import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.database.dto.outgoing.GameStateDto;
 import com.rydzwr.tictactoe.database.dto.outgoing.LoadGameDto;
 import com.rydzwr.tictactoe.database.model.Game;
@@ -56,8 +57,8 @@ public class GameService {
         return playerDatabaseService.findFirstByUser(user);
     }
 
-    public boolean checkWin(Game game) {
-        return checkWinAlgorithm.checkWin(game);
+    public boolean checkWin(Game game, int playerMoveIndex) {
+        return checkWinAlgorithm.checkWin(game, playerMoveIndex);
     }
 
     @Transactional

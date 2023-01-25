@@ -43,27 +43,27 @@ public class WebSocketService {
                 var player = gameService.getCurrentPlayer(game);
                 Game gameAfterAi = processPlayerMove(accessor, playerMoveDto, player);
 
-                processGameStatus(gameAfterAi, player);
+                processGameStatus(gameAfterAi, player, playerMoveDto.getGameBoardElementIndex());
 
             } while (gameService.isNextPlayerAIType(game));
         }
         return game;
     }
 
-    public void processGameStatus(Game game, Player player) {
-        var gameStatus = checkWin(game);
+    public void processGameStatus(Game game, Player player, int playerMoveIndex) {
+        var gameStatus = checkWin(game, playerMoveIndex);
 
         var strategy =  gameStateStrategySelector.chooseStrategy(gameStatus);
         strategy.send(game, player, template);
     }
 
-    private CheckWinState checkWin(Game game) {
-        if (!gameService.containsEmptyFields(game)) {
-            return CheckWinState.DRAW;
+    private CheckWinState checkWin(Game game, int playerMoveIndex) {
+        if (gameService.checkWin(game, playerMoveIndex)) {
+            return CheckWinState.WIN;
         }
 
-        if (gameService.checkWin(game)) {
-            return CheckWinState.WIN;
+        if (!gameService.containsEmptyFields(game)) {
+            return CheckWinState.DRAW;
         }
         return CheckWinState.CONTINUE;
     }
