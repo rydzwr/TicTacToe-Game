@@ -14,6 +14,8 @@ public class PlayerBuilder {
     private User user;
     private Game game;
     private PlayerType playerType;
+
+    private int playerGameIndex;
     public PlayerBuilder() {
     }
 
@@ -34,6 +36,11 @@ public class PlayerBuilder {
 
     public PlayerBuilder setPlayerType(PlayerType playerType) {
         this.playerType = playerType;
+        return this;
+    }
+
+    public PlayerBuilder setPlayerGameIndex(int index) {
+        this.playerGameIndex = index;
         return this;
     }
 

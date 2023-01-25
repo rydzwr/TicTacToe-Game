@@ -6,18 +6,23 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.NaturalId;
+import org.hibernate.annotations.RowId;
+import org.hibernate.annotations.TenantId;
 
 @Data
 @Entity
 @NoArgsConstructor
 @Table(name = "players")
-public class Player{
+public class Player {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private char pawn;
     @OneToOne
     private User user;
+
+    private int playerGameIndex;
     @ManyToOne
     private Game game;
     @NotNull
@@ -28,6 +33,7 @@ public class Player{
         this.pawn = playerBuilder.getPawn();
         this.game = playerBuilder.getGame();
         this.playerType = playerBuilder.getPlayerType();
+        this.playerGameIndex = playerBuilder.getPlayerGameIndex();
 
         if (playerBuilder.getUser() != null) {
             this.user = playerBuilder.getUser();

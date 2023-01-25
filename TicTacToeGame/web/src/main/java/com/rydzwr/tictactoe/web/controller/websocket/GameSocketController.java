@@ -24,16 +24,22 @@ public class GameSocketController {
         Player currentPlayer;
         try {
             currentPlayer = webSocketService.getCurrentPlayer(accessor);
-        }catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             exceptionHandler.sendException(e.getMessage());
             return;
         }
 
-        Game gameAfterCallerMove = webSocketService.processPlayerMove(accessor, playerMoveDto, currentPlayer);
+        Game gameAfterAIMove = null;
+        try {
+            Game gameAfterCallerMove = webSocketService.processPlayerMove(accessor, playerMoveDto, currentPlayer);
+            gameAfterAIMove = webSocketService.processAIPlayers(accessor, gameAfterCallerMove, playerMoveDto);
+        } catch (IllegalArgumentException e) {
+            exceptionHandler.sendException(e.getMessage());
+        }
 
-        Game gameAfterAIMove = webSocketService.processAIPlayers(accessor, gameAfterCallerMove, playerMoveDto);
-
-        webSocketService.checkWin(gameAfterAIMove, currentPlayer);
-        webSocketService.sendUpdatedGame(gameAfterAIMove);
+        assert gameAfterAIMove != null;
+        if (!webSocketService.checkWin(gameAfterAIMove, currentPlayer)) {
+            webSocketService.sendUpdatedGame(gameAfterAIMove);
+        }
     }
 }

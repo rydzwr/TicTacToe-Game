@@ -17,11 +17,9 @@ public class CheckWinAlgorithm {
             return true;
         }
 
-        boolean horizontal = checkHorizontalWin(gameBoard, gameSize, gameDifficulty);
-        boolean vertical = checkHVerticalWin(gameBoard, gameSize, gameDifficulty);
-        boolean diagonalWin = checkDiagonalWin(gameBoard, gameSize, gameDifficulty);
-
-        return horizontal || vertical || diagonalWin;
+        return checkHorizontalWin(gameBoard, gameSize, gameDifficulty) ||
+                checkHVerticalWin(gameBoard, gameSize, gameDifficulty) ||
+                checkDiagonalWin(gameBoard, gameSize, gameDifficulty);
     }
 
     private boolean checkHorizontalWin(String gameBoard, int gameSize, int gameDifficulty) {

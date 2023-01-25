@@ -13,10 +13,13 @@ import com.rydzwr.tictactoe.game.service.GameService;
 import com.rydzwr.tictactoe.game.strategy.moveProcessor.ProcessMoveStrategy;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class WebSocketService {
@@ -54,17 +57,18 @@ public class WebSocketService {
         return game;
     }
 
-    public void checkWin(Game game, Player winner) {
+    @Transactional
+    public boolean checkWin(Game game, Player winner) {
         if (gameService.checkWin(game)) {
-            gameService.processGameWinning(game);
-
-            if (!gameService.containsEmptyFields(game)) {
-               processDraw();
-            }
-
-            var gameStateDto = new GameStateDto(GameState.FINISHED.name(), new GameResultDto("WIN", winner.getPawn()));
-            template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, gameStateDto);
+            processGameWin(game, winner);
+            return true;
         }
+
+        if (!gameService.containsEmptyFields(game)) {
+            processDraw(game);
+            return true;
+        }
+        return false;
     }
 
     public void sendUpdatedGame(Game game) {
@@ -73,8 +77,15 @@ public class WebSocketService {
         template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(updatedGameBoard, nextPlayerPawn));
     }
 
-    private void processDraw() {
+    private void processGameWin(Game game, Player winner) {
+        var gameStateDto = new GameStateDto(GameState.FINISHED.name(), new GameResultDto("WIN", winner.getPawn()));
+        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, gameStateDto);
+        gameService.deleteFinishedGame(game);
+    }
+
+    private void processDraw(Game game) {
         var gameStateDto = new GameStateDto(GameState.FINISHED.name(), new GameResultDto("DRAW", null));
         template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, gameStateDto);
+        gameService.deleteFinishedGame(game);
     }
 }

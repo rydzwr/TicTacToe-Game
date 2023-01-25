@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -61,7 +62,8 @@ public class GameService {
         return checkWinAlgorithm.checkWin(game);
     }
 
-    public void processGameWinning(Game game) {
+    @Transactional
+    public void deleteFinishedGame(Game game) {
         gameDatabaseService.delete(game);
     }
 
@@ -91,7 +93,7 @@ public class GameService {
     public void removePrevUserGame(String username) {
         User caller = userDatabaseService.findByName(username);
         Player player = playerDatabaseService.findFirstByUser(caller);
-        gameDatabaseService.delete(player.getGame());
+        gameDatabaseService.deleteById(player.getGame().getId());
     }
 
     @Transactional
