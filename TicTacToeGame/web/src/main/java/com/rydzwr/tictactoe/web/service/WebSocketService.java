@@ -11,14 +11,14 @@ import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.game.selector.PlayerMoveStrategySelector;
 import com.rydzwr.tictactoe.game.service.GameService;
 import com.rydzwr.tictactoe.game.strategy.moveProcessor.ProcessMoveStrategy;
-import com.rydzwr.tictactoe.web.CheckWinState;
+import com.rydzwr.tictactoe.web.selector.GameStateStrategySelector;
+import com.rydzwr.tictactoe.web.strategy.CheckWinState;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -27,6 +27,7 @@ public class WebSocketService {
     private final SimpMessagingTemplate template;
     private final GameService gameService;
     private final PlayerMoveStrategySelector playerMoveStrategySelector;
+    private final GameStateStrategySelector gameStateStrategySelector;
 
     public Player getCurrentPlayer(SimpMessageHeaderAccessor accessor) {
         Player callerPlayer = gameService.retrieveAnyPlayerFromUser(accessor);
@@ -57,44 +58,18 @@ public class WebSocketService {
     public void processGameStatus(Game game, Player player) {
         var gameStatus = checkWin(game);
 
-        if (gameStatus == CheckWinState.PLAY) {
-            sendUpdatedGame(game, player);
-        }
-
-        if (gameStatus == CheckWinState.WIN) {
-            processGameWin(game, player);
-        }
-
-        if (gameStatus == CheckWinState.DRAW) {
-            processDraw(game);
-        }
+        var strategy =  gameStateStrategySelector.chooseStrategy(gameStatus);
+        strategy.send(game, player, template);
     }
 
     private CheckWinState checkWin(Game game) {
-        if (gameService.checkWin(game)) {
-            return CheckWinState.WIN;
-        }
-
         if (!gameService.containsEmptyFields(game)) {
             return CheckWinState.DRAW;
         }
-        return CheckWinState.PLAY;
-    }
 
-    private void sendUpdatedGame(Game game, Player player) {
-        String updatedGameBoard = game.getGameBoard();
-        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardDto(updatedGameBoard, player.getPawn()));
-    }
-
-    private void processGameWin(Game game, Player winner) {
-        gameService.deleteFinishedGame(game);
-        var gameStateDto = new GameStateDto(GameState.FINISHED.name(), new GameResultDto("WIN", winner.getPawn()));
-        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, gameStateDto);
-    }
-
-    private void processDraw(Game game) {
-        gameService.deleteFinishedGame(game);
-        var gameStateDto = new GameStateDto(GameState.FINISHED.name(), new GameResultDto("DRAW", null));
-        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, gameStateDto);
+        if (gameService.checkWin(game)) {
+            return CheckWinState.WIN;
+        }
+        return CheckWinState.CONTINUE;
     }
 }

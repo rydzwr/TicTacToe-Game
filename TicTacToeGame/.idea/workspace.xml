@@ -5,12 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8e697bde-ed68-4dcf-ae5c-774d34f5675b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/algorithm/CheckWinAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/game/src/main/java/com/rydzwr/tictactoe/game/algorithm/CheckWinAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/algorithm/CheckWinAlgorithm.class" beforeDir="false" afterPath="$PROJECT_DIR$/game/target/classes/com/rydzwr/tictactoe/game/algorithm/CheckWinAlgorithm.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/CheckWinState.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/strategy/CheckWinState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/service/WebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/service/WebSocketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/service/WebSocketService.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/service/WebSocketService.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -23,9 +21,9 @@
       <list>
         <option value="package-info" />
         <option value="AnnotationType" />
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
-        <option value="Enum" />
       </list>
     </option>
   </component>
