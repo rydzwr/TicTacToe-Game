@@ -1,11 +1,10 @@
 package com.rydzwr.tictactoe.web.selector;
 
-import com.rydzwr.tictactoe.database.dto.incoming.GameDto;
-import com.rydzwr.tictactoe.game.strategy.gameBuilder.BuildGameStrategy;
-import com.rydzwr.tictactoe.game.strategy.gameBuilder.ErrorGameTypeStrategy;
-import com.rydzwr.tictactoe.game.strategy.gameBuilder.LocalPlayerGameStrategy;
-import com.rydzwr.tictactoe.game.strategy.gameBuilder.MultiPlayerGameStrategy;
-import com.rydzwr.tictactoe.web.strategy.*;
+import com.rydzwr.tictactoe.web.constants.CheckWinState;
+import com.rydzwr.tictactoe.web.strategy.ContinueGameStrategy;
+import com.rydzwr.tictactoe.web.strategy.DrawStateStrategy;
+import com.rydzwr.tictactoe.web.strategy.GameStateStrategy;
+import com.rydzwr.tictactoe.web.strategy.WinGameStrategy;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 

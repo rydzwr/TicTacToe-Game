@@ -1,9 +1,5 @@
 package com.rydzwr.tictactoe.web.service;
 
-import com.rydzwr.tictactoe.database.constants.GameState;
-import com.rydzwr.tictactoe.database.dto.outgoing.GameBoardDto;
-import com.rydzwr.tictactoe.database.dto.outgoing.GameResultDto;
-import com.rydzwr.tictactoe.database.dto.outgoing.GameStateDto;
 import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
@@ -11,9 +7,8 @@ import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.game.selector.PlayerMoveStrategySelector;
 import com.rydzwr.tictactoe.game.service.GameService;
 import com.rydzwr.tictactoe.game.strategy.moveProcessor.ProcessMoveStrategy;
+import com.rydzwr.tictactoe.web.constants.CheckWinState;
 import com.rydzwr.tictactoe.web.selector.GameStateStrategySelector;
-import com.rydzwr.tictactoe.web.strategy.CheckWinState;
-import com.rydzwr.tictactoe.web.constants.WebConstants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;

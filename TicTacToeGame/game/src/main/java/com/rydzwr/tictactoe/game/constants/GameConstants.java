@@ -1,7 +1,5 @@
 package com.rydzwr.tictactoe.game.constants;
 
-import org.springframework.jdbc.core.SqlReturnType;
-
 public class GameConstants {
     public static final String INVALID_GAME_TYPE_EXCEPTION = "Invalid Game Type";
     public static final String PLAYER_NOT_FOUND_EXCEPTION = "Player Not Found ( GAME HAS BEEN DELETED OR NEVER EXIST)";

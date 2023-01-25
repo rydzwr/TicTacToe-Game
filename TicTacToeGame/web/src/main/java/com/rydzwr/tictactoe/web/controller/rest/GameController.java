@@ -1,13 +1,12 @@
 package com.rydzwr.tictactoe.web.controller.rest;
 
 import com.rydzwr.tictactoe.database.dto.incoming.GameDto;
+import com.rydzwr.tictactoe.database.dto.incoming.InviteCodeDto;
 import com.rydzwr.tictactoe.database.dto.outgoing.LoadGameDto;
 import com.rydzwr.tictactoe.database.model.Game;
-import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.game.service.GameService;
 import com.rydzwr.tictactoe.game.validator.GameDtoValidator;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
-import com.rydzwr.tictactoe.database.dto.incoming.InviteCodeDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +16,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController

@@ -1,6 +1,5 @@
 package com.rydzwr.tictactoe.game.algorithm;
 
-import com.rydzwr.tictactoe.game.constants.GameConstants;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;

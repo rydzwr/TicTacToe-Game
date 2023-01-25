@@ -23,10 +23,8 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -119,6 +117,7 @@ public class GameService {
         }
 
         Player newPlayer = new PlayerBuilder()
+                .setPlayerGameIndex(game.getPlayers().size())
                 .setPlayerType(PlayerType.ONLINE)
                 .setPlayerPawn(availablePawn)
                 .setUser(caller)
