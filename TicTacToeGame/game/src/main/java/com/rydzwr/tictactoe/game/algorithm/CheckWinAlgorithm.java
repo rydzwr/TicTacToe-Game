@@ -13,10 +13,6 @@ public class CheckWinAlgorithm {
         int gameDifficulty = game.getDifficulty();
         String gameBoard = game.getGameBoard();
 
-        if (!gameBoard.contains("-")) {
-            return true;
-        }
-
         return checkHorizontalWin(gameBoard, gameSize, gameDifficulty) ||
                 checkHVerticalWin(gameBoard, gameSize, gameDifficulty) ||
                 checkDiagonalWin(gameBoard, gameSize, gameDifficulty);
