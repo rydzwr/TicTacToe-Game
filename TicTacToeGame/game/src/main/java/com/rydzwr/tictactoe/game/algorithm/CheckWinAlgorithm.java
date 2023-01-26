@@ -8,141 +8,133 @@ import org.springframework.stereotype.Component;
 @Component
 public class CheckWinAlgorithm {
 
-    public boolean checkWin(Game game, int playerMoveIdx) {
+    public boolean checkWin(Game game, int playerMoveIndex) {
         int gameSize = game.getGameSize();
         int gameDifficulty = game.getDifficulty();
         String gameBoard = game.getGameBoard();
 
-        return checkHorizontalWin(gameBoard, gameSize, gameDifficulty, playerMoveIdx) ||
-                checkHVerticalWin(gameBoard, gameSize, gameDifficulty, playerMoveIdx) ||
-                checkDiagonalWin(gameBoard, gameSize, gameDifficulty, playerMoveIdx);
+        return checkHorizontals(gameBoard, gameSize, gameDifficulty, playerMoveIndex) ||
+                checkVerticals(gameBoard, gameSize, gameDifficulty, playerMoveIndex) ||
+                checkDiagonals(gameBoard, gameSize, gameDifficulty, playerMoveIndex);
     }
 
-    private int clamp(int val, int min, int max) {
-        return Math.max(min, Math.min(max, val));
+    private boolean checkHorizontals(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        return checkHorizontalLeft(gameBoard, gameSize, gameDifficulty, playerMoveIndex) ||
+                checkHorizontalRight(gameBoard, gameSize, gameDifficulty, playerMoveIndex);
     }
 
-    private boolean checkHorizontalWin(String gameBoard, int gameSize, int gameDifficulty, int moveIdx) {
-        // CHECK HORIZONTAL WIN
-        int moveX = moveIdx / gameSize; // 15/10=1
-        int moveY = moveIdx % gameSize; // 15%10=5
+    private boolean checkVerticals(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        return checkVerticalUp(gameBoard, gameSize, gameDifficulty, playerMoveIndex) ||
+                checkVerticalDown(gameBoard, gameSize, gameDifficulty, playerMoveIndex);
+    }
 
-        int startX = clamp(moveX - gameDifficulty, 0, gameSize);
-        int startY = clamp(moveY - gameDifficulty, 0, gameSize);
-        int endX = clamp(moveX + gameDifficulty, 0, gameSize);
-        int endY = clamp(moveY + gameDifficulty, 0, gameSize);
+    private boolean checkDiagonals(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        return checkDiagonalLeftDownRightUp(gameBoard, gameSize, gameDifficulty, playerMoveIndex) ||
+                checkDiagonalLeftUpRightDown(gameBoard, gameSize, gameDifficulty, playerMoveIndex);
+    }
 
-        for (int row = startY; row < endY; row++) {
-            char candidate = getPawnAtCoords(gameBoard, gameSize, row, 0);
-            int counter = 1;
-            for (int column = startX; column < endX; column++) {
-                char pawn = getPawnAtCoords(gameBoard, gameSize, row, column);
-
-                if ((pawn == candidate) && (pawn != '-')) {
-                    counter++;
-                } else {
-                    counter = 1;
-                    candidate = pawn;
-                }
-
-                if (counter == gameDifficulty) {
-                    return true;
-                }
-            }
+    // HORIZONTALS
+    // ------------------------------------------
+    private boolean checkHorizontalLeft(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        int counter = 1;
+        int currentIndex = playerMoveIndex;
+        char candidate = gameBoard.charAt(currentIndex);
+        while (currentIndex % gameSize != 0 && gameBoard.charAt(currentIndex - 1) == candidate) {
+            counter++;
+            currentIndex--;
         }
-        return false;
+        return counter >= gameDifficulty;
     }
 
-    private boolean checkHVerticalWin(String gameBoard, int gameSize, int gameDifficulty, int moveIdx) {
-        // CHECK VERTICAL WIN
-        int moveX = moveIdx / gameSize;
-        int moveY = moveIdx % gameSize;
-
-        int startX = clamp(moveX - gameDifficulty, 0, gameSize);
-        int startY = clamp(moveY - gameDifficulty, 0, gameSize);
-        int endX = clamp(moveX + gameDifficulty, 0, gameSize);
-        int endY = clamp(moveY + gameDifficulty, 0, gameSize);
-
-        for (int column = startX; column < endX; column++) {
-            char candidate = getPawnAtCoords(gameBoard, gameSize, 0, column);
-            int counter = 1;
-            for (int row = startY; row < endY; row++) {
-                char pawn = getPawnAtCoords(gameBoard, gameSize, row, column);
-
-                if ((pawn == candidate) && (pawn != '-')) {
-                    counter++;
-                } else {
-                    counter = 1;
-                    candidate = pawn;
-                }
-
-                if (counter == gameDifficulty) {
-                    return true;
-                }
-            }
+    private boolean checkHorizontalRight(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        int counter = 1;
+        int currentIndex = playerMoveIndex;
+        char candidate = gameBoard.charAt(currentIndex);
+        while ((currentIndex + 1) % gameSize != 0 && gameBoard.charAt(currentIndex + 1) == candidate) {
+            counter++;
+            currentIndex++;
         }
-        return false;
+        return counter >= gameDifficulty;
     }
 
-    private boolean checkDiagonalWin(String gameBoard, int gameSize, int gameDifficulty, int moveIdx) {
-        int moveX = moveIdx / gameSize;
-        int moveY = moveIdx % gameSize;
-
-        int startX = clamp(moveX - gameDifficulty, 0, gameSize);
-        int startY = clamp(moveY - gameDifficulty, 0, gameSize);
-        int endX = clamp(moveX + gameDifficulty, 0, gameSize);
-        int endY = clamp(moveY + gameDifficulty, 0, gameSize);
-
-        // CHECK DIAGONAL WIN (LEFT TO RIGHT)
-        for (int row = startY; row < endY - gameDifficulty + 1; row++) {
-            for (int col = startX; col < endY - gameDifficulty + 1; col++) {
-                char candidate = getPawnAtCoords(gameBoard, gameSize, row, col);
-                int counter = 1;
-                for (int i = 1; i < gameDifficulty; i++) {
-                    int nextRow = row + i;
-                    int nextCol = col + i;
-                    char pawn = getPawnAtCoords(gameBoard, gameSize, nextRow, nextCol);
-                    if ((pawn == candidate) && (pawn != '-')) {
-                        counter++;
-                    } else {
-                        counter = 1;
-                        candidate = pawn;
-                    }
-                    if (counter == gameDifficulty) {
-                        return true;
-                    }
-                }
-            }
+    // VERTICALS
+    // ------------------------------------------
+    private boolean checkVerticalUp(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        int counter = 1;
+        int currentIndex = playerMoveIndex;
+        char candidate = gameBoard.charAt(currentIndex);
+        while (currentIndex >= gameSize && gameBoard.charAt(currentIndex - gameSize) == candidate) {
+            counter++;
+            currentIndex -= gameSize;
         }
+        return counter >= gameDifficulty;
+    }
 
-        // CHECK DIAGONAL WIN (RIGHT TO LEFT)
-        for (int row = startY; row < endY - gameDifficulty + 1; row++) {
-            for (int col = endX - 1; col > startX - 1; col--) {
-                char candidate = getPawnAtCoords(gameBoard, gameSize, row, col);
-                int counter = 1;
-                for (int i = 1; i < gameDifficulty; i++) {
-                    int nextRow = row + i;
-                    int nextCol = col - i;
-                    char pawn = getPawnAtCoords(gameBoard, gameSize, nextRow, nextCol);
-                    if ((pawn == candidate) && (pawn != '-')) {
-                        counter++;
-                    } else {
-                        counter = 1;
-                        candidate = pawn;
-                    }
-                    if (counter == gameDifficulty) {
-                        return true;
-                    }
-                }
-            }
+    private boolean checkVerticalDown(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        int counter = 1;
+        int currentIndex = playerMoveIndex;
+        char candidate = gameBoard.charAt(currentIndex);
+        while (currentIndex < gameBoard.length() - gameSize && gameBoard.charAt(currentIndex + gameSize) == candidate) {
+            counter++;
+            currentIndex += gameSize;
         }
-
-        return false;
+        return counter >= gameDifficulty;
     }
 
-
-    private char getPawnAtCoords(String board, int gameSize, int row, int column) {
-        int index = row * gameSize + column; // 1 * 10 + 5
-        return board.charAt(index);
+    // DIAGONALS
+    // ------------------------------------------
+    private boolean checkDiagonalLeftUpRightDown(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+      return checkDiagonalLeftUpRightDownPartOne(gameBoard, gameSize, gameDifficulty, playerMoveIndex) ||
+              checkDiagonalLeftUpRightDownPartTwo(gameBoard, gameSize, gameDifficulty, playerMoveIndex);
     }
+
+    private boolean checkDiagonalLeftUpRightDownPartOne(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        int counter = 1;
+        int currentIndex = playerMoveIndex;
+        char candidate = gameBoard.charAt(currentIndex);
+        while (currentIndex % gameSize != 0 && currentIndex >= gameSize && gameBoard.charAt(currentIndex - gameSize - 1) == candidate) {
+            counter++;
+            currentIndex -= gameSize + 1;
+        }
+        return counter >= gameDifficulty;
+    }
+
+    private boolean checkDiagonalLeftUpRightDownPartTwo(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        int counter = 1;
+        int currentIndex = playerMoveIndex;
+        char candidate = gameBoard.charAt(currentIndex);
+        while ((currentIndex + 1) % gameSize != 0 && currentIndex < gameBoard.length() - gameSize && gameBoard.charAt(currentIndex + gameSize + 1) == candidate) {
+            counter++;
+            currentIndex += gameSize + 1;
+        }
+        return counter >= gameDifficulty;
+    }
+
+    private boolean checkDiagonalLeftDownRightUp(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+       return checkDiagonalLeftDownRightUpPartOne(gameBoard, gameSize, gameDifficulty, playerMoveIndex) ||
+               checkDiagonalLeftDownRightUpPartTwo(gameBoard, gameSize, gameDifficulty, playerMoveIndex);
+    }
+
+    private boolean checkDiagonalLeftDownRightUpPartOne(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        int counter = 1;
+        int currentIndex = playerMoveIndex;
+        char candidate = gameBoard.charAt(currentIndex);
+        while (currentIndex % gameSize != 0 && currentIndex < gameBoard.length() - gameSize && gameBoard.charAt(currentIndex + gameSize - 1) == candidate) {
+            counter++;
+            currentIndex += gameSize - 1;
+        }
+        return counter >= gameDifficulty;
+    }
+
+    private boolean checkDiagonalLeftDownRightUpPartTwo(String gameBoard, int gameSize, int gameDifficulty, int playerMoveIndex) {
+        int counter = 1;
+        int currentIndex = playerMoveIndex;
+        char candidate = gameBoard.charAt(currentIndex);
+        while ((currentIndex + 1) % gameSize != 0 && currentIndex >= gameSize && gameBoard.charAt(currentIndex - gameSize + 1) == candidate) {
+            counter++;
+            currentIndex -= gameSize - 1;
+        }
+        return counter >= gameDifficulty;
+    }
+
 }
