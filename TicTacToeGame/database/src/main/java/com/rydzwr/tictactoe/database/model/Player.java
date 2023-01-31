@@ -1,6 +1,5 @@
 package com.rydzwr.tictactoe.database.model;
 
-import com.rydzwr.tictactoe.database.builder.PlayerBuilder;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -25,15 +24,4 @@ public class Player {
     @NotNull
     @Enumerated(EnumType.STRING)
     private PlayerType playerType;
-
-    public Player(PlayerBuilder playerBuilder) {
-        this.pawn = playerBuilder.getPawn();
-        this.game = playerBuilder.getGame();
-        this.playerType = playerBuilder.getPlayerType();
-        this.playerGameIndex = playerBuilder.getPlayerGameIndex();
-
-        if (playerBuilder.getUser() != null) {
-            this.user = playerBuilder.getUser();
-        }
-    }
 }

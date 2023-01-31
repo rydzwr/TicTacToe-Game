@@ -7,7 +7,7 @@ import java.util.Set;
 
 @Component
 public class TokenBlackList {
-    private static Set<String> list = new HashSet<>();
+    private static final Set<String> list = new HashSet<>();
 
     public boolean contains(String token) {
         return list.contains(token);

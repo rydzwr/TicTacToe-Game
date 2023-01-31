@@ -3,7 +3,6 @@ package com.rydzwr.tictactoe.security.filter.jwt;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.database.repository.UserRepository;
-import com.rydzwr.tictactoe.database.service.UserDatabaseService;
 import com.rydzwr.tictactoe.security.constants.SecurityConstants;
 import com.rydzwr.tictactoe.security.service.CookieManager;
 import com.rydzwr.tictactoe.security.service.JWTService;
@@ -28,7 +27,6 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 @RequiredArgsConstructor
 public class AuthenticationFilter extends OncePerRequestFilter {
     private final JWTService jwtService;
-    private final UserDatabaseService service;
     private final UserRepository repository;
     private final CookieManager cookieManager;
     @Override
@@ -49,7 +47,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
         // SAVING REFRESH TOKEN INTO DATABASE
         User user = repository.findByName(authentication.getName());
         user.setRefreshToken(refreshToken);
-        service.saveUser(user);
+        repository.save(user);
 
         // CREATING JSON MAP
         Map<String, String> tokens = new HashMap<>();

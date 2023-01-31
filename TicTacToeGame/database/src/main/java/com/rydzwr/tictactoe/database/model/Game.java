@@ -1,6 +1,5 @@
 package com.rydzwr.tictactoe.database.model;
 
-import com.rydzwr.tictactoe.database.builder.GameBuilder;
 import com.rydzwr.tictactoe.database.constants.GameState;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -40,19 +39,4 @@ public class Game {
     private String inviteCode = null;
 
     private int playersCount;
-
-    public Game(GameBuilder gameBuilder) {
-        this.gameSize = gameBuilder.getGameSize();
-        this.difficulty = gameBuilder.getGameDifficulty();
-        this.gameBoard = gameBuilder.getGameBoard();
-
-        if (gameBuilder.getInviteCode() != null) {
-            this.inviteCode = gameBuilder.getInviteCode();
-        } else this.inviteCode = null;
-
-        this.playersCount = gameBuilder.getPlayersCount();
-        this.state = gameBuilder.getGameState();
-    }
-
-    //
 }

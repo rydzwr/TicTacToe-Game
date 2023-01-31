@@ -1,19 +1,15 @@
 package com.rydzwr.tictactoe.web.controller.websocket;
 
-import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
-import com.rydzwr.tictactoe.database.dto.outgoing.PlayerMoveResponseDto;
-import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
+import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
+import com.rydzwr.tictactoe.service.dto.outgoing.PlayerMoveResponseDto;
+import com.rydzwr.tictactoe.service.game.wesocket.WebSocketService;
 import com.rydzwr.tictactoe.web.handler.WebSocketExceptionHandler;
-import com.rydzwr.tictactoe.web.service.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -24,8 +20,6 @@ public class GameSocketController {
 
     @MessageMapping("/gameMove")
     public void send(PlayerMoveDto playerMoveDto, SimpMessageHeaderAccessor accessor) {
-
-        // TODO DB MODULE SHOULD CONTAIN ONLY ENTITIES AND REPOS
 
         Player currentPlayer;
         try {

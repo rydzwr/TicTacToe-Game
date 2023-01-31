@@ -1,11 +1,11 @@
 package com.rydzwr.tictactoe.web.controller.rest;
 
-import com.rydzwr.tictactoe.database.dto.incoming.GameDto;
-import com.rydzwr.tictactoe.database.dto.incoming.InviteCodeDto;
-import com.rydzwr.tictactoe.database.dto.outgoing.LoadGameDto;
 import com.rydzwr.tictactoe.database.model.Game;
-import com.rydzwr.tictactoe.game.service.GameService;
-import com.rydzwr.tictactoe.game.validator.GameDtoValidator;
+import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
+import com.rydzwr.tictactoe.service.dto.incoming.InviteCodeDto;
+import com.rydzwr.tictactoe.service.dto.outgoing.LoadGameDto;
+import com.rydzwr.tictactoe.service.game.GameService;
+import com.rydzwr.tictactoe.service.game.validator.GameDtoValidator;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -12,6 +12,7 @@
         <module name="game" />
         <module name="application" />
         <module name="web" />
+        <module name="service" />
       </profile>
     </annotationProcessing>
   </component>
@@ -21,6 +22,7 @@
       <module name="database" options="-parameters" />
       <module name="game" options="-parameters" />
       <module name="security" options="-parameters" />
+      <module name="service" options="-parameters" />
       <module name="web" options="-parameters" />
     </option>
   </component>

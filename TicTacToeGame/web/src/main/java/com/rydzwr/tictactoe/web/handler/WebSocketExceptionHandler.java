@@ -1,6 +1,6 @@
 package com.rydzwr.tictactoe.web.handler;
 
-import com.rydzwr.tictactoe.game.exception.ExceptionModel;
+import com.rydzwr.tictactoe.web.exception.ExceptionModel;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
