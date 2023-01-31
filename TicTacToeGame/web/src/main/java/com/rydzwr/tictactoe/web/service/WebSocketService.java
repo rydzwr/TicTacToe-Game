@@ -1,6 +1,7 @@
 package com.rydzwr.tictactoe.web.service;
 
 import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
+import com.rydzwr.tictactoe.database.dto.outgoing.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
@@ -32,29 +33,24 @@ public class WebSocketService {
         return gameService.getCurrentPlayer(callerPlayer.getGame());
     }
 
-    public Game processPlayerMove(SimpMessageHeaderAccessor accessor, PlayerMoveDto playerMoveDto, Player currentPlayer) {
+    public void processPlayerMove(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, Game game, PlayerMoveDto playerMoveDto, Player currentPlayer) {
         ProcessMoveStrategy processMoveStrategy = playerMoveStrategySelector.chooseStrategy(currentPlayer.getPlayerType());
-        return processMoveStrategy.processPlayerMove(currentPlayer.getGame(), accessor, playerMoveDto);
+        processMoveStrategy.processPlayerMove(moves, game, accessor, playerMoveDto);
     }
 
-    public Game processAIPlayers(SimpMessageHeaderAccessor accessor, Game game, PlayerMoveDto playerMoveDto) {
-        if (gameService.isNextPlayerAIType(game)) {
-            do {
-                var player = gameService.getCurrentPlayer(game);
-                Game gameAfterAi = processPlayerMove(accessor, playerMoveDto, player);
-
-                processGameStatus(gameAfterAi, player, playerMoveDto.getGameBoardElementIndex());
-
-            } while (gameService.isNextPlayerAIType(game));
+    public void processAIPlayers(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, Game game, PlayerMoveDto playerMoveDto) {
+        while (gameService.isNextPlayerAIType(game)) {
+            var player = gameService.getCurrentPlayer(game);
+            processPlayerMove(moves, accessor, game, playerMoveDto, player);
+            processGameStatus(moves, game, player, playerMoveDto.getGameBoardElementIndex());
         }
-        return game;
     }
 
-    public void processGameStatus(Game game, Player player, int playerMoveIndex) {
+    public void processGameStatus(PlayerMoveResponseDto moves, Game game, Player player, int playerMoveIndex) {
         var gameStatus = checkWin(game, playerMoveIndex);
 
         var strategy =  gameStateStrategySelector.chooseStrategy(gameStatus);
-        strategy.send(game, player, template);
+        strategy.send(moves, game, player, playerMoveIndex, template);
     }
 
     private CheckWinState checkWin(Game game, int playerMoveIndex) {

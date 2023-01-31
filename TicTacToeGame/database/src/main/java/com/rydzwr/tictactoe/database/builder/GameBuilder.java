@@ -47,6 +47,8 @@ public class GameBuilder {
     public Game build() {
        return new Game(this);
     }
+
+    // TODO USE SETTERS
     private void generateBoard() {
         this.gameBoard = DatabaseConstants.DEFAULT_BOARD_VALUE.repeat(this.gameSize * this.gameSize);
     }

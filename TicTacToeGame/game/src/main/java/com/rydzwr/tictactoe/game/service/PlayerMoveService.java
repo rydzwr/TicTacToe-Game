@@ -14,17 +14,15 @@ import java.util.List;
 public class PlayerMoveService {
     private final GameDatabaseService gameDatabaseService;
 
-    public Game updateGameBoard(Game game, PlayerMoveDto playerMoveDto, char playerPawn) {
+    public void updateGameBoard(Game game, PlayerMoveDto playerMoveDto, char playerPawn) {
         StringBuilder stringBuilder = new StringBuilder(game.getGameBoard());
         stringBuilder.setCharAt(playerMoveDto.getGameBoardElementIndex(), playerPawn);
 
         game.setGameBoard(stringBuilder.toString());
         gameDatabaseService.save(game);
-
-        return game;
     }
 
-    public Game updateCurrentPlayerTurn(Game game) {
+    public void updateCurrentPlayerTurn(Game game) {
         List<Player> players = game.getPlayers();
 
         int currentPlayerTurn = game.getCurrentPlayerTurn();
@@ -32,7 +30,5 @@ public class PlayerMoveService {
 
         game.setCurrentPlayerTurn(nextPlayerTurn);
         gameDatabaseService.save(game);
-
-        return game;
     }
 }

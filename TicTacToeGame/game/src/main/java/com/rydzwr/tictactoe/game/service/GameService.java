@@ -95,6 +95,8 @@ public class GameService {
         gameDatabaseService.deleteById(player.getGame().getId());
     }
 
+    // TODO SPLIT INTO TWO METHODS
+
     @Transactional
     public LoadGameDto addPlayerToOnlineGame(String callerName, String inviteCode, SimpMessagingTemplate template) {
         final String AWAITING_PLAYERS_ENDPOINT = "/topic/awaitingPlayers";
@@ -138,6 +140,8 @@ public class GameService {
         return new LoadGameDto(game, availablePawn, X_PAWN, availableGameSlots);
     }
 
+    // TODO THAT SHOULD BE IN GAME DTO CLASS
+
     public int getHumanGameSlots(GameDto game) {
 
         int allGameSlots = game.getPlayers().size();
@@ -149,12 +153,15 @@ public class GameService {
         return allGameSlots - aIPlayersCount;
     }
 
+    // TODO THAT SHOULD BE IN GAME ENTITY CLASS
+
     public int countEmptyGameSlots(Game game) {
         int gamePlayerCount = game.getPlayersCount();
         int occupiedSlotsCount = game.getPlayers().size();
         return gamePlayerCount - occupiedSlotsCount;
     }
 
+    // TODO SHOULD BE IN GAME BOARD CLASS
     public boolean containsEmptyFields(Game game) {
         return game.getGameBoard().contains("-");
     }

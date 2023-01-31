@@ -2,6 +2,7 @@ package com.rydzwr.tictactoe.game.strategy.moveProcessor;
 
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
+import com.rydzwr.tictactoe.database.dto.outgoing.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.game.service.GameService;
@@ -13,6 +14,8 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -22,7 +25,7 @@ public class OnlinePlayerMoveStrategy implements ProcessMoveStrategy{
     private final PlayerMoveValidator playerMoveValidator;
     @Override
     @Transactional
-    public Game processPlayerMove(Game game, SimpMessageHeaderAccessor accessor, PlayerMoveDto playerMoveDto) {
+    public void processPlayerMove(PlayerMoveResponseDto moves, Game game, SimpMessageHeaderAccessor accessor, PlayerMoveDto playerMoveDto) {
 
         // NEED TO VALIDATE IF IT'S CALLER TURN
         if (!playerMoveValidator.validateCurrentPlayerTurn(game, accessor)) {
@@ -35,8 +38,12 @@ public class OnlinePlayerMoveStrategy implements ProcessMoveStrategy{
         }
 
         char playerPawn = gameService.getCurrentPlayer(game).getPawn();
-        game = playerMoveService.updateCurrentPlayerTurn(game);
-        return playerMoveService.updateGameBoard(game, playerMoveDto, playerPawn);
+        playerMoveService.updateCurrentPlayerTurn(game);
+
+        moves.getProcessedMovesIndices().add(playerMoveDto.getGameBoardElementIndex());
+        moves.getProcessedMovesPawns().add(playerPawn);
+
+        playerMoveService.updateGameBoard(game, playerMoveDto, playerPawn);
     }
 
     @Override

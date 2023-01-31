@@ -2,6 +2,7 @@ package com.rydzwr.tictactoe.game.strategy.moveProcessor;
 
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.dto.incoming.PlayerMoveDto;
+import com.rydzwr.tictactoe.database.dto.outgoing.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.game.algorithm.MinimaxAlgorithm;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
@@ -14,6 +15,8 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
@@ -24,7 +27,7 @@ public class AIPlayerMoveStrategy implements ProcessMoveStrategy{
     private final MinimaxAlgorithm minimaxAlgorithm;
     @Override
     @Transactional
-    public Game processPlayerMove(Game game, SimpMessageHeaderAccessor accessor, PlayerMoveDto playerMoveDto) {
+    public void processPlayerMove(PlayerMoveResponseDto moves, Game game, SimpMessageHeaderAccessor accessor, PlayerMoveDto playerMoveDto) {
 
         if (!playerMoveValidator.containsEmptyFields(game)) {
             throw new IllegalArgumentException(GameConstants.ALL_FIELDS_ON_BOARD_OCCUPIED_EXCEPTION);
@@ -35,8 +38,11 @@ public class AIPlayerMoveStrategy implements ProcessMoveStrategy{
         int gameBoardIndex = minimaxAlgorithm.processMove(game.getGameBoard(), playerPawn);
         minimaxMove.setGameBoardElementIndex(gameBoardIndex);
 
-        game = playerMoveService.updateCurrentPlayerTurn(game);
-        return playerMoveService.updateGameBoard(game, minimaxMove, playerPawn);
+        moves.getProcessedMovesIndices().add(gameBoardIndex);
+        moves.getProcessedMovesPawns().add(playerPawn);
+
+        playerMoveService.updateCurrentPlayerTurn(game);
+        playerMoveService.updateGameBoard(game, minimaxMove, playerPawn);
     }
 
     @Override
