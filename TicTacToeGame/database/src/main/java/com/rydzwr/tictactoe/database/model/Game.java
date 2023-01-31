@@ -30,8 +30,6 @@ public class Game {
     @Column(columnDefinition = "TEXT")
     private String gameBoard;
 
-    // TODO WRAPPER
-
     @OrderBy("playerGameIndex")
     @OneToMany(mappedBy = "game", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Player> players;

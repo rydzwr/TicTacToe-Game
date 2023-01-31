@@ -1,5 +1,9 @@
 package com.rydzwr.tictactoe.game.constants;
 
+import com.rydzwr.tictactoe.database.constants.PlayerType;
+
+import java.util.List;
+
 public class GameConstants {
     public static final String INVALID_GAME_TYPE_EXCEPTION = "Invalid Game Type";
     public static final String PLAYER_NOT_FOUND_EXCEPTION = "Player Not Found ( GAME HAS BEEN DELETED OR NEVER EXIST)";
@@ -10,6 +14,8 @@ public class GameConstants {
     public static final String PLAYER_PRESSED_OCCUPIED_FIELD_EXCEPTION = "Player Pressed Occupied Field";
     public static final String NOT_CALLER_TURN_EXCEPTION = "Invalid caller (Another Player Turn)";
     public static final String INVALID_PLAYER_TYPE_EXCEPTION = "Invalid Player Type (Cannot Process Move)";
-
     public static final String PLAYER_PAWNS = "ABCDEFGHIJKLMNOPRSTUWYZ";
+    public static final char DEFAULT_STARTING_PAWN = 'X';
+    public static final String DEFAULT_BOARD_VALUE = "-";
+    public static final List<String> playerTypes = List.of(PlayerType.AI.name(), PlayerType.LOCAL.name(), PlayerType.ONLINE.name());
 }

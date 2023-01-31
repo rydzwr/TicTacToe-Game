@@ -10,7 +10,9 @@ import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.GameStateDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.LoadGameDto;
+import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import com.rydzwr.tictactoe.service.game.builder.PlayerBuilder;
+import com.rydzwr.tictactoe.service.game.constants.WebConstants;
 import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
 import com.rydzwr.tictactoe.service.game.database.PlayerDatabaseService;
 import com.rydzwr.tictactoe.service.game.strategy.selector.GameBuilderStrategySelector;
@@ -18,6 +20,7 @@ import com.rydzwr.tictactoe.service.game.strategy.selector.PlayerPawnRandomSelec
 import com.rydzwr.tictactoe.service.security.database.UserDatabaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +33,8 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class GameService {
+    @Autowired
+    private SimpMessagingTemplate template;
     private final GameBuilderStrategySelector selector;
     private final GameDatabaseService gameDatabaseService;
     private final UserDatabaseService userDatabaseService;
@@ -64,12 +69,9 @@ public class GameService {
         gameDatabaseService.delete(game);
     }
 
-    public Player getCurrentPlayer(Game game) {
-        return game.getPlayers().get(game.getCurrentPlayerTurn());
-    }
 
     public boolean isNextPlayerAIType(Game game) {
-        return getCurrentPlayer(game).getPlayerType().equals(PlayerType.AI);
+        return new GameAdapter(game).getCurrentPlayer().getPlayerType().equals(PlayerType.AI);
     }
 
     public boolean isUserInGame() {
@@ -82,8 +84,11 @@ public class GameService {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User caller = userDatabaseService.findByName(userName);
         Player player = playerDatabaseService.findFirstByUser(caller);
+
         Game game = player.getGame();
-        return new LoadGameDto(game, player.getPawn(), getCurrentPlayer(game).getPawn());
+        var currentPlayer = new GameAdapter(game).getCurrentPlayer();
+
+        return new LoadGameDto(game, player.getPawn(), currentPlayer.getPawn());
     }
 
     @Transactional
@@ -93,14 +98,8 @@ public class GameService {
         gameDatabaseService.deleteById(player.getGame().getId());
     }
 
-    // TODO SPLIT INTO TWO METHODS
-
     @Transactional
-    public LoadGameDto addPlayerToOnlineGame(String callerName, String inviteCode, SimpMessagingTemplate template) {
-        final String AWAITING_PLAYERS_ENDPOINT = "/topic/awaitingPlayers";
-        final String GAME_STATE_ENDPOINT = "/topic/gameState";
-        final char X_PAWN = 'X';
-
+    public LoadGameDto addPlayerToOnlineGame(String callerName, String inviteCode) {
         var playerPawnRandomSelector = new PlayerPawnRandomSelector();
         User caller = userDatabaseService.findByName(callerName);
 
@@ -111,7 +110,7 @@ public class GameService {
         Game game = gameDatabaseService.findByInviteCode(inviteCode);
         char availablePawn = playerPawnRandomSelector.selectAvailablePawn(game);
 
-        int availableGameSlots = countEmptyGameSlots(game);
+        int availableGameSlots = new GameAdapter(game).countEmptyGameSlots();
 
         if (availableGameSlots == 0) {
             throw new IllegalArgumentException(GameConstants.ALL_GAME_SLOTS_OCCUPIED_EXCEPTION);
@@ -127,40 +126,22 @@ public class GameService {
         availableGameSlots--;
 
         playerDatabaseService.save(newPlayer);
-        template.convertAndSend(AWAITING_PLAYERS_ENDPOINT, availableGameSlots);
+        updateAwaitingPlayersLobby(availableGameSlots);
 
         if (availableGameSlots == 0) {
             game.setState(GameState.IN_PROGRESS);
             gameDatabaseService.save(game);
-            template.convertAndSend(GAME_STATE_ENDPOINT, new GameStateDto(GameState.IN_PROGRESS.name()));
+            startOnlineGame();
         }
 
-        return new LoadGameDto(game, availablePawn, X_PAWN, availableGameSlots);
+        return new LoadGameDto(game, availablePawn, GameConstants.DEFAULT_STARTING_PAWN, availableGameSlots);
     }
 
-    // TODO THAT SHOULD BE IN GAME DTO CLASS
-
-    public int getHumanGameSlots(GameDto game) {
-
-        int allGameSlots = game.getPlayers().size();
-
-        int aIPlayersCount = (int) game.getPlayers().stream()
-                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI.name())))
-                .count();
-
-        return allGameSlots - aIPlayersCount;
+    private void updateAwaitingPlayersLobby(int availableGameSlots) {
+        template.convertAndSend(WebConstants.WEB_SOCKET_AWAITING_PLAYERS_ENDPOINT, availableGameSlots);
     }
 
-    // TODO THAT SHOULD BE IN GAME ENTITY CLASS
-
-    public int countEmptyGameSlots(Game game) {
-        int gamePlayerCount = game.getPlayersCount();
-        int occupiedSlotsCount = game.getPlayers().size();
-        return gamePlayerCount - occupiedSlotsCount;
-    }
-
-    // TODO SHOULD BE IN GAME BOARD CLASS
-    public boolean containsEmptyFields(Game game) {
-        return game.getGameBoard().contains("-");
+    private void startOnlineGame() {
+        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.IN_PROGRESS.name()));
     }
 }

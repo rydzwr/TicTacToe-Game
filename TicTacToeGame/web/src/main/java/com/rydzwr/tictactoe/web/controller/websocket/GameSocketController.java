@@ -3,7 +3,7 @@ package com.rydzwr.tictactoe.web.controller.websocket;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.PlayerMoveResponseDto;
-import com.rydzwr.tictactoe.service.game.wesocket.WebSocketService;
+import com.rydzwr.tictactoe.service.game.WebSocketService;
 import com.rydzwr.tictactoe.web.handler.WebSocketExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,8 +33,6 @@ public class GameSocketController {
         var moves = new PlayerMoveResponseDto();
 
         try {
-
-            // TODO PROCESS IN ONE DB TRANSACTION
             webSocketService.processPlayerMove(moves, accessor, game, playerMoveDto, currentPlayer);
             webSocketService.processAIPlayers(moves, accessor, game, playerMoveDto);
         } catch (IllegalArgumentException e) {

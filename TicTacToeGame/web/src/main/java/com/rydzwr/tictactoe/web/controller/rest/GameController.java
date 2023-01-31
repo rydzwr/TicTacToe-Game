@@ -5,6 +5,7 @@ import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
 import com.rydzwr.tictactoe.service.dto.incoming.InviteCodeDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.LoadGameDto;
 import com.rydzwr.tictactoe.service.game.GameService;
+import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.game.validator.GameDtoValidator;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
 import jakarta.validation.Valid;
@@ -12,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -24,8 +24,6 @@ import org.springframework.web.bind.annotation.*;
 public class GameController {
     private final GameService gameService;
     private final GameDtoValidator validator;
-
-    private final SimpMessagingTemplate template;
 
     @GetMapping("/canResumeGame")
     @PreAuthorize("hasAuthority('USER')")
@@ -50,7 +48,7 @@ public class GameController {
 
         LoadGameDto loadGameDto;
         try {
-            loadGameDto = gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode(), template);
+            loadGameDto = gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode());
         }catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -80,9 +78,9 @@ public class GameController {
             return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
 
-        final char DEFAULT_HOST_PLAYER_PAWN = 'X';
-        var playersToJoin = gameService.getHumanGameSlots(gameDto) - 1;
+        var playersToJoin = gameDto.getHumanGameSlots() - 1;
         Game game = gameService.buildGame(gameDto);
-        return new ResponseEntity<>(new LoadGameDto(game, DEFAULT_HOST_PLAYER_PAWN, DEFAULT_HOST_PLAYER_PAWN, playersToJoin), HttpStatus.CREATED);
+        var loadGameDto = new LoadGameDto(game, GameConstants.DEFAULT_STARTING_PAWN, GameConstants.DEFAULT_STARTING_PAWN, playersToJoin);
+        return new ResponseEntity<>(loadGameDto, HttpStatus.CREATED);
     }
 }

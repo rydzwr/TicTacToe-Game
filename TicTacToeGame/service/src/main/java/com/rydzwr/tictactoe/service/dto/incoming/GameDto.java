@@ -1,5 +1,6 @@
 package com.rydzwr.tictactoe.service.dto.incoming;
 
+import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.service.game.validator.game.ValidPlayersCount;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -22,4 +23,20 @@ public class GameDto {
     @NotNull
     @ValidPlayersCount
     private List<PlayerDto> players;
+
+    public int countAIPlayers() {
+        return (int) this.getPlayers().stream()
+                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI.name())))
+                .count();
+    }
+
+    public int getHumanGameSlots() {
+        int allGameSlots = this.getPlayers().size();
+
+        int aIPlayersCount = (int) this.getPlayers().stream()
+                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI.name())))
+                .count();
+
+        return allGameSlots - aIPlayersCount;
+    }
 }

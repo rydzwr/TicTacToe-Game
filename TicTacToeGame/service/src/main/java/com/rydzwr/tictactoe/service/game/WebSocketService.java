@@ -1,4 +1,4 @@
-package com.rydzwr.tictactoe.service.game.wesocket;
+package com.rydzwr.tictactoe.service.game;
 
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
@@ -6,7 +6,7 @@ import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.CheckWinState;
 import com.rydzwr.tictactoe.service.dto.outgoing.PlayerMoveResponseDto;
-import com.rydzwr.tictactoe.service.game.GameService;
+import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import com.rydzwr.tictactoe.service.game.strategy.selector.GameStateStrategySelector;
 import com.rydzwr.tictactoe.service.game.strategy.selector.PlayerMoveStrategySelector;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,8 @@ public class WebSocketService {
         if (callerPlayer == null) {
             throw new IllegalArgumentException(GameConstants.PLAYER_NOT_FOUND_EXCEPTION);
         }
-        return gameService.getCurrentPlayer(callerPlayer.getGame());
+        var game = callerPlayer.getGame();
+        return new GameAdapter(game).getCurrentPlayer();
     }
 
     public void processPlayerMove(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, Game game, PlayerMoveDto playerMoveDto, Player currentPlayer) {
@@ -40,19 +41,18 @@ public class WebSocketService {
         processMoveStrategy.processPlayerMove(moves, game, accessor, playerMoveDto);
     }
 
+    public void processGameStatus(PlayerMoveResponseDto moves, Game game, Player player, int playerMoveIndex) {
+        var gameStatus = checkWin(game, playerMoveIndex);
+        var strategy =  gameStateStrategySelector.chooseStrategy(gameStatus);
+        strategy.send(moves, game, player, playerMoveIndex);
+    }
+
     public void processAIPlayers(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, Game game, PlayerMoveDto playerMoveDto) {
         while (gameService.isNextPlayerAIType(game)) {
-            var player = gameService.getCurrentPlayer(game);
+            var player = new GameAdapter(game).getCurrentPlayer();
             processPlayerMove(moves, accessor, game, playerMoveDto, player);
             processGameStatus(moves, game, player, playerMoveDto.getGameBoardElementIndex());
         }
-    }
-
-    public void processGameStatus(PlayerMoveResponseDto moves, Game game, Player player, int playerMoveIndex) {
-        var gameStatus = checkWin(game, playerMoveIndex);
-
-        var strategy =  gameStateStrategySelector.chooseStrategy(gameStatus);
-        strategy.send(moves, game, player, playerMoveIndex);
     }
 
     private CheckWinState checkWin(Game game, int playerMoveIndex) {
@@ -60,7 +60,7 @@ public class WebSocketService {
             return CheckWinState.WIN;
         }
 
-        if (!gameService.containsEmptyFields(game)) {
+        if (new GameAdapter(game).notContainsEmptyFields()) {
             return CheckWinState.DRAW;
         }
         return CheckWinState.CONTINUE;

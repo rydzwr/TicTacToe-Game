@@ -5,6 +5,7 @@ import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.service.game.GameService;
+import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Component;
@@ -21,12 +22,8 @@ public class PlayerMoveValidator {
         return newGameBoard.charAt(playerMoveDto.getGameBoardElementIndex()) != '-';
     }
     public boolean validateCurrentPlayerTurn(Game game, SimpMessageHeaderAccessor accessor) {
-        Player currentPlayer = gameService.getCurrentPlayer(game);
+        Player currentPlayer = new GameAdapter(game).getCurrentPlayer();
         Player callerPlayer = gameService.retrieveAnyPlayerFromUser(accessor);
         return callerPlayer.getPawn() == currentPlayer.getPawn();
-    }
-
-    public boolean containsEmptyFields(Game game) {
-       return game.getGameBoard().contains("-");
     }
 }

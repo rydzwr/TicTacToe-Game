@@ -1,8 +1,8 @@
 package com.rydzwr.tictactoe.service.game.builder;
 
 import com.rydzwr.tictactoe.database.model.Game;
-import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.database.constants.GameState;
+import com.rydzwr.tictactoe.game.constants.GameConstants;
 
 public class GameBuilder {
     private final int gameSize;

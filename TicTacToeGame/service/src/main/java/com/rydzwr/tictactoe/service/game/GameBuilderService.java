@@ -51,12 +51,6 @@ public class GameBuilderService {
         }
     }
 
-    public int countAIPlayers(GameDto gameDto) {
-       return (int) gameDto.getPlayers().stream()
-                .filter((playerDto -> playerDto.getPlayerType().equals(PlayerType.AI.name())))
-                .count();
-    }
-
     public void buildAIPlayers(Game game, int aiPlayersCount) {
         PlayerPawnRandomSelector pawnSelector = new PlayerPawnRandomSelector();
         for (int i = 0; i < aiPlayersCount; i++) {

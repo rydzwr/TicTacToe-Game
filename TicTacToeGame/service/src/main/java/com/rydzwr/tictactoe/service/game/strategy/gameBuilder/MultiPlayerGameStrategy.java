@@ -40,7 +40,7 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
         var caller = gameBuilderService.getCaller();
         assert caller != null;
 
-        int aiPlayersCount = gameBuilderService.countAIPlayers(gameDto);
+        int aiPlayersCount = gameDto.countAIPlayers();
 
         gameBuilderService.buildCallerPlayer(caller, game, PlayerType.ONLINE);
         gameBuilderService.buildAIPlayers(game, aiPlayersCount);

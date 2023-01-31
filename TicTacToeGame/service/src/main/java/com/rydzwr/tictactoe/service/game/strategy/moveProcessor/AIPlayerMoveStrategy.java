@@ -6,8 +6,8 @@ import com.rydzwr.tictactoe.game.algorithm.MinimaxAlgorithm;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.PlayerMoveResponseDto;
-import com.rydzwr.tictactoe.service.game.GameService;
-import com.rydzwr.tictactoe.service.game.PlayerMoveService;
+import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
+import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
 import com.rydzwr.tictactoe.service.game.validator.PlayerMoveValidator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,28 +19,27 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @RequiredArgsConstructor
 public class AIPlayerMoveStrategy implements ProcessMoveStrategy{
-    private final GameService gameService;
-    private final PlayerMoveService playerMoveService;
-    private final PlayerMoveValidator playerMoveValidator;
     private final MinimaxAlgorithm minimaxAlgorithm;
+    private final GameDatabaseService gameDatabaseService;
     @Override
     @Transactional
     public void processPlayerMove(PlayerMoveResponseDto moves, Game game, SimpMessageHeaderAccessor accessor, PlayerMoveDto playerMoveDto) {
 
-        if (!playerMoveValidator.containsEmptyFields(game)) {
+        if (new GameAdapter(game).notContainsEmptyFields()) {
             throw new IllegalArgumentException(GameConstants.ALL_FIELDS_ON_BOARD_OCCUPIED_EXCEPTION);
         }
 
         PlayerMoveDto minimaxMove = new PlayerMoveDto();
-        char playerPawn = gameService.getCurrentPlayer(game).getPawn();
+        char playerPawn = new GameAdapter(game).getCurrentPlayer().getPawn();
         int gameBoardIndex = minimaxAlgorithm.processMove(game.getGameBoard(), playerPawn);
         minimaxMove.setGameBoardElementIndex(gameBoardIndex);
 
         moves.getProcessedMovesIndices().add(gameBoardIndex);
         moves.getProcessedMovesPawns().add(playerPawn);
 
-        playerMoveService.updateCurrentPlayerTurn(game);
-        playerMoveService.updateGameBoard(game, minimaxMove, playerPawn);
+        new GameAdapter(game).updateCurrentPlayerTurn();
+        new GameAdapter(game).updateGameBoard(minimaxMove, playerPawn);
+        gameDatabaseService.save(game);
     }
 
     @Override
