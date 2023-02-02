@@ -3,7 +3,7 @@ package com.rydzwr.tictactoe.service.game;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.game.constants.GameConstants;
-import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
+import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.CheckWinState;
 import com.rydzwr.tictactoe.service.dto.outgoing.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
@@ -36,22 +36,22 @@ public class WebSocketService {
         return new GameAdapter(game).getCurrentPlayer();
     }
 
-    public void processPlayerMove(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, Game game, PlayerMoveDto playerMoveDto, Player currentPlayer) {
+    public void processPlayerMove(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, Game game, int moveIndex, Player currentPlayer) {
         var processMoveStrategy = playerMoveStrategySelector.chooseStrategy(currentPlayer.getPlayerType());
-        processMoveStrategy.processPlayerMove(moves, game, accessor, playerMoveDto);
+        processMoveStrategy.processPlayerMove(moves, game, accessor, moveIndex);
     }
 
-    public void processGameStatus(PlayerMoveResponseDto moves, Game game, Player player, int playerMoveIndex) {
-        var gameStatus = checkWin(game, playerMoveIndex);
+    public void processGameStatus(PlayerMoveResponseDto moves, Game game, Player player, int moveIndex) {
+        var gameStatus = checkWin(game, moveIndex);
         var strategy =  gameStateStrategySelector.chooseStrategy(gameStatus);
-        strategy.send(moves, game, player, playerMoveIndex);
+        strategy.send(moves, game, player, moveIndex);
     }
 
-    public void processAIPlayers(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, Game game, PlayerMoveDto playerMoveDto) {
+    public void processAIPlayers(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, Game game, int moveIndex) {
         while (gameService.isNextPlayerAIType(game)) {
             var player = new GameAdapter(game).getCurrentPlayer();
-            processPlayerMove(moves, accessor, game, playerMoveDto, player);
-            processGameStatus(moves, game, player, playerMoveDto.getGameBoardElementIndex());
+            processPlayerMove(moves, accessor, game, moveIndex, player);
+            processGameStatus(moves, game, player, moveIndex);
         }
     }
 

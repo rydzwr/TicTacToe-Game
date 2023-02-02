@@ -2,6 +2,7 @@ package com.rydzwr.tictactoe.service.game.adapter;
 
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
+import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
 import lombok.AllArgsConstructor;
 
@@ -26,9 +27,9 @@ public class GameAdapter {
     }
 
 
-    public void updateGameBoard(PlayerMoveDto playerMoveDto, char playerPawn) {
+    public void updateGameBoard(int moveIndex, char playerPawn) {
         StringBuilder stringBuilder = new StringBuilder(game.getGameBoard());
-        stringBuilder.setCharAt(playerMoveDto.getGameBoardElementIndex(), playerPawn);
+        stringBuilder.setCharAt(moveIndex, playerPawn);
 
         game.setGameBoard(stringBuilder.toString());
     }

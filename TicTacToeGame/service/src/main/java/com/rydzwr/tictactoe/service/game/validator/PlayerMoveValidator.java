@@ -15,11 +15,11 @@ import org.springframework.stereotype.Component;
 public class PlayerMoveValidator {
     private final GameService gameService;
 
-    public boolean validatePlayerMove(String newGameBoard, PlayerMoveDto playerMoveDto) {
-        if (playerMoveDto.getGameBoardElementIndex() > newGameBoard.length()) {
+    public boolean validatePlayerMove(String newGameBoard, int moveIndex) {
+        if (moveIndex > newGameBoard.length()) {
             throw new IllegalArgumentException(GameConstants.PLAYER_MOVE_OUT_OF_BOARD_EXCEPTION);
         }
-        return newGameBoard.charAt(playerMoveDto.getGameBoardElementIndex()) != '-';
+        return newGameBoard.charAt(moveIndex) != '-';
     }
     public boolean validateCurrentPlayerTurn(Game game, SimpMessageHeaderAccessor accessor) {
         Player currentPlayer = new GameAdapter(game).getCurrentPlayer();

@@ -9,7 +9,7 @@ import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 public class ErrorPlayerMoveStrategy implements ProcessMoveStrategy{
     @Override
-    public void processPlayerMove(PlayerMoveResponseDto moves, Game game, SimpMessageHeaderAccessor accessor, PlayerMoveDto playerMoveDto) {
+    public void processPlayerMove(PlayerMoveResponseDto moves, Game game, SimpMessageHeaderAccessor accessor, int moveIndex) {
         throw  new IllegalArgumentException(GameConstants.INVALID_PLAYER_TYPE_EXCEPTION);
     }
 

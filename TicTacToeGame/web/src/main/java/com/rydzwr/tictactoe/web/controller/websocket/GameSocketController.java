@@ -1,6 +1,7 @@
 package com.rydzwr.tictactoe.web.controller.websocket;
 
 import com.rydzwr.tictactoe.database.model.Player;
+import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.service.game.WebSocketService;
@@ -19,7 +20,7 @@ public class GameSocketController {
     private final WebSocketService webSocketService;
 
     @MessageMapping("/gameMove")
-    public void send(PlayerMoveDto playerMoveDto, SimpMessageHeaderAccessor accessor) {
+    public void send(MoveCoordsDto moveCoordsDto, SimpMessageHeaderAccessor accessor) {
 
         Player currentPlayer;
         try {
@@ -32,14 +33,15 @@ public class GameSocketController {
         var game = currentPlayer.getGame();
         var moves = new PlayerMoveResponseDto();
 
+        var index = moveCoordsDto.getIndex(game.getGameSize());
+
         try {
-            webSocketService.processPlayerMove(moves, accessor, game, playerMoveDto, currentPlayer);
-            webSocketService.processAIPlayers(moves, accessor, game, playerMoveDto);
+            webSocketService.processPlayerMove(moves, accessor, game, index, currentPlayer);
+            webSocketService.processAIPlayers(moves, accessor, game, index);
         } catch (IllegalArgumentException e) {
             exceptionHandler.sendException(e.getMessage());
         }
 
-        assert game != null;
-        webSocketService.processGameStatus(moves, game, currentPlayer, playerMoveDto.getGameBoardElementIndex());
+        webSocketService.processGameStatus(moves, game, currentPlayer, moveCoordsDto.getIndex(game.getGameSize()));
     }
 }

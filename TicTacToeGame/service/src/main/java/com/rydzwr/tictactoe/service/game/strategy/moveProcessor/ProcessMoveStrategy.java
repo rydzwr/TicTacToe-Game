@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ProcessMoveStrategy {
 
-    void processPlayerMove(PlayerMoveResponseDto moves, Game game, SimpMessageHeaderAccessor accessor, PlayerMoveDto playerMoveDto);
+    void processPlayerMove(PlayerMoveResponseDto moves, Game game, SimpMessageHeaderAccessor accessor, int moveIndex);
 
     boolean applies(PlayerType playerType);
 }
