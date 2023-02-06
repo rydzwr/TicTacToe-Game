@@ -9,7 +9,6 @@ import com.rydzwr.tictactoe.service.dto.outgoing.GameStateDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.service.game.GameService;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
-import com.rydzwr.tictactoe.service.game.constants.WebConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

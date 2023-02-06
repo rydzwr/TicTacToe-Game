@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -42,9 +43,16 @@ public class WebSocketService {
         return new GameAdapter(game).getCurrentPlayer();
     }
 
+    @Transactional
     public void processPlayerMove(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, GameAdapter gameAdapter, MoveCoordsDto moveCoordsDto, Player currentPlayer) {
         var processMoveStrategy = playerMoveStrategySelector.chooseStrategy(currentPlayer.getPlayerType());
         processMoveStrategy.processPlayerMove(moves, gameAdapter, accessor, moveCoordsDto);
+
+        while (gameService.isNextPlayerAIType(gameAdapter)) {
+            var player = gameAdapter.getCurrentPlayer();
+            processGameStatus(moves, gameAdapter, player, moveCoordsDto);
+            processPlayerMove(moves, accessor, gameAdapter, moveCoordsDto, player);
+        }
     }
 
     public void processGameStatus(PlayerMoveResponseDto moves, GameAdapter gameAdapter, Player player, MoveCoordsDto moveCoordsDto) {
@@ -55,14 +63,6 @@ public class WebSocketService {
         if (response instanceof GameStateDto) {
             sendGameResult((GameStateDto) response);
         } else sendMovesDto((PlayerMoveResponseDto) response);
-    }
-
-    public void processAIPlayers(PlayerMoveResponseDto moves, SimpMessageHeaderAccessor accessor, GameAdapter gameAdapter, MoveCoordsDto moveCoordsDto) {
-        while (gameService.isNextPlayerAIType(gameAdapter)) {
-            var player = gameAdapter.getCurrentPlayer();
-            processPlayerMove(moves, accessor, gameAdapter, moveCoordsDto, player);
-            processGameStatus(moves, gameAdapter, player, moveCoordsDto);
-        }
     }
 
     private CheckWinState checkWin(GameAdapter gameAdapter, MoveCoordsDto moveCoordsDto) {

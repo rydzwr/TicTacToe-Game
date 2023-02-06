@@ -34,11 +34,8 @@ public class GameSocketController {
         var gameAdapter = new GameAdapter(game);
         var moves = new PlayerMoveResponseDto();
 
-
-        // TODO CALL IN ONE TRANSACTION
         try {
             webSocketService.processPlayerMove(moves, accessor, gameAdapter, moveCoordsDto, currentPlayer);
-            webSocketService.processAIPlayers(moves, accessor, gameAdapter, moveCoordsDto);
         } catch (IllegalArgumentException e) {
             exceptionHandler.sendException(e.getMessage());
         }
