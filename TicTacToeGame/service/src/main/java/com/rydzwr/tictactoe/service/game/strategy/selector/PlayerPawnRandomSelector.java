@@ -2,7 +2,7 @@ package com.rydzwr.tictactoe.service.game.strategy.selector;
 
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
-import com.rydzwr.tictactoe.game.constants.GameConstants;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

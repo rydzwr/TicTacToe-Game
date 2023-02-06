@@ -5,7 +5,7 @@ import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
 import com.rydzwr.tictactoe.service.dto.incoming.InviteCodeDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.LoadGameDto;
 import com.rydzwr.tictactoe.service.game.GameService;
-import com.rydzwr.tictactoe.game.constants.GameConstants;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.game.validator.GameDtoValidator;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
 import jakarta.validation.Valid;

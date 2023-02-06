@@ -1,4 +1,4 @@
-package com.rydzwr.tictactoe.game.algorithm;
+package com.rydzwr.tictactoe.service.game.algorithm;
 
 import org.springframework.stereotype.Component;
 

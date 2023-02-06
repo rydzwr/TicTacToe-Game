@@ -1,9 +1,7 @@
 package com.rydzwr.tictactoe.service.game.validator;
 
-import com.rydzwr.tictactoe.database.model.Game;
-import com.rydzwr.tictactoe.database.model.Player;
-import com.rydzwr.tictactoe.game.constants.GameConstants;
-import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
+import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.game.GameService;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import lombok.AllArgsConstructor;
@@ -15,15 +13,17 @@ import org.springframework.stereotype.Component;
 public class PlayerMoveValidator {
     private final GameService gameService;
 
-    public boolean validatePlayerMove(String newGameBoard, int moveIndex) {
-        if (moveIndex > newGameBoard.length()) {
+    public boolean validatePlayerMove(GameAdapter gameAdapter, MoveCoordsDto moveCoordsDto) {
+        var gameBoard = gameAdapter.getGameBoardCopy();
+        var moveIndex = moveCoordsDto.getIndex(gameAdapter.getGameSize());
+        if (moveIndex > gameBoard.length()) {
             throw new IllegalArgumentException(GameConstants.PLAYER_MOVE_OUT_OF_BOARD_EXCEPTION);
         }
-        return newGameBoard.charAt(moveIndex) != '-';
+        return gameBoard.charAt(moveIndex) != '-';
     }
-    public boolean validateCurrentPlayerTurn(Game game, SimpMessageHeaderAccessor accessor) {
-        Player currentPlayer = new GameAdapter(game).getCurrentPlayer();
-        Player callerPlayer = gameService.retrieveAnyPlayerFromUser(accessor);
+    public boolean validateCurrentPlayerTurn(GameAdapter gameAdapter, SimpMessageHeaderAccessor accessor) {
+        var currentPlayer = gameAdapter.getCurrentPlayer();
+        var callerPlayer = gameService.retrieveAnyPlayerFromUser(accessor);
         return callerPlayer.getPawn() == currentPlayer.getPawn();
     }
 }

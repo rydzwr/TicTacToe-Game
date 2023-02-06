@@ -1,5 +1,6 @@
-package com.rydzwr.tictactoe.game.algorithm;
+package com.rydzwr.tictactoe.service.game.algorithm;
 
+import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import org.springframework.stereotype.Component;
 
 import java.util.Random;
@@ -9,7 +10,8 @@ public class MinimaxAlgorithm {
 
     // NO IT'S NOT MINIMAX ALGORITHM ;)
 
-    public int processMove(String gameBoard, char playerPawn) {
+    public int processMove(GameAdapter gameAdapter, char playerPawn) {
+        var gameBoard = gameAdapter.getGameBoardCopy();
         int moveIndex = -1;
         char[] board = gameBoard.toCharArray();
         Random rand = new Random();

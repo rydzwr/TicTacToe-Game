@@ -2,9 +2,9 @@ package com.rydzwr.tictactoe.web.controller.websocket;
 
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
-import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
-import com.rydzwr.tictactoe.service.dto.outgoing.PlayerMoveResponseDto;
+import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.service.game.WebSocketService;
+import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import com.rydzwr.tictactoe.web.handler.WebSocketExceptionHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -31,17 +31,18 @@ public class GameSocketController {
         }
 
         var game = currentPlayer.getGame();
+        var gameAdapter = new GameAdapter(game);
         var moves = new PlayerMoveResponseDto();
 
-        var index = moveCoordsDto.getIndex(game.getGameSize());
 
+        // TODO CALL IN ONE TRANSACTION
         try {
-            webSocketService.processPlayerMove(moves, accessor, game, index, currentPlayer);
-            webSocketService.processAIPlayers(moves, accessor, game, index);
+            webSocketService.processPlayerMove(moves, accessor, gameAdapter, moveCoordsDto, currentPlayer);
+            webSocketService.processAIPlayers(moves, accessor, gameAdapter, moveCoordsDto);
         } catch (IllegalArgumentException e) {
             exceptionHandler.sendException(e.getMessage());
         }
 
-        webSocketService.processGameStatus(moves, game, currentPlayer, moveCoordsDto.getIndex(game.getGameSize()));
+        webSocketService.processGameStatus(moves, gameAdapter, currentPlayer, moveCoordsDto);
     }
 }

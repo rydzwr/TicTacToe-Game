@@ -1,7 +1,7 @@
 package com.rydzwr.tictactoe.service.game.validator.player;
 
 import com.rydzwr.tictactoe.database.constants.PlayerType;
-import com.rydzwr.tictactoe.game.constants.GameConstants;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

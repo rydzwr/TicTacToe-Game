@@ -1,13 +1,14 @@
 package com.rydzwr.tictactoe.service.game.strategy.gameState;
 
 import com.rydzwr.tictactoe.database.constants.GameState;
-import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
-import com.rydzwr.tictactoe.service.dto.outgoing.CheckWinState;
-import com.rydzwr.tictactoe.service.dto.outgoing.GameResultDto;
+import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
+import com.rydzwr.tictactoe.service.dto.outgoing.gameState.CheckWinState;
+import com.rydzwr.tictactoe.service.dto.outgoing.gameState.GameResultDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.GameStateDto;
-import com.rydzwr.tictactoe.service.dto.outgoing.PlayerMoveResponseDto;
+import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.service.game.GameService;
+import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import com.rydzwr.tictactoe.service.game.constants.WebConstants;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +23,9 @@ public class DrawStateStrategy implements GameStateStrategy {
     private SimpMessagingTemplate template;
 
     @Override
-    public void send(PlayerMoveResponseDto moves, Game game, Player player, int playerMoveIndex) {
-        gameService.deleteFinishedGame(game);
-        var gameStateDto = new GameStateDto(GameState.FINISHED.name(), new GameResultDto("DRAW", null));
-        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, gameStateDto);
+    public Object resolve(PlayerMoveResponseDto moves, GameAdapter gameAdapter, Player player, MoveCoordsDto moveCoordsDto) {
+        gameService.deleteFinishedGame(gameAdapter.getGame());
+        return new GameStateDto(GameState.FINISHED.name(), new GameResultDto("DRAW", null));
     }
 
     @Override

@@ -1,15 +1,15 @@
 package com.rydzwr.tictactoe.service.game.strategy.moveProcessor;
 
 import com.rydzwr.tictactoe.database.constants.PlayerType;
-import com.rydzwr.tictactoe.database.model.Game;
-import com.rydzwr.tictactoe.game.constants.GameConstants;
-import com.rydzwr.tictactoe.service.dto.incoming.PlayerMoveDto;
-import com.rydzwr.tictactoe.service.dto.outgoing.PlayerMoveResponseDto;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
+import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
+import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
+import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 public class ErrorPlayerMoveStrategy implements ProcessMoveStrategy{
     @Override
-    public void processPlayerMove(PlayerMoveResponseDto moves, Game game, SimpMessageHeaderAccessor accessor, int moveIndex) {
+    public void processPlayerMove(PlayerMoveResponseDto moves, GameAdapter gameAdapter, SimpMessageHeaderAccessor accessor, MoveCoordsDto moveCoordsDto) {
         throw  new IllegalArgumentException(GameConstants.INVALID_PLAYER_TYPE_EXCEPTION);
     }
 

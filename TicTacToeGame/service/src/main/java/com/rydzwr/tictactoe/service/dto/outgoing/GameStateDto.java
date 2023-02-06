@@ -1,5 +1,6 @@
 package com.rydzwr.tictactoe.service.dto.outgoing;
 
+import com.rydzwr.tictactoe.service.dto.outgoing.gameState.GameResultDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 

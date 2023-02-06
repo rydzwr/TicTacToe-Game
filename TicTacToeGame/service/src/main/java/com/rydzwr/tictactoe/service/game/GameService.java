@@ -5,8 +5,9 @@ import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;
-import com.rydzwr.tictactoe.game.algorithm.CheckWinAlgorithm;
-import com.rydzwr.tictactoe.game.constants.GameConstants;
+import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
+import com.rydzwr.tictactoe.service.game.algorithm.CheckWinAlgorithm;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.GameStateDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.LoadGameDto;
@@ -60,8 +61,8 @@ public class GameService {
         return playerDatabaseService.findFirstByUser(user);
     }
 
-    public boolean checkWin(Game game, int playerMoveIndex) {
-        return checkWinAlgorithm.checkWin(game, playerMoveIndex);
+    public boolean checkWin(GameAdapter gameAdapter, MoveCoordsDto moveCoordsDto) {
+        return checkWinAlgorithm.checkWin(gameAdapter, moveCoordsDto);
     }
 
     @Transactional
@@ -70,8 +71,8 @@ public class GameService {
     }
 
 
-    public boolean isNextPlayerAIType(Game game) {
-        return new GameAdapter(game).getCurrentPlayer().getPlayerType().equals(PlayerType.AI);
+    public boolean isNextPlayerAIType(GameAdapter gameAdapter) {
+        return gameAdapter.getCurrentPlayer().getPlayerType().equals(PlayerType.AI);
     }
 
     public boolean isUserInGame() {
