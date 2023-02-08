@@ -3,7 +3,7 @@ package com.rydzwr.tictactoe.web.controller.websocket;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
-import com.rydzwr.tictactoe.service.game.WebSocketService;
+import com.rydzwr.tictactoe.service.game.WebService;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import com.rydzwr.tictactoe.web.handler.WebSocketExceptionHandler;
 import lombok.RequiredArgsConstructor;
@@ -17,14 +17,14 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class GameSocketController {
     private final WebSocketExceptionHandler exceptionHandler;
-    private final WebSocketService webSocketService;
+    private final WebService webService;
 
     @MessageMapping("/gameMove")
     public void send(MoveCoordsDto moveCoordsDto, SimpMessageHeaderAccessor accessor) {
 
         Player currentPlayer;
         try {
-            currentPlayer = webSocketService.getCurrentPlayer(accessor);
+            currentPlayer = webService.getCurrentPlayer(accessor);
         } catch (IllegalArgumentException e) {
             exceptionHandler.sendException(e.getMessage());
             return;
@@ -35,11 +35,11 @@ public class GameSocketController {
         var moves = new PlayerMoveResponseDto();
 
         try {
-            webSocketService.processPlayerMove(moves, accessor, gameAdapter, moveCoordsDto, currentPlayer);
+            webService.processPlayerMove(moves, accessor, gameAdapter, moveCoordsDto, currentPlayer);
         } catch (IllegalArgumentException e) {
             exceptionHandler.sendException(e.getMessage());
         }
 
-        webSocketService.processGameStatus(moves, gameAdapter, currentPlayer, moveCoordsDto);
+        webService.processGameStatus(moves, gameAdapter, currentPlayer, moveCoordsDto);
     }
 }

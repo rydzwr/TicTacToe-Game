@@ -46,13 +46,12 @@ public class GameController {
             gameService.removePrevUserGame(callerName);
         }
 
-        LoadGameDto loadGameDto;
         try {
-            loadGameDto = gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode());
+            var loadGameDto = gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode());
+            return new ResponseEntity<>(loadGameDto, HttpStatus.OK);
         }catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(loadGameDto, HttpStatus.OK);
     }
 
     @GetMapping("/continueGame")
@@ -69,13 +68,13 @@ public class GameController {
     @PostMapping("/createGame")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> createNewGame(@Valid @RequestBody GameDto gameDto) {
+        if (!validator.validateReceivedData(gameDto)) {
+            return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.BAD_REQUEST);
+        }
+
         if (gameService.isUserInGame()) {
             String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
             gameService.removePrevUserGame(callerName);
-        }
-
-        if (!validator.validateReceivedData(gameDto)) {
-            return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
 
         var playersToJoin = gameDto.getHumanGameSlots() - 1;

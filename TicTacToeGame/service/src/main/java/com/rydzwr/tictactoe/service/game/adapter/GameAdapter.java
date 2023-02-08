@@ -1,12 +1,15 @@
 package com.rydzwr.tictactoe.service.game.adapter;
 
+import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
+@Slf4j
 @AllArgsConstructor
 public class GameAdapter {
     private Game game;
@@ -76,5 +79,21 @@ public class GameAdapter {
 
     public Game getGame(){
         return game;
+    }
+
+    public boolean isNextPlayerAIType() {
+        return getCurrentPlayer().getPlayerType().equals(PlayerType.AI);
+    }
+
+    public boolean isOutOfBoard(MoveCoordsDto moveCoordsDto) {
+        int x = moveCoordsDto.getX();
+        int y = moveCoordsDto.getY();
+        int gameSize = getGameSize();
+        return x >= 0 && y >= 0 && x < gameSize && y < gameSize;
+    }
+
+    public boolean hasPawn(MoveCoordsDto moveCoordsDto, char candidate) {
+        int index = moveCoordsDto.getIndex(getGameSize());
+        return getGameBoardCopy().charAt(index) == candidate;
     }
 }

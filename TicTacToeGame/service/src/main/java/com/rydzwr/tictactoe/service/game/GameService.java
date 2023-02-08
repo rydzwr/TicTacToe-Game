@@ -9,11 +9,9 @@ import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.game.algorithm.CheckWinAlgorithm;
 import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
-import com.rydzwr.tictactoe.service.dto.outgoing.GameStateDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.LoadGameDto;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import com.rydzwr.tictactoe.service.game.builder.PlayerBuilder;
-import com.rydzwr.tictactoe.service.game.constants.WebConstants;
 import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
 import com.rydzwr.tictactoe.service.game.database.PlayerDatabaseService;
 import com.rydzwr.tictactoe.service.game.strategy.selector.GameBuilderStrategySelector;
@@ -21,9 +19,7 @@ import com.rydzwr.tictactoe.service.game.strategy.selector.PlayerPawnRandomSelec
 import com.rydzwr.tictactoe.service.security.database.UserDatabaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,14 +30,14 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class GameService {
-    @Autowired
-    private SimpMessagingTemplate template;
     private final GameBuilderStrategySelector selector;
     private final GameDatabaseService gameDatabaseService;
     private final UserDatabaseService userDatabaseService;
     private final PlayerDatabaseService playerDatabaseService;
     private final CheckWinAlgorithm checkWinAlgorithm;
+    private final WebSocketService webSocketService;
 
+    @Transactional
     public Game buildGame(GameDto gameDto) {
         var strategy = selector.chooseStrategy(gameDto);
         var game = strategy.buildGame(gameDto);
@@ -70,10 +66,6 @@ public class GameService {
         gameDatabaseService.delete(game);
     }
 
-
-    public boolean isNextPlayerAIType(GameAdapter gameAdapter) {
-        return gameAdapter.getCurrentPlayer().getPlayerType().equals(PlayerType.AI);
-    }
 
     public boolean isUserInGame() {
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -127,22 +119,14 @@ public class GameService {
         availableGameSlots--;
 
         playerDatabaseService.save(newPlayer);
-        updateAwaitingPlayersLobby(availableGameSlots);
+        webSocketService.updateAwaitingPlayersLobby(availableGameSlots);
 
         if (availableGameSlots == 0) {
             game.setState(GameState.IN_PROGRESS);
             gameDatabaseService.save(game);
-            startOnlineGame();
+            webSocketService.startOnlineGame();
         }
 
         return new LoadGameDto(game, availablePawn, GameConstants.DEFAULT_STARTING_PAWN, availableGameSlots);
-    }
-
-    private void updateAwaitingPlayersLobby(int availableGameSlots) {
-        template.convertAndSend(WebConstants.WEB_SOCKET_AWAITING_PLAYERS_ENDPOINT, availableGameSlots);
-    }
-
-    private void startOnlineGame() {
-        template.convertAndSend(WebConstants.WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateDto(GameState.IN_PROGRESS.name()));
     }
 }

@@ -18,8 +18,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class DrawStateStrategy implements GameStateStrategy {
     private final GameService gameService;
-    @Autowired
-    private SimpMessagingTemplate template;
 
     @Override
     public Object resolve(PlayerMoveResponseDto moves, GameAdapter gameAdapter, Player player, MoveCoordsDto moveCoordsDto) {

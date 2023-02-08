@@ -19,8 +19,6 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class WinGameStrategy implements GameStateStrategy {
     private final GameService gameService;
-    @Autowired
-    private SimpMessagingTemplate template;
 
     @Override
     public Object resolve(PlayerMoveResponseDto moves, GameAdapter gameAdapter, Player player, MoveCoordsDto moveCoordsDto) {
