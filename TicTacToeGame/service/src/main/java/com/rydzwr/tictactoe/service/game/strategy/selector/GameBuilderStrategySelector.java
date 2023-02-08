@@ -12,7 +12,7 @@ import java.util.List;
 @Service
 public class GameBuilderStrategySelector {
     @Autowired
-    private List<BuildGameStrategy> strategyList;
+    public List<BuildGameStrategy> strategyList;
 
     public BuildGameStrategy chooseStrategy(GameDto gameDto) {
         return strategyList

@@ -13,4 +13,5 @@ public class PlayerDto {
     @NotNull
     @ValidPlayerType
     private String playerType;
+
 }

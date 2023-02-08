@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class WebService {
+public class GameMoveService {
     private final GameService gameService;
     private final PlayerMoveStrategySelector playerMoveStrategySelector;
     private final GameStateStrategySelector gameStateStrategySelector;

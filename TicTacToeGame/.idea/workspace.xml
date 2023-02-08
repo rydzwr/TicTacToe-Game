@@ -7,33 +7,17 @@
     <list default="true" id="8e697bde-ed68-4dcf-ae5c-774d34f5675b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/test/java/com/rydzwr/tictactoe/security/MyServiceTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/incoming/MoveCoordsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/incoming/MoveCoordsDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/WebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/WebService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/incoming/PlayerDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/incoming/PlayerDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/WebService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameMoveService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/adapter/GameAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/adapter/GameAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/algorithm/CheckWinAlgorithm.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/algorithm/CheckWinAlgorithm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/ContinueGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/ContinueGameStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/GameService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/WebSocketService.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/WebSocketService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/selector/GameBuilderStrategySelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/selector/GameBuilderStrategySelector.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/adapter/GameAdapter.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/adapter/GameAdapter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/algorithm/CheckWinAlgorithm.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/algorithm/CheckWinAlgorithm.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/builder/GameBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/builder/GameBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/builder/PlayerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/builder/PlayerBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/ContinueGameStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/ContinueGameStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/DrawStateStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/DrawStateStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/WinGameStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/WinGameStrategy.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" afterDir="false" />
     </list>
-    <list id="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" name="Changes by gmakosa" comment="">
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/repository/GameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/repository/GameRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/adapter/GameAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/adapter/GameAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/builder/GameBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/builder/GameBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/builder/PlayerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/builder/PlayerBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/DrawStateStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/DrawStateStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/WinGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/WinGameStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" afterDir="false" />
-    </list>
+    <list id="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" name="Changes by gmakosa" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -69,31 +53,6 @@
       </map>
     </option>
   </component>
-  <component name="LineStatusTrackerManager">
-    <file path="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java">
-      <ranges>
-        <range start1="11" end1="12" start2="11" end2="11" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-        <range start1="15" end1="16" start2="14" end2="14" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-        <range start1="23" end1="24" start2="21" end2="21" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-        <range start1="25" end1="26" start2="22" end2="22" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-        <range start1="36" end1="38" start2="32" end2="32" changelist="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" />
-        <range start1="43" end1="43" start2="37" end2="38" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-        <range start1="44" end1="44" start2="39" end2="40" changelist="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" />
-        <range start1="73" end1="77" start2="69" end2="69" changelist="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" />
-        <range start1="129" end1="130" start2="121" end2="122" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-        <range start1="134" end1="135" start2="126" end2="127" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-        <range start1="139" end1="147" start2="131" end2="131" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-      </ranges>
-    </file>
-    <file path="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/adapter/GameAdapter.java">
-      <ranges>
-        <range start1="2" end1="2" start2="2" end2="3" changelist="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" />
-        <range start1="6" end1="6" start2="7" end2="8" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-        <range start1="9" end1="9" start2="11" end2="12" changelist="8e697bde-ed68-4dcf-ae5c-774d34f5675b" />
-        <range start1="79" end1="79" start2="82" end2="98" changelist="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" />
-      </ranges>
-    </file>
-  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -127,44 +86,81 @@
       <recent name="D:\Programs\Projects\Sagiton Praktyki\TicTacToe Game\TicTacToeGame\application\src\main\resources" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.Application (1)">
-    <configuration name="Application (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.application.Application" />
-      <module name="application" />
+  <component name="RunManager" selected="JUnit.GameBuilderStrategySelectorTest">
+    <configuration name="GameBuilderStrategySelectorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.application.*" />
+          <option name="PATTERN" value="strategy.selector.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="strategy.selector" />
+      <option name="MAIN_CLASS_NAME" value="strategy.selector.GameBuilderStrategySelectorTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.application.Application" />
-      <module name="TicTacToeGame" />
+    <configuration name="GameBuilderStrategySelectorTest.chooseStrategy_returnsLocalGameStrategy" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.*" />
+          <option name="PATTERN" value="strategy.selector.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <option name="PACKAGE_NAME" value="strategy.selector" />
+      <option name="MAIN_CLASS_NAME" value="strategy.selector.GameBuilderStrategySelectorTest" />
+      <option name="METHOD_NAME" value="chooseStrategy_returnsLocalGameStrategy" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="MyServiceTest.contextLoads" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="security" />
+    <configuration name="GameBuilderStrategySelectorTest.test" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.security.*" />
+          <option name="PATTERN" value="strategy.selector.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.security" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.security.MyServiceTest" />
-      <option name="METHOD_NAME" value="contextLoads" />
+      <option name="PACKAGE_NAME" value="strategy.selector" />
+      <option name="MAIN_CLASS_NAME" value="strategy.selector.GameBuilderStrategySelectorTest" />
+      <option name="METHOD_NAME" value="test" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MinimaxAlgorithmTest.processMove_returnsValidIndex_WhenBoardHasEmptySpaces" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="algorithm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="algorithm" />
+      <option name="MAIN_CLASS_NAME" value="algorithm.MinimaxAlgorithmTest" />
+      <option name="METHOD_NAME" value="processMove_returnsValidIndex_WhenBoardHasEmptySpaces" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MinimaxAlgorithmTest.processMove_returnsValidMove_WhenBoardHasEmptySpaces" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="algorithm.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="algorithm" />
+      <option name="MAIN_CLASS_NAME" value="algorithm.MinimaxAlgorithmTest" />
+      <option name="METHOD_NAME" value="processMove_returnsValidMove_WhenBoardHasEmptySpaces" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -172,9 +168,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.Application (1)" />
-        <item itemvalue="Application.Application" />
-        <item itemvalue="JUnit.MyServiceTest.contextLoads" />
+        <item itemvalue="JUnit.GameBuilderStrategySelectorTest" />
+        <item itemvalue="JUnit.GameBuilderStrategySelectorTest.test" />
+        <item itemvalue="JUnit.GameBuilderStrategySelectorTest.chooseStrategy_returnsLocalGameStrategy" />
+        <item itemvalue="JUnit.MinimaxAlgorithmTest.processMove_returnsValidMove_WhenBoardHasEmptySpaces" />
+        <item itemvalue="JUnit.MinimaxAlgorithmTest.processMove_returnsValidIndex_WhenBoardHasEmptySpaces" />
       </list>
     </recent_temporary>
   </component>

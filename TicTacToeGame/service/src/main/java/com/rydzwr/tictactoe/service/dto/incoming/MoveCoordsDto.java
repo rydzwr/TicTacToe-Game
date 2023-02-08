@@ -1,21 +1,18 @@
 package com.rydzwr.tictactoe.service.dto.incoming;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class MoveCoordsDto {
     private int x;
     private int y;
 
     public int getIndex(int gameSize) {
-        return x * gameSize + y;
-    }
-
-    public MoveCoordsDto(int index, int gameSize) {
-        this.x = index / gameSize;
-        this.y = index % gameSize;
+        return this.x * gameSize + this.y;
     }
 
     public MoveCoordsDto copy() {

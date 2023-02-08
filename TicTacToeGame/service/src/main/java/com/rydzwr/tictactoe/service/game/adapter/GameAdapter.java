@@ -52,18 +52,6 @@ public class GameAdapter {
         return getGameBoardCopy().charAt(index);
     }
 
-    public char getPawnAtIndex(int index) {
-        return getGameBoardCopy().charAt(index);
-    }
-
-    //--------------------------------------------------
-    private char getPawnAt(MoveCoordsDto moveCoordsDto) {
-        var index = moveCoordsDto.getIndex(game.getGameSize());
-        char[] boardArray = game.getGameBoard().toCharArray();
-        return boardArray[index];
-    }
-    //--------------------------------------------------
-
     public String getGameBoardCopy() {
         var original = game.getGameBoard();
         return original.substring(0, original.length());
@@ -94,6 +82,10 @@ public class GameAdapter {
 
     public boolean hasPawn(MoveCoordsDto moveCoordsDto, char candidate) {
         int index = moveCoordsDto.getIndex(getGameSize());
-        return getGameBoardCopy().charAt(index) == candidate;
+        String gameBoard = getGameBoardCopy();
+        if (index >= 0 && index < gameBoard.length()) {
+            return gameBoard.charAt(index) == candidate;
+        }
+        return false;
     }
 }
