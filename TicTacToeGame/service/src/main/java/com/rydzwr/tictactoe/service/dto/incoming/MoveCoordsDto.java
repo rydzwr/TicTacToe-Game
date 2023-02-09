@@ -26,4 +26,9 @@ public class MoveCoordsDto {
         this.setX(this.getX() + x);
         this.setY(this.getY() + y);
     }
+
+    public void setCoords(int index, int gameSize) {
+        this.x = index / gameSize;
+        this.y = index % gameSize;
+    }
 }

@@ -1,7 +1,7 @@
 package com.rydzwr.tictactoe.web.handler;
 
-import com.rydzwr.tictactoe.web.exception.ExceptionModel;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
+import com.rydzwr.tictactoe.web.exception.ExceptionModel;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;

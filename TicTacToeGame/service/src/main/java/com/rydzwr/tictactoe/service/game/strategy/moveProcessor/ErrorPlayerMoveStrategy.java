@@ -1,10 +1,10 @@
 package com.rydzwr.tictactoe.service.game.strategy.moveProcessor;
 
 import com.rydzwr.tictactoe.database.constants.PlayerType;
-import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 
 public class ErrorPlayerMoveStrategy implements ProcessMoveStrategy{

@@ -6,7 +6,6 @@ import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerDto;
 import jakarta.validation.Valid;
-import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

@@ -2,10 +2,10 @@ package com.rydzwr.tictactoe.service.game.strategy.moveProcessor;
 
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
-import com.rydzwr.tictactoe.service.game.algorithm.MinimaxAlgorithm;
-import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
+import com.rydzwr.tictactoe.service.game.algorithm.MinimaxAlgorithm;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +30,8 @@ public class AIPlayerMoveStrategy implements ProcessMoveStrategy{
         char playerPawn = gameAdapter.getCurrentPlayer().getPawn();
         int gameBoardIndex = minimaxAlgorithm.processMove(gameAdapter, playerPawn);
 
-        var aiMove = new MoveCoordsDto(gameBoardIndex, gameAdapter.getGameSize());
+        var aiMove = new MoveCoordsDto();
+        aiMove.setCoords(gameBoardIndex, gameAdapter.getGameSize());
 
         moves.addValueToProcessedMovesIndices(aiMove, gameAdapter);
         moves.addValueToProcessedMovesPawns(playerPawn);

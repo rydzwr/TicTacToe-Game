@@ -2,7 +2,6 @@ package com.rydzwr.tictactoe.service.dto.outgoing.gameState;
 
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.ArrayList;

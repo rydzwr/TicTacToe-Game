@@ -5,13 +5,13 @@ import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.database.model.User;
-import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
-import com.rydzwr.tictactoe.service.game.algorithm.CheckWinAlgorithm;
-import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
+import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.LoadGameDto;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
+import com.rydzwr.tictactoe.service.game.algorithm.CheckWinAlgorithm;
 import com.rydzwr.tictactoe.service.game.builder.PlayerBuilder;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
 import com.rydzwr.tictactoe.service.game.database.PlayerDatabaseService;
 import com.rydzwr.tictactoe.service.game.strategy.selector.GameBuilderStrategySelector;
@@ -35,7 +35,6 @@ public class GameService {
     private final UserDatabaseService userDatabaseService;
     private final PlayerDatabaseService playerDatabaseService;
     private final CheckWinAlgorithm checkWinAlgorithm;
-    private final WebSocketService webSocketService;
 
     @Transactional
     public Game buildGame(GameDto gameDto) {
@@ -119,12 +118,10 @@ public class GameService {
         availableGameSlots--;
 
         playerDatabaseService.save(newPlayer);
-        webSocketService.updateAwaitingPlayersLobby(availableGameSlots);
 
         if (availableGameSlots == 0) {
             game.setState(GameState.IN_PROGRESS);
             gameDatabaseService.save(game);
-            webSocketService.startOnlineGame();
         }
 
         return new LoadGameDto(game, availablePawn, GameConstants.DEFAULT_STARTING_PAWN, availableGameSlots);

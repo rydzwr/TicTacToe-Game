@@ -1,12 +1,11 @@
 package com.rydzwr.tictactoe.service.game;
 
 import com.rydzwr.tictactoe.database.model.Player;
-import com.rydzwr.tictactoe.service.dto.outgoing.GameStateDto;
-import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.gameState.CheckWinState;
 import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.game.strategy.selector.GameStateStrategySelector;
 import com.rydzwr.tictactoe.service.game.strategy.selector.PlayerMoveStrategySelector;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +21,6 @@ public class GameMoveService {
     private final GameService gameService;
     private final PlayerMoveStrategySelector playerMoveStrategySelector;
     private final GameStateStrategySelector gameStateStrategySelector;
-    private final WebSocketService webSocketService;
 
     public Player getCurrentPlayer(SimpMessageHeaderAccessor accessor) {
         Player callerPlayer = gameService.retrieveAnyPlayerFromUser(accessor);
@@ -50,14 +48,10 @@ public class GameMoveService {
         }
     }
 
-    public void processGameStatus(PlayerMoveResponseDto moves, GameAdapter gameAdapter, Player player, MoveCoordsDto moveCoordsDto) {
+    public Object processGameStatus(PlayerMoveResponseDto moves, GameAdapter gameAdapter, Player player, MoveCoordsDto moveCoordsDto) {
         var gameStatus = checkWin(gameAdapter, moveCoordsDto);
         var gameStatusStrategy = gameStateStrategySelector.chooseStrategy(gameStatus);
-        var response = gameStatusStrategy.resolve(moves, gameAdapter, player, moveCoordsDto);
-
-        if (response instanceof GameStateDto) {
-            webSocketService.sendGameResult((GameStateDto) response);
-        } else webSocketService.sendMovesDto((PlayerMoveResponseDto) response);
+        return gameStatusStrategy.resolve(moves, gameAdapter, player, moveCoordsDto);
     }
 
     private CheckWinState checkWin(GameAdapter gameAdapter, MoveCoordsDto moveCoordsDto) {

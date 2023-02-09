@@ -1,9 +1,9 @@
 package com.rydzwr.tictactoe.service.game.strategy.gameBuilder;
 
 import com.rydzwr.tictactoe.database.model.Game;
-import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerDto;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 
 import java.util.List;
 

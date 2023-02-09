@@ -2,10 +2,12 @@ package com.rydzwr.tictactoe.web.controller.websocket;
 
 import com.rydzwr.tictactoe.database.model.Player;
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
+import com.rydzwr.tictactoe.service.dto.outgoing.GameStateDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
 import com.rydzwr.tictactoe.service.game.GameMoveService;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import com.rydzwr.tictactoe.web.handler.WebSocketExceptionHandler;
+import com.rydzwr.tictactoe.web.service.WebSocketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 public class GameSocketController {
     private final WebSocketExceptionHandler exceptionHandler;
     private final GameMoveService gameMoveService;
+    private final WebSocketService webSocketService;
 
     @MessageMapping("/gameMove")
     public void send(MoveCoordsDto moveCoordsDto, SimpMessageHeaderAccessor accessor) {
@@ -40,6 +43,12 @@ public class GameSocketController {
             exceptionHandler.sendException(e.getMessage());
         }
 
-        gameMoveService.processGameStatus(moves, gameAdapter, currentPlayer, moveCoordsDto);
+        var response = gameMoveService.processGameStatus(moves, gameAdapter, currentPlayer, moveCoordsDto);
+
+        if (response instanceof GameStateDto) {
+            webSocketService.sendGameResult((GameStateDto) response);
+        } else {
+            webSocketService.sendMovesDto((PlayerMoveResponseDto) response);
+        }
     }
 }

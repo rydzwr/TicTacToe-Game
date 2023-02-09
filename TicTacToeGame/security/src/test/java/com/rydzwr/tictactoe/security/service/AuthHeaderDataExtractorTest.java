@@ -1,6 +1,8 @@
 package com.rydzwr.tictactoe.security.service;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.security.authentication.BadCredentialsException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -8,9 +10,6 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.HttpHeaders.AUTHORIZATION;
-
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 
 public class AuthHeaderDataExtractorTest {

@@ -8,6 +8,7 @@ import com.rydzwr.tictactoe.service.game.GameService;
 import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.game.validator.GameDtoValidator;
 import com.rydzwr.tictactoe.web.constants.WebConstants;
+import com.rydzwr.tictactoe.web.service.WebSocketService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 public class GameController {
     private final GameService gameService;
     private final GameDtoValidator validator;
+    private final WebSocketService webSocketService;
 
     @GetMapping("/canResumeGame")
     @PreAuthorize("hasAuthority('USER')")
@@ -48,6 +50,12 @@ public class GameController {
 
         try {
             var loadGameDto = gameService.addPlayerToOnlineGame(callerName, inviteCode.getInviteCode());
+            webSocketService.updateAwaitingPlayersLobby(loadGameDto.getAwaitingPlayers());
+
+            if (loadGameDto.getAwaitingPlayers() == 0) {
+                webSocketService.startOnlineGame();
+            }
+
             return new ResponseEntity<>(loadGameDto, HttpStatus.OK);
         }catch (IllegalArgumentException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);

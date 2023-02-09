@@ -1,9 +1,9 @@
 package com.rydzwr.tictactoe.service.game.validator;
 
-import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.game.GameService;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
+import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Component;
