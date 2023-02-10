@@ -26,7 +26,7 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
 
     @Override
     @Transactional
-    public Game buildGame(GameDto gameDto) {
+    public Game buildGame(GameDto gameDto, String callerName) {
         String inviteCode = inviteCodeGenerator.generateCode();
 
         Game game = new GameBuilder(gameDto.getGameSize(), gameDto.getGameDifficulty())
@@ -37,7 +37,7 @@ public class MultiPlayerGameStrategy implements BuildGameStrategy {
 
         gameDatabaseService.save(game);
 
-        var caller = gameBuilderService.getCaller();
+        var caller = gameBuilderService.getCaller(callerName);
         assert caller != null;
 
         int aiPlayersCount = gameDto.countAIPlayers();

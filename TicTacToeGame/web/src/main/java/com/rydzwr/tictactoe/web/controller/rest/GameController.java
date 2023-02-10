@@ -76,17 +76,18 @@ public class GameController {
     @PostMapping("/createGame")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> createNewGame(@Valid @RequestBody GameDto gameDto) {
+        var callerName = SecurityContextHolder.getContext().getAuthentication().getName();
+
         if (!validator.validateReceivedData(gameDto)) {
             return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
 
         if (gameService.isUserInGame()) {
-            String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
             gameService.removePrevUserGame(callerName);
         }
 
         var playersToJoin = gameDto.getHumanGameSlots() - 1;
-        Game game = gameService.buildGame(gameDto);
+        Game game = gameService.buildGame(gameDto, callerName);
         var loadGameDto = new LoadGameDto(game, GameConstants.DEFAULT_STARTING_PAWN, GameConstants.DEFAULT_STARTING_PAWN, playersToJoin);
         return new ResponseEntity<>(loadGameDto, HttpStatus.CREATED);
     }

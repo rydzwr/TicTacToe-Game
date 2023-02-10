@@ -1,80 +1,165 @@
 package com.rydzwr.tictactoe.service.game.strategy;
 
+import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
+import com.rydzwr.tictactoe.service.ServiceTestConfiguration;
 import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerDto;
 import com.rydzwr.tictactoe.service.game.GameBuilderService;
-import com.rydzwr.tictactoe.service.game.algorithm.InviteCodeGenerator;
 import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
-import com.rydzwr.tictactoe.service.game.strategy.gameBuilder.BuildGameStrategy;
 import com.rydzwr.tictactoe.service.game.strategy.gameBuilder.LocalPlayerGameStrategy;
 import com.rydzwr.tictactoe.service.game.strategy.gameBuilder.MultiPlayerGameStrategy;
 import com.rydzwr.tictactoe.service.game.strategy.selector.GameBuilderStrategySelector;
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.util.ReflectionTestUtils;
+import com.rydzwr.tictactoe.service.security.database.UserDatabaseService;
+import com.rydzwr.tictactoe.service.security.factory.UserFactory;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@ExtendWith(MockitoExtension.class)
+import static org.junit.Assert.*;
+
+@Slf4j
+@SpringBootTest
+@RunWith(SpringRunner.class)
+@Import(ServiceTestConfiguration.class)
+@TestPropertySource(locations = "classpath:application-test.properties")
 public class GameBuilderStrategyTest {
 
-    @Mock
-    private GameDatabaseService gameDatabaseService;
-
-    @Mock
-    private GameBuilderService gameBuilderService;
-
-    @Mock
-    private InviteCodeGenerator inviteCodeGenerator;
-
-    @InjectMocks
-    private MultiPlayerGameStrategy multiPlayerGameStrategy;
-
-    @InjectMocks
+    @Autowired
+    private GameBuilderStrategySelector strategySelector;
+    @Autowired
     private LocalPlayerGameStrategy localPlayerGameStrategy;
+    @Autowired
+    private MultiPlayerGameStrategy multiPlayerGameStrategy;
+    @Autowired
+    private GameBuilderService gameBuilderService;
+    @Autowired
+    private UserFactory userFactory;
+    @Autowired
+    private UserDatabaseService userDatabaseService;
+
+    @Autowired
+    private GameDatabaseService gameDatabaseService;
 
     @Test
     public void testChooseLocalStrategy() {
-        List<BuildGameStrategy> strategyList = List.of(localPlayerGameStrategy);
-        var selector = new GameBuilderStrategySelector();
+        // GIVEN
+        List<PlayerDto> playerDtoList = new ArrayList<>();
 
-        // Use ReflectionTestUtils to set the 'strategyList' field in the selector
-        ReflectionTestUtils.setField(selector, "strategyList", strategyList);
+        for (int i = 0; i < 5; i++) {
+            var playerDto = new PlayerDto();
+            playerDto.setPlayerType(PlayerType.LOCAL.name());
+            playerDtoList.add(playerDto);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            var playerDto = new PlayerDto();
+            playerDto.setPlayerType(PlayerType.AI.name());
+            playerDtoList.add(playerDto);
+        }
 
         var gameDto = new GameDto();
-        var playerDto1 = new PlayerDto();
-        playerDto1.setPlayerType(PlayerType.LOCAL.name());
+        gameDto.setPlayers(playerDtoList);
 
-        gameDto.setPlayers(List.of(playerDto1));
+        // WHEN
+        var toTest = strategySelector.chooseStrategy(gameDto);
 
-        var chosenStrategy = selector.chooseStrategy(gameDto);
-
-        MatcherAssert.assertThat(chosenStrategy, Matchers.instanceOf(LocalPlayerGameStrategy.class));
+        // THEN
+        assertTrue(toTest instanceof LocalPlayerGameStrategy);
     }
 
     @Test
     public void testChooseMultiStrategy() {
-        List<BuildGameStrategy> strategyList = List.of(multiPlayerGameStrategy);
-        var selector = new GameBuilderStrategySelector();
+        // GIVEN
+        List<PlayerDto> playerDtoList = new ArrayList<>();
 
-        // Use ReflectionTestUtils to set the 'strategyList' field in the selector
-        ReflectionTestUtils.setField(selector, "strategyList", strategyList);
+        for (int i = 0; i < 5; i++) {
+            var playerDto = new PlayerDto();
+            playerDto.setPlayerType(PlayerType.ONLINE.name());
+            playerDtoList.add(playerDto);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            var playerDto = new PlayerDto();
+            playerDto.setPlayerType(PlayerType.AI.name());
+            playerDtoList.add(playerDto);
+        }
 
         var gameDto = new GameDto();
-        var playerDto1 = new PlayerDto();
-        playerDto1.setPlayerType(PlayerType.ONLINE.name());
+        gameDto.setPlayers(playerDtoList);
 
-        gameDto.setPlayers(List.of(playerDto1));
+        // WHEN
+        var toTest = strategySelector.chooseStrategy(gameDto);
 
-        var chosenStrategy = selector.chooseStrategy(gameDto);
+        // THEN
+        assertTrue(toTest instanceof MultiPlayerGameStrategy);
+    }
 
-        MatcherAssert.assertThat(chosenStrategy, Matchers.instanceOf(MultiPlayerGameStrategy.class));
+    @Test
+    public void localPlayerGameStrategyTest() {
+        // GIVEN
+        var testUser = userFactory.createUser("localPlayerGameStrategyTest", "test");
+        userDatabaseService.saveUser(testUser);
+
+        List<PlayerDto> playerDtoList = new ArrayList<>();
+
+        for (int i = 0; i < 2; i++) {
+            var playerDto = new PlayerDto();
+            playerDto.setPlayerType(PlayerType.LOCAL.name());
+            playerDtoList.add(playerDto);
+        }
+
+        var gameDto = new GameDto();
+        gameDto.setGameSize(3);
+        gameDto.setGameDifficulty(3);
+        gameDto.setPlayers(playerDtoList);
+
+        // WHEN
+        var toTest = localPlayerGameStrategy.buildGame(gameDto, "localPlayerGameStrategyTest");
+
+        // THEN
+        assertEquals(3, toTest.getGameSize());
+        assertEquals(3, toTest.getDifficulty());
+        assertEquals(GameState.IN_PROGRESS, toTest.getState());
+    }
+
+    @Test
+    public void multiPlayerGameStrategyTest() {
+        // GIVEN
+        var testUser = userFactory.createUser("multiPlayerGameStrategyTest", "test");
+        userDatabaseService.saveUser(testUser);
+
+        List<PlayerDto> playerDtoList = new ArrayList<>();
+
+        for (int i = 0; i < 2; i++) {
+            var playerDto = new PlayerDto();
+            playerDto.setPlayerType(PlayerType.AI.name());
+            playerDtoList.add(playerDto);
+        }
+
+        var gameDto = new GameDto();
+        gameDto.setGameSize(10);
+        gameDto.setGameDifficulty(6);
+        gameDto.setPlayers(playerDtoList);
+
+        // WHEN
+        var toTest = multiPlayerGameStrategy.buildGame(gameDto, "multiPlayerGameStrategyTest");
+        var updatedGame = gameDatabaseService.findById(toTest.getId());
+
+        // THEN
+        assertEquals(10, updatedGame.getGameSize());
+        assertEquals(6, updatedGame.getDifficulty());
+        assertEquals(3, updatedGame.getPlayers().size());
+        assertEquals(GameState.AWAITING_PLAYERS, updatedGame.getState());
     }
 }
 

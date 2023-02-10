@@ -37,9 +37,9 @@ public class GameService {
     private final CheckWinAlgorithm checkWinAlgorithm;
 
     @Transactional
-    public Game buildGame(GameDto gameDto) {
+    public Game buildGame(GameDto gameDto, String callerName) {
         var strategy = selector.chooseStrategy(gameDto);
-        var game = strategy.buildGame(gameDto);
+        var game = strategy.buildGame(gameDto, callerName);
         gameDatabaseService.save(game);
         return gameDatabaseService.findById(game.getId());
     }

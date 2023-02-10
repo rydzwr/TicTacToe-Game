@@ -24,9 +24,9 @@ public class LocalPlayerGameStrategy implements BuildGameStrategy {
 
     @Override
     @Transactional
-    public Game buildGame(GameDto gameDto) {
+    public Game buildGame(GameDto gameDto, String callerName) {
 
-        var caller = gameBuilderService.getCaller();
+        var caller = gameBuilderService.getCaller(callerName);
         assert caller != null;
 
         Game game = new GameBuilder(gameDto.getGameSize(), gameDto.getGameDifficulty())

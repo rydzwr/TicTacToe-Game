@@ -20,8 +20,8 @@ public class GameBuilderService {
     private final UserDatabaseService userDatabaseService;
     private final PlayerDatabaseService playerDatabaseService;
 
-    public User getCaller() {
-        return userDatabaseService.findByName(SecurityContextHolder.getContext().getAuthentication().getName());
+    public User getCaller(String callerName) {
+        return userDatabaseService.findByName(callerName);
     }
 
     public void buildCallerPlayer(User caller, Game game, PlayerType playerType) {

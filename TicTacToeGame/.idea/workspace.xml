@@ -7,56 +7,34 @@
     <list default="true" id="8e697bde-ed68-4dcf-ae5c-774d34f5675b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/application/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/application/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/repository/GameRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/repository/GameRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/repository/PlayerRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/database/src/main/java/com/rydzwr/tictactoe/database/repository/PlayerRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/repository/PlayerRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/database/target/classes/com/rydzwr/tictactoe/database/repository/PlayerRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/test/java/com/rydzwr/tictactoe/security/service/AuthHeaderDataExtractorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/test/java/com/rydzwr/tictactoe/security/service/AuthHeaderDataExtractorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/security/src/test/java/com/rydzwr/tictactoe/security/service/JWTServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/test/java/com/rydzwr/tictactoe/security/service/JWTServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/service/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/incoming/MoveCoordsDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/incoming/MoveCoordsDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/test-classes/com/rydzwr/tictactoe/security/service/AuthHeaderDataExtractorTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/test-classes/com/rydzwr/tictactoe/security/service/AuthHeaderDataExtractorTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/target/test-classes/com/rydzwr/tictactoe/security/service/JWTServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/security/target/test-classes/com/rydzwr/tictactoe/security/service/JWTServiceTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/outgoing/gameState/PlayerMoveResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/outgoing/gameState/PlayerMoveResponseDto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameMoveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameMoveService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameBuilderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameBuilderService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/WebSocketService.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/service/WebSocketService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/builder/GameBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/builder/GameBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/builder/PlayerBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/builder/PlayerBuilder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/database/PlayerDatabaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/database/PlayerDatabaseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/database/GameDatabaseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/database/GameDatabaseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameBuilder/BuildGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameBuilder/BuildGameStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameBuilder/ErrorGameTypeStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameBuilder/ErrorGameTypeStrategy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameBuilder/LocalPlayerGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameBuilder/LocalPlayerGameStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameBuilder/MultiPlayerGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameBuilder/MultiPlayerGameStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/DrawStateStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/DrawStateStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/WinGameStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/gameState/WinGameStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/AIPlayerMoveStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/AIPlayerMoveStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/ErrorPlayerMoveStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/ErrorPlayerMoveStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/LocalPlayerMoveStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/LocalPlayerMoveStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/OnlinePlayerMoveStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/OnlinePlayerMoveStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/selector/GameBuilderStrategySelector.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/strategy/selector/GameBuilderStrategySelector.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/validator/PlayerMoveValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/validator/PlayerMoveValidator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/security/user/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/security/user/UserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/adapter/GameAdapterTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/adapter/GameAdapterTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/algorithm/CheckWinAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/algorithm/CheckWinAlgorithmTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/algorithm/MinimaxAlgorithmTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/algorithm/MinimaxAlgorithmTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/dto/GameDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/dto/GameDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/dto/MoveCoordsDtoTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/dto/MoveCoordsDtoTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/strategy/selector/GameBuilderStrategySelectorTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/dto/incoming/MoveCoordsDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/dto/incoming/MoveCoordsDto.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/GameBuilderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/GameBuilderServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/dto/outgoing/gameState/PlayerMoveResponseDto.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/dto/outgoing/gameState/PlayerMoveResponseDto.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/GameMoveService.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/GameMoveService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/GameService.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/GameService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/WebSocketService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/database/PlayerDatabaseService.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/database/PlayerDatabaseService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/AIPlayerMoveStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/moveProcessor/AIPlayerMoveStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/selector/GameBuilderStrategySelector.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/selector/GameBuilderStrategySelector.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/test-classes/adapter/GameAdapterTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/test-classes/algorithm/CheckWinAlgorithmTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/test-classes/algorithm/MinimaxAlgorithmTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/test-classes/dto/GameDtoTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/test-classes/dto/MoveCoordsDtoTest.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/test-classes/strategy/selector/GameBuilderStrategySelectorTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/builder/PlayerBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/builder/PlayerBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/DrawStateStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/DrawStateStrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/WinGameStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/classes/com/rydzwr/tictactoe/service/game/strategy/gameState/WinGameStrategy.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/GameBuilderServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/GameBuilderServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/ServiceTestConfiguration.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/ServiceTestConfiguration.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/dto/GameDtoTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/dto/GameDtoTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/dto/MoveCoordsDtoTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/dto/MoveCoordsDtoTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/adapter/GameAdapterTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/adapter/GameAdapterTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/algorithm/CheckWinAlgorithmTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/algorithm/CheckWinAlgorithmTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/algorithm/MinimaxAlgorithmTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/algorithm/MinimaxAlgorithmTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/handler/WebSocketExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/handler/WebSocketExceptionHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/rest/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/rest/GameController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketController.class" afterDir="false" />
     </list>
     <list id="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" name="Changes by gmakosa" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -108,20 +86,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "jdk.selected.JAVA_MODULE": "corretto-18",
-    "last_opened_file_path": "D:/Programs/Projects/Sagiton Praktyki/TicTacToe Game/TicTacToeGame/service/src/main/resources",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;corretto-18&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Programs/Projects/Sagiton Praktyki/TicTacToe Game/TicTacToeGame/service/src/main/resources&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Programs\Projects\Sagiton Praktyki\TicTacToe Game\TicTacToeGame\service\src\main\resources" />
@@ -132,6 +110,7 @@
       <recent name="D:\Programs\Projects\Sagiton Praktyki\TicTacToe Game\TicTacToeGame\application\src\main\resources" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.rydzwr.tictactoe.service" />
       <recent name="com.rydzwr.tictactoe.application" />
       <recent name="com.rydzwr.tictactoe.service.game" />
       <recent name="com.rydzwr.tictactoe.service.game.algorithm" />
@@ -140,78 +119,81 @@
       <recent name="com.rydzwr.tictactoe.service" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameBuilderServiceTest (1)">
-    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.application.Application" />
-      <module name="application" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.application.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GameBuilderServiceTest (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.MoveProcessorStrategyTest.onlinePlayerMoveStrategyTestCaseInvalidPlayerTurn">
+    <configuration name="MoveProcessorStrategyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.service.*" />
+          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.strategy.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.GameBuilderServiceTest" />
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.game.strategy" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.game.strategy.MoveProcessorStrategyTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameBuilderServiceTest.testBuildCallerPlayer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="application" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.application.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.application" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.application.GameBuilderServiceTest" />
-      <option name="METHOD_NAME" value="testBuildCallerPlayer" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="GameBuilderServiceTest.testBuildLocalPlayers (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="MoveProcessorStrategyTest.localPlayerMoveStrategyTestInvalidMoveCase" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.service.*" />
+          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.strategy.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.GameBuilderServiceTest" />
-      <option name="METHOD_NAME" value="testBuildLocalPlayers" />
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.game.strategy" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.game.strategy.MoveProcessorStrategyTest" />
+      <option name="METHOD_NAME" value="localPlayerMoveStrategyTestInvalidMoveCase" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameBuilderServiceTest.testBuildLocalPlayers" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="application" />
+    <configuration name="MoveProcessorStrategyTest.onlinePlayerMoveStrategyTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.application.*" />
+          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.strategy.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.application" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.application.GameBuilderServiceTest" />
-      <option name="METHOD_NAME" value="testBuildLocalPlayers" />
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.game.strategy" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.game.strategy.MoveProcessorStrategyTest" />
+      <option name="METHOD_NAME" value="onlinePlayerMoveStrategyTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MoveProcessorStrategyTest.onlinePlayerMoveStrategyTestCaseInvalidPlayerTurn" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.strategy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.game.strategy" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.game.strategy.MoveProcessorStrategyTest" />
+      <option name="METHOD_NAME" value="onlinePlayerMoveStrategyTestCaseInvalidPlayerTurn" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MoveProcessorStrategyTest.onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.strategy.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.game.strategy" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.game.strategy.MoveProcessorStrategyTest" />
+      <option name="METHOD_NAME" value="onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -219,11 +201,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GameBuilderServiceTest (1)" />
-        <item itemvalue="Application.Application" />
-        <item itemvalue="JUnit.GameBuilderServiceTest.testBuildLocalPlayers (1)" />
-        <item itemvalue="JUnit.GameBuilderServiceTest.testBuildLocalPlayers" />
-        <item itemvalue="JUnit.GameBuilderServiceTest.testBuildCallerPlayer" />
+        <item itemvalue="JUnit.MoveProcessorStrategyTest.onlinePlayerMoveStrategyTestCaseInvalidPlayerTurn" />
+        <item itemvalue="JUnit.MoveProcessorStrategyTest.onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed" />
+        <item itemvalue="JUnit.MoveProcessorStrategyTest.localPlayerMoveStrategyTestInvalidMoveCase" />
+        <item itemvalue="JUnit.MoveProcessorStrategyTest.onlinePlayerMoveStrategyTest" />
+        <item itemvalue="JUnit.MoveProcessorStrategyTest" />
       </list>
     </recent_temporary>
   </component>
@@ -248,17 +230,6 @@
         </entry>
       </map>
     </option>
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/adapter/GameAdapter.java</url>
-          <line>32</line>
-          <option name="timeStamp" value="17" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

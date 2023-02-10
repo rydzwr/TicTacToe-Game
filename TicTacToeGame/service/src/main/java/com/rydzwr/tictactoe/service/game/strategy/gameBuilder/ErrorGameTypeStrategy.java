@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ErrorGameTypeStrategy implements BuildGameStrategy {
     @Override
-    public Game buildGame(GameDto gameDto) {
+    public Game buildGame(GameDto gameDto, String callerName) {
         throw new IllegalArgumentException(GameConstants.INVALID_GAME_TYPE_EXCEPTION);
     }
 

@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AIPlayerMoveStrategy implements ProcessMoveStrategy{
+public class AIPlayerMoveStrategy implements ProcessMoveStrategy {
     private final MinimaxAlgorithm minimaxAlgorithm;
     private final GameDatabaseService gameDatabaseService;
     @Override

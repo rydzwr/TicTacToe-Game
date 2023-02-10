@@ -22,6 +22,10 @@ public class GameDatabaseService {
         gameRepository.delete(game);
     }
 
+    public void deleteAll() {
+        gameRepository.deleteAll();
+    }
+
     @Transactional
     public void deleteById(int id) {
         gameRepository.deleteById(id);
