@@ -22,8 +22,8 @@ public class PlayerMoveValidator {
         return gameBoard.charAt(moveIndex) != '-';
     }
     public boolean validateCurrentPlayerTurn(GameAdapter gameAdapter, SimpMessageHeaderAccessor accessor) {
-        var currentPlayer = gameAdapter.getCurrentPlayer();
         var callerPlayer = gameService.retrieveAnyPlayerFromUser(accessor);
+        var currentPlayer = gameAdapter.getCurrentPlayer();
         return callerPlayer.getPawn() == currentPlayer.getPawn();
     }
 }
