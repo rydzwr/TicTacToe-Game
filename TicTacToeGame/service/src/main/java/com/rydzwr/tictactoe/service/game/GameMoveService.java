@@ -50,8 +50,8 @@ public class GameMoveService {
 
     public Object processGameStatus(PlayerMoveResponseDto moves, GameAdapter gameAdapter, Player player, MoveCoordsDto moveCoordsDto) {
         var gameStatus = checkWin(gameAdapter, moveCoordsDto);
-        var gameStatusStrategy = gameStateStrategySelector.chooseStrategy(gameStatus);
-        return gameStatusStrategy.resolve(moves, gameAdapter, player, moveCoordsDto);
+        var gameStateStrategy = gameStateStrategySelector.chooseStrategy(gameStatus);
+        return gameStateStrategy.resolve(moves, gameAdapter, player, moveCoordsDto);
     }
 
     private CheckWinState checkWin(GameAdapter gameAdapter, MoveCoordsDto moveCoordsDto) {

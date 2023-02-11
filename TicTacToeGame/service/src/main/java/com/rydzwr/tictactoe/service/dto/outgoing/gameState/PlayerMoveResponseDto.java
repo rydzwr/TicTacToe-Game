@@ -2,7 +2,6 @@ package com.rydzwr.tictactoe.service.dto.outgoing.gameState;
 
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 

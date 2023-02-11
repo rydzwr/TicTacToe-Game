@@ -1,12 +1,12 @@
-package com.rydzwr.tictactoe.service.validator;
+package com.rydzwr.tictactoe.service.game.validator;
 
 import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerDto;
-import com.rydzwr.tictactoe.service.game.validator.GameDtoValidator;
 import org.junit.Test;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class GameDtoValidatorTest {
 

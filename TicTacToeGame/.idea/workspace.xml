@@ -7,7 +7,20 @@
     <list default="true" id="8e697bde-ed68-4dcf-ae5c-774d34f5675b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/validator/PlayerMoveValidator.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/validator/PlayerMoveValidator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/outgoing/gameState/PlayerMoveResponseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/dto/outgoing/gameState/PlayerMoveResponseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameBuilderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameBuilderService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameMoveService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameMoveService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/GameBuilderServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/GameBuilderServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameStateStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameStateStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/MoveProcessorStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/MoveProcessorStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/validator/GameDtoValidatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/validator/GameDtoValidatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/validator/PlayerMoveValidatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/validator/PlayerMoveValidatorTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/GameBuilderServiceTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/validator/GameDtoValidatorTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/validator/PlayerMoveValidatorTest.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" afterDir="false" />
     </list>
     <list id="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" name="Changes by gmakosa" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -83,102 +96,94 @@
       <recent name="D:\Programs\Projects\Sagiton Praktyki\TicTacToe Game\TicTacToeGame\application\src\main\resources" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.rydzwr.tictactoe.service.game" />
       <recent name="com.rydzwr.tictactoe.service" />
       <recent name="com.rydzwr.tictactoe.application" />
-      <recent name="com.rydzwr.tictactoe.service.game" />
       <recent name="com.rydzwr.tictactoe.service.game.algorithm" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.rydzwr.tictactoe.service" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PlayerMoveValidatorTest">
-    <configuration name="PlayerMoveValidatorTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.All in service">
+    <configuration name="All in service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameBuilderServiceTest.buildAIPlayersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="service" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.service.validator.*" />
+          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.validator" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.validator.PlayerMoveValidatorTest" />
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.game" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.game.GameBuilderServiceTest" />
+      <option name="METHOD_NAME" value="buildAIPlayersTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameBuilderServiceTest.buildCallerPlayerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.game" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.game.GameBuilderServiceTest" />
+      <option name="METHOD_NAME" value="buildCallerPlayerTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameBuilderServiceTest.buildLocalPlayersTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.game" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.game.GameBuilderServiceTest" />
+      <option name="METHOD_NAME" value="buildLocalPlayersTest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GameMoveServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.rydzwr.tictactoe.service.game.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.game" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.game.GameMoveServiceTest" />
       <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PlayerMoveValidatorTest.validateCurrentPlayerTurnReturnsTrue" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.service.validator.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.validator" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.validator.PlayerMoveValidatorTest" />
-      <option name="METHOD_NAME" value="validateCurrentPlayerTurnReturnsTrue" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PlayerMoveValidatorTest.validatePlayerMoveTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.service.validator.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.validator" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.validator.PlayerMoveValidatorTest" />
-      <option name="METHOD_NAME" value="validatePlayerMoveTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PlayerMoveValidatorTest.validatePlayerMoveTestCaseOutOfBoard" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.service.validator.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.validator" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.validator.PlayerMoveValidatorTest" />
-      <option name="METHOD_NAME" value="validatePlayerMoveTestCaseOutOfBoard" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="PlayerMoveValidatorTest.validatePlayerMoveTestReturnsFalse" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.service.validator.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.service.validator" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.service.validator.PlayerMoveValidatorTest" />
-      <option name="METHOD_NAME" value="validatePlayerMoveTestReturnsFalse" />
-      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.PlayerMoveValidatorTest" />
-        <item itemvalue="JUnit.PlayerMoveValidatorTest.validateCurrentPlayerTurnReturnsTrue" />
-        <item itemvalue="JUnit.PlayerMoveValidatorTest.validatePlayerMoveTestCaseOutOfBoard" />
-        <item itemvalue="JUnit.PlayerMoveValidatorTest.validatePlayerMoveTestReturnsFalse" />
-        <item itemvalue="JUnit.PlayerMoveValidatorTest.validatePlayerMoveTest" />
+        <item itemvalue="JUnit.All in service" />
+        <item itemvalue="JUnit.GameBuilderServiceTest.buildCallerPlayerTest" />
+        <item itemvalue="JUnit.GameBuilderServiceTest.buildAIPlayersTest" />
+        <item itemvalue="JUnit.GameBuilderServiceTest.buildLocalPlayersTest" />
+        <item itemvalue="JUnit.GameMoveServiceTest" />
       </list>
     </recent_temporary>
   </component>
@@ -203,6 +208,13 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="JUnit">
+        <watch expression="moveCoordsDto" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

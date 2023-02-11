@@ -10,7 +10,6 @@ import com.rydzwr.tictactoe.service.game.database.PlayerDatabaseService;
 import com.rydzwr.tictactoe.service.game.strategy.selector.PlayerPawnRandomSelector;
 import com.rydzwr.tictactoe.service.security.database.UserDatabaseService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -222,12 +222,12 @@ public class MoveProcessorStrategyTest {
 
     @Test
     public void onlinePlayerMoveStrategyTest() {
-        var testUser = userFactory.createUser("onlinePlayerMoveStrategyTest", "test");
+        var testUser = userFactory.createUser("onlinePlayerMoveStrategyTestAtMoveProcessor", "test");
         userDatabaseService.saveUser(testUser);
 
         Game game = new GameBuilder(3, 3)
                 .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("onlinePlayerMoveStrategyTest")
+                .setInviteCode("onlinePlayerMoveStrategyTestAtMoveProcessor")
                 .build();
 
         gameDatabaseService.save(game);
@@ -253,7 +253,7 @@ public class MoveProcessorStrategyTest {
         gameBuilderService.buildLocalPlayers(game, gameDto);
 
         gameDatabaseService.save(game);
-        var readyGame = gameDatabaseService.findByInviteCode("onlinePlayerMoveStrategyTest");
+        var readyGame = gameDatabaseService.findByInviteCode("onlinePlayerMoveStrategyTestAtMoveProcessor");
 
         var gameAdapter = new GameAdapter(readyGame);
 
@@ -270,7 +270,7 @@ public class MoveProcessorStrategyTest {
         var accessor = mock(SimpMessageHeaderAccessor.class);
 
         var principal = mock(Principal.class);
-        when(principal.getName()).thenReturn("onlinePlayerMoveStrategyTest");
+        when(principal.getName()).thenReturn("onlinePlayerMoveStrategyTestAtMoveProcessor");
 
         when(accessor.getUser()).thenReturn(principal);
 
@@ -284,12 +284,12 @@ public class MoveProcessorStrategyTest {
 
     @Test
     public void onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed() {
-        var testUser = userFactory.createUser("onlinePlayerMoveStrategyTest", "test");
+        var testUser = userFactory.createUser("onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed", "test");
         userDatabaseService.saveUser(testUser);
 
         Game game = new GameBuilder(3, 3)
                 .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("onlinePlayerMoveStrategyTest")
+                .setInviteCode("onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed")
                 .build();
 
         gameDatabaseService.save(game);
@@ -315,7 +315,7 @@ public class MoveProcessorStrategyTest {
         gameBuilderService.buildLocalPlayers(game, gameDto);
 
         gameDatabaseService.save(game);
-        var readyGame = gameDatabaseService.findByInviteCode("onlinePlayerMoveStrategyTest");
+        var readyGame = gameDatabaseService.findByInviteCode("onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed");
 
         var spyGame = spy(readyGame);
         when(spyGame.getGameBoard()).thenReturn("XXXOOOXXX");
@@ -331,7 +331,7 @@ public class MoveProcessorStrategyTest {
 
         var accessor = mock(SimpMessageHeaderAccessor.class);
         var principal = mock(Principal.class);
-        when(principal.getName()).thenReturn("onlinePlayerMoveStrategyTest");
+        when(principal.getName()).thenReturn("onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed");
         when(accessor.getUser()).thenReturn(principal);
 
         var exception = assertThrows(IllegalArgumentException.class, () -> {

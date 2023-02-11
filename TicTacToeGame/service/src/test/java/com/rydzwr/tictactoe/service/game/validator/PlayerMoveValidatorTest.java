@@ -1,4 +1,4 @@
-package com.rydzwr.tictactoe.service.validator;
+package com.rydzwr.tictactoe.service.game.validator;
 
 import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
@@ -12,11 +12,9 @@ import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
 import com.rydzwr.tictactoe.service.game.builder.GameBuilder;
 import com.rydzwr.tictactoe.service.game.constants.GameConstants;
 import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
-import com.rydzwr.tictactoe.service.game.validator.PlayerMoveValidator;
 import com.rydzwr.tictactoe.service.security.database.UserDatabaseService;
 import com.rydzwr.tictactoe.service.security.factory.UserFactory;
 import lombok.extern.slf4j.Slf4j;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +30,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.mock;
 
 @Slf4j
 @SpringBootTest
@@ -160,12 +157,12 @@ public class PlayerMoveValidatorTest {
 
     @Test
     public void validateCurrentPlayerTurnReturnsFalse() {
-        var testUser = userFactory.createUser("testCaseFalse", "test");
+        var testUser = userFactory.createUser("validateCurrentPlayerTurnReturnsFalse", "test");
         userDatabaseService.saveUser(testUser);
 
         Game game = new GameBuilder(3, 3)
                 .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("testCaseFalse")
+                .setInviteCode("validateCurrentPlayerTurnReturnsFalse")
                 .build();
 
         gameDatabaseService.save(game);
@@ -191,7 +188,7 @@ public class PlayerMoveValidatorTest {
         gameBuilderService.buildLocalPlayers(game, gameDto);
 
         gameDatabaseService.save(game);
-        var readyGame = gameDatabaseService.findByInviteCode("testCaseFalse");
+        var readyGame = gameDatabaseService.findByInviteCode("validateCurrentPlayerTurnReturnsFalse");
 
         var spyGame = spy(readyGame);
         when(spyGame.getGameBoard()).thenReturn("---------");
@@ -201,7 +198,7 @@ public class PlayerMoveValidatorTest {
 
         var accessor = mock(SimpMessageHeaderAccessor.class);
         var principal = mock(Principal.class);
-        when(principal.getName()).thenReturn("testCaseFalse");
+        when(principal.getName()).thenReturn("validateCurrentPlayerTurnReturnsFalse");
         when(accessor.getUser()).thenReturn(principal);
 
         var toTest = playerMoveValidator.validateCurrentPlayerTurn(gameAdapter, accessor);

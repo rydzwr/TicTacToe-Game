@@ -20,7 +20,6 @@ import com.rydzwr.tictactoe.service.security.database.UserDatabaseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,14 +65,12 @@ public class GameService {
     }
 
 
-    public boolean isUserInGame() {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+    public boolean isUserInGame(String userName) {
         User caller = userDatabaseService.findByName(userName);
         return playerDatabaseService.existsByUser(caller);
     }
 
-    public LoadGameDto loadPreviousPlayerGame() {
-        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+    public LoadGameDto loadPreviousPlayerGame(String userName) {
         User caller = userDatabaseService.findByName(userName);
         Player player = playerDatabaseService.findFirstByUser(caller);
 

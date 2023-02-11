@@ -1,30 +1,23 @@
-package com.rydzwr.tictactoe.service;
+package com.rydzwr.tictactoe.service.game;
 
-import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.model.Player;
+import com.rydzwr.tictactoe.service.ServiceTestConfiguration;
+import com.rydzwr.tictactoe.service.ServiceTestsHelper;
 import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
-import com.rydzwr.tictactoe.service.dto.incoming.PlayerDto;
-import com.rydzwr.tictactoe.service.game.GameBuilderService;
-import com.rydzwr.tictactoe.service.game.builder.GameBuilder;
 import com.rydzwr.tictactoe.service.game.builder.PlayerBuilder;
-import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
 import com.rydzwr.tictactoe.service.game.database.PlayerDatabaseService;
-import com.rydzwr.tictactoe.service.security.database.UserDatabaseService;
-import com.rydzwr.tictactoe.service.security.factory.UserFactory;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -33,31 +26,24 @@ import static org.junit.Assert.*;
 public class GameBuilderServiceTest {
 
     @Autowired
-    private UserDatabaseService userDatabaseService;
-    @Autowired
     private PlayerDatabaseService playerDatabaseService;
-    @Autowired
-    private GameDatabaseService gameDatabaseService;
     @Autowired
     private GameBuilderService gameBuilderService;
     @Autowired
-    private UserFactory userFactory;
+    private ServiceTestsHelper testsHelper;
 
     @Test
-    public void injectionTest() {
-        assertNotNull(userDatabaseService);
-        assertNotNull(playerDatabaseService);
-        assertNotNull(gameBuilderService);
-    }
-
-    @Test
+    @DisplayName("Should Build New Player With Assigned User and Game")
     public void buildCallerPlayerTest() {
         // GIVEN
-        var testUser = userFactory.createUser("buildCallerPlayerTest", "test");
-        userDatabaseService.saveUser(testUser);
+        String GAME_BUILDER_SERVICE_TEST_ONE = "gameBuilderServiceTestOne";
+        var testUser = testsHelper.buildTestUser(GAME_BUILDER_SERVICE_TEST_ONE);
 
-        var testGame = new GameBuilder(3, 3).setGameState(GameState.IN_PROGRESS).build();
-        gameDatabaseService.save(testGame);
+        var gameDto = new GameDto();
+        gameDto.setGameSize(3);
+        gameDto.setGameDifficulty(3);
+
+        var testGame = testsHelper.buildEmptyGame(GAME_BUILDER_SERVICE_TEST_ONE, gameDto);
 
         var playerType = PlayerType.LOCAL;
 
@@ -85,68 +71,45 @@ public class GameBuilderServiceTest {
     }
 
     @Test
+    @DisplayName("Should Build All Local Players For Game")
     public void buildLocalPlayersTest() {
 
-        var testGame = new GameBuilder(3, 3)
-                .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("buildLocalPlayersTest")
-                .build();
+        var gameDto = testsHelper.buildGameDto(30, 3, 5, 5);
+        String GAME_BUILDER_SERVICE_TEST_TWO = "gameBuilderServiceTestTwo";
+        var game = testsHelper.buildEmptyGame(GAME_BUILDER_SERVICE_TEST_TWO, gameDto);
 
-        gameDatabaseService.save(testGame);
+        gameBuilderService.buildLocalPlayers(game, gameDto);
 
-        List<PlayerDto> playerDtoList = new ArrayList<>();
+        var updatedGame = testsHelper.findGame(GAME_BUILDER_SERVICE_TEST_TWO);
 
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.LOCAL.name());
-            playerDtoList.add(playerDto);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.AI.name());
-            playerDtoList.add(playerDto);
-        }
-
-        var gameDto = new GameDto();
-        gameDto.setPlayers(playerDtoList);
-
-
-        gameBuilderService.buildLocalPlayers(testGame, gameDto);
-
-        var gameToTest = gameDatabaseService.findByInviteCode("buildLocalPlayersTest");
-
-        int localPlayers = (int) gameToTest.getPlayers().stream()
+        int localPlayers = (int) updatedGame.getPlayers().stream()
                 .filter((player -> player.getPlayerType().equals(PlayerType.LOCAL)))
                 .count();
 
-        int aiPlayers = (int) gameToTest.getPlayers().stream()
+        int aiPlayers = (int) updatedGame.getPlayers().stream()
                 .filter((player -> player.getPlayerType().equals(PlayerType.AI)))
                 .count();
 
-        int onlinePlayers = (int) gameToTest.getPlayers().stream()
+        int onlinePlayers = (int) updatedGame.getPlayers().stream()
                 .filter((player -> player.getPlayerType().equals(PlayerType.ONLINE)))
                 .count();
 
-        assertNotNull(gameToTest);
+        assertNotNull(updatedGame);
         assertEquals(5, localPlayers);
         assertEquals(5, aiPlayers);
         assertEquals(0, onlinePlayers);
-        assertEquals(10, gameToTest.getPlayers().size());
     }
 
     @Test
+    @DisplayName("Should Build All AI Players For Game")
     public void buildAIPlayersTest() {
-        var testGame = new GameBuilder(3, 3)
-                .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("buildAIPlayersTest")
-                .build();
+        var gameDto = testsHelper.buildGameDto(30, 3, 0, 10);
+        String GAME_BUILDER_SERVICE_TEST_THREE = "gameBuilderServiceTestThree";
+        var game = testsHelper.buildEmptyGame(GAME_BUILDER_SERVICE_TEST_THREE, gameDto);
 
-        gameDatabaseService.save(testGame);
+        gameBuilderService.buildAIPlayers(game, 10);
 
-        gameBuilderService.buildAIPlayers(testGame, 10);
-
-        var gameToTest = gameDatabaseService.findByInviteCode("buildAIPlayersTest");
+        var gameToTest = testsHelper.findGame(GAME_BUILDER_SERVICE_TEST_THREE);
 
         int localPlayers = (int) gameToTest.getPlayers().stream()
                 .filter((player -> player.getPlayerType().equals(PlayerType.LOCAL)))
@@ -164,6 +127,5 @@ public class GameBuilderServiceTest {
         assertEquals(0, localPlayers);
         assertEquals(10, aiPlayers);
         assertEquals(0, onlinePlayers);
-        assertEquals(10, gameToTest.getPlayers().size());
     }
 }

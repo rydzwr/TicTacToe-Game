@@ -30,7 +30,8 @@ public class GameController {
     @GetMapping("/canResumeGame")
     @PreAuthorize("hasAuthority('USER')")
     public boolean isUserInGame() {
-        return gameService.isUserInGame();
+        var userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        return gameService.isUserInGame(userName);
     }
 
     @GetMapping("/inviteCode")
@@ -44,7 +45,7 @@ public class GameController {
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> joinGame(@Valid @RequestBody InviteCodeDto inviteCode) {
         String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
-        if (gameService.isUserInGame()) {
+        if (gameService.isUserInGame(callerName)) {
             gameService.removePrevUserGame(callerName);
         }
 
@@ -65,11 +66,12 @@ public class GameController {
     @GetMapping("/continueGame")
     @PreAuthorize("hasAuthority('USER')")
     public ResponseEntity<Object> continueGame() {
-        if (!gameService.isUserInGame()) {
+        var userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        if (!gameService.isUserInGame(userName)) {
             return new ResponseEntity<>(WebConstants.PREV_GAME_NOT_FOUND_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
 
-        LoadGameDto loadedGame = gameService.loadPreviousPlayerGame();
+        LoadGameDto loadedGame = gameService.loadPreviousPlayerGame(userName);
         return new ResponseEntity<>(loadedGame, HttpStatus.OK);
     }
 
@@ -82,7 +84,7 @@ public class GameController {
             return new ResponseEntity<>(WebConstants.GAME_VALIDATOR_EXCEPTION, HttpStatus.BAD_REQUEST);
         }
 
-        if (gameService.isUserInGame()) {
+        if (gameService.isUserInGame(callerName)) {
             gameService.removePrevUserGame(callerName);
         }
 
