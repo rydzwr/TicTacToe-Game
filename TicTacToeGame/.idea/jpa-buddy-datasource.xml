@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="JpbDataSourceConfig">
+    <data-sources>
+      <data-source id="8e77e719-a768-4013-8ed5-f9ae3c9648a8" name="TicTacToeGame" url="jdbc:h2:mem:mytestdb" driverClass="org.h2.Driver" />
+    </data-sources>
+  </component>
+</project>

@@ -1,26 +1,20 @@
 package com.rydzwr.tictactoe.service.game.strategy;
 
-import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
 import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.service.ServiceTestConfiguration;
-import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
+import com.rydzwr.tictactoe.service.ServiceTestsHelper;
 import com.rydzwr.tictactoe.service.dto.incoming.MoveCoordsDto;
-import com.rydzwr.tictactoe.service.dto.incoming.PlayerDto;
 import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto;
-import com.rydzwr.tictactoe.service.game.GameBuilderService;
 import com.rydzwr.tictactoe.service.game.adapter.GameAdapter;
-import com.rydzwr.tictactoe.service.game.builder.GameBuilder;
 import com.rydzwr.tictactoe.service.game.constants.GameConstants;
-import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
 import com.rydzwr.tictactoe.service.game.strategy.moveProcessor.AIPlayerMoveStrategy;
 import com.rydzwr.tictactoe.service.game.strategy.moveProcessor.LocalPlayerMoveStrategy;
 import com.rydzwr.tictactoe.service.game.strategy.moveProcessor.OnlinePlayerMoveStrategy;
 import com.rydzwr.tictactoe.service.game.strategy.selector.PlayerMoveStrategySelector;
-import com.rydzwr.tictactoe.service.security.database.UserDatabaseService;
-import com.rydzwr.tictactoe.service.security.factory.UserFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,10 +22,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -50,15 +40,8 @@ public class MoveProcessorStrategyTest {
     private LocalPlayerMoveStrategy localPlayerMoveStrategy;
     @Autowired
     private OnlinePlayerMoveStrategy onlinePlayerMoveStrategy;
-
     @Autowired
-    private UserDatabaseService userDatabaseService;
-    @Autowired
-    private GameDatabaseService gameDatabaseService;
-    @Autowired
-    private UserFactory userFactory;
-    @Autowired
-    private GameBuilderService gameBuilderService;
+    private ServiceTestsHelper testsHelper;
 
     @Test
     public void shouldChooseAiPlayerStrategy() {
@@ -77,41 +60,14 @@ public class MoveProcessorStrategyTest {
     }
 
     @Test
+    @DisplayName("Should Process Move For AI Player")
     public void aiPlayerMoveStrategyTest() {
-        var testUser = userFactory.createUser("aiPlayerMoveStrategyTest", "test");
-        userDatabaseService.saveUser(testUser);
+        // GIVEN
+        String MOVE_PROCESSOR_STRATEGY_TEST_ONE = "moveProcessorStrategyTestOne";
+        var testUser = testsHelper.buildTestUser(MOVE_PROCESSOR_STRATEGY_TEST_ONE);
+        var game = testsHelper.buildGameWithPlayers(MOVE_PROCESSOR_STRATEGY_TEST_ONE, 5, 5, testUser);
 
-        Game game = new GameBuilder(3, 3)
-                .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("aiPlayerMoveStrategyTest")
-                .build();
-
-        gameDatabaseService.save(game);
-
-        List<PlayerDto> playerDtoList = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.LOCAL.name());
-            playerDtoList.add(playerDto);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.AI.name());
-            playerDtoList.add(playerDto);
-        }
-
-        var gameDto = new GameDto();
-        gameDto.setPlayers(playerDtoList);
-
-        gameBuilderService.buildCallerPlayer(testUser, game, PlayerType.LOCAL);
-        gameBuilderService.buildLocalPlayers(game, gameDto);
-
-        gameDatabaseService.save(game);
-        var readyGame = gameDatabaseService.findByInviteCode("aiPlayerMoveStrategyTest");
-
-        var gameAdapter = new GameAdapter(readyGame);
+        var gameAdapter = new GameAdapter(game);
 
         var moves = new PlayerMoveResponseDto();
         moves.setCurrentPlayerMove('X');
@@ -122,23 +78,28 @@ public class MoveProcessorStrategyTest {
         moveCoordsDto.setX(0);
         moveCoordsDto.setY(0);
 
-        var gameBoardToTest = readyGame.getGameBoard();
-        var currentPlayerTurnToTest = readyGame.getCurrentPlayerTurn();
+        var gameBoardToTest = game.getGameBoard();
+        var currentPlayerTurnToTest = game.getCurrentPlayerTurn();
 
+        // WHEN
         aiPlayerMoveStrategy.processPlayerMove(moves, gameAdapter, accessor, moveCoordsDto);
 
-        assertNotEquals(gameBoardToTest, readyGame.getGameBoard());
-        assertNotEquals(currentPlayerTurnToTest, readyGame.getCurrentPlayerTurn());
+        // THEN
+        assertNotEquals(gameBoardToTest, game.getGameBoard());
+        assertNotEquals(currentPlayerTurnToTest, game.getCurrentPlayerTurn());
         assertEquals(1, moves.getProcessedMovesIndices().size());
         assertEquals(1, moves.getProcessedMovesPawns().size());
     }
 
     @Test
+    @DisplayName("Should Trow Exception When Trying To Process Move On Full Game Board")
     public void aiPlayerMoveStrategyTestNotEmptyFieldsCase() {
+        // GIVEN
         var game = mock(Game.class);
         when(game.getGameBoard()).thenReturn("XXXOOOXXX");
         var gameAdapter = new GameAdapter(game);
 
+        // WHEN + THEN
         var exception = assertThrows(IllegalArgumentException.class, () -> {
             aiPlayerMoveStrategy.processPlayerMove(null, gameAdapter, null, null);
         });
@@ -147,41 +108,14 @@ public class MoveProcessorStrategyTest {
     }
 
     @Test
+    @DisplayName("Should Process Move For Local Player")
     public void localPlayerMoveStrategyTest() {
-        var testUser = userFactory.createUser("localPlayerMoveStrategyTest", "test");
-        userDatabaseService.saveUser(testUser);
+        // GIVEN
+        String MOVE_PROCESSOR_STRATEGY_TEST_TWO = "moveProcessorStrategyTestTwo";
+        var testUser = testsHelper.buildTestUser(MOVE_PROCESSOR_STRATEGY_TEST_TWO);
+        var game = testsHelper.buildGameWithPlayers(MOVE_PROCESSOR_STRATEGY_TEST_TWO, 5, 5, testUser);
 
-        Game game = new GameBuilder(3, 3)
-                .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("localPlayerMoveStrategyTest")
-                .build();
-
-        gameDatabaseService.save(game);
-
-        List<PlayerDto> playerDtoList = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.LOCAL.name());
-            playerDtoList.add(playerDto);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.AI.name());
-            playerDtoList.add(playerDto);
-        }
-
-        var gameDto = new GameDto();
-        gameDto.setPlayers(playerDtoList);
-
-        gameBuilderService.buildCallerPlayer(testUser, game, PlayerType.LOCAL);
-        gameBuilderService.buildLocalPlayers(game, gameDto);
-
-        gameDatabaseService.save(game);
-        var readyGame = gameDatabaseService.findByInviteCode("localPlayerMoveStrategyTest");
-
-        var gameAdapter = new GameAdapter(readyGame);
+        var gameAdapter = new GameAdapter(game);
 
         var moves = new PlayerMoveResponseDto();
         moves.setCurrentPlayerMove('X');
@@ -192,19 +126,23 @@ public class MoveProcessorStrategyTest {
         moveCoordsDto.setX(0);
         moveCoordsDto.setY(0);
 
-        var gameBoardToTest = readyGame.getGameBoard();
-        var currentPlayerTurnToTest = readyGame.getCurrentPlayerTurn();
+        var gameBoardToTest = game.getGameBoard();
+        var currentPlayerTurnToTest = game.getCurrentPlayerTurn();
 
+        // WHEN
         localPlayerMoveStrategy.processPlayerMove(moves, gameAdapter, accessor, moveCoordsDto);
 
-        assertNotEquals(gameBoardToTest, readyGame.getGameBoard());
-        assertNotEquals(currentPlayerTurnToTest, readyGame.getCurrentPlayerTurn());
+        // THEN
+        assertNotEquals(gameBoardToTest, game.getGameBoard());
+        assertNotEquals(currentPlayerTurnToTest, game.getCurrentPlayerTurn());
         assertEquals(1, moves.getProcessedMovesIndices().size());
         assertEquals(1, moves.getProcessedMovesPawns().size());
     }
 
     @Test
+    @DisplayName("Should Throw Exception When Player Pressed Occupied Field")
     public void localPlayerMoveStrategyTestInvalidMoveCase() {
+        // GIVEN
         var game = mock(Game.class);
         when(game.getGameBoard()).thenReturn("XXXOOOXXX");
         var gameAdapter = new GameAdapter(game);
@@ -213,6 +151,7 @@ public class MoveProcessorStrategyTest {
         moveCoordsDto.setX(0);
         moveCoordsDto.setY(0);
 
+        // WHEN + THEN
         var exception = assertThrows(IllegalArgumentException.class, () -> {
             localPlayerMoveStrategy.processPlayerMove(null, gameAdapter, null, moveCoordsDto);
         });
@@ -221,41 +160,14 @@ public class MoveProcessorStrategyTest {
     }
 
     @Test
+    @DisplayName("Should Process Move For Online Player")
     public void onlinePlayerMoveStrategyTest() {
-        var testUser = userFactory.createUser("onlinePlayerMoveStrategyTestAtMoveProcessor", "test");
-        userDatabaseService.saveUser(testUser);
+        // GIVEN
+        String MOVE_PROCESSOR_STRATEGY_TEST_THREE = "moveProcessorStrategyTestThree";
+        var testUser = testsHelper.buildTestUser(MOVE_PROCESSOR_STRATEGY_TEST_THREE);
+        var game = testsHelper.buildGameWithPlayers(MOVE_PROCESSOR_STRATEGY_TEST_THREE, 5, 5, testUser);
 
-        Game game = new GameBuilder(3, 3)
-                .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("onlinePlayerMoveStrategyTestAtMoveProcessor")
-                .build();
-
-        gameDatabaseService.save(game);
-
-        List<PlayerDto> playerDtoList = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.LOCAL.name());
-            playerDtoList.add(playerDto);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.AI.name());
-            playerDtoList.add(playerDto);
-        }
-
-        var gameDto = new GameDto();
-        gameDto.setPlayers(playerDtoList);
-
-        gameBuilderService.buildCallerPlayer(testUser, game, PlayerType.LOCAL);
-        gameBuilderService.buildLocalPlayers(game, gameDto);
-
-        gameDatabaseService.save(game);
-        var readyGame = gameDatabaseService.findByInviteCode("onlinePlayerMoveStrategyTestAtMoveProcessor");
-
-        var gameAdapter = new GameAdapter(readyGame);
+        var gameAdapter = new GameAdapter(game);
 
         var moves = new PlayerMoveResponseDto();
         moves.setCurrentPlayerMove('X');
@@ -264,63 +176,30 @@ public class MoveProcessorStrategyTest {
         moveCoordsDto.setX(0);
         moveCoordsDto.setY(0);
 
-        var gameBoardToTest = readyGame.getGameBoard();
-        var currentPlayerTurnToTest = readyGame.getCurrentPlayerTurn();
+        var gameBoardToTest = game.getGameBoard();
+        var currentPlayerTurnToTest = game.getCurrentPlayerTurn();
 
-        var accessor = mock(SimpMessageHeaderAccessor.class);
+        var accessor = testsHelper.mockAccessor(MOVE_PROCESSOR_STRATEGY_TEST_THREE);
 
-        var principal = mock(Principal.class);
-        when(principal.getName()).thenReturn("onlinePlayerMoveStrategyTestAtMoveProcessor");
-
-        when(accessor.getUser()).thenReturn(principal);
-
+        // WHEN
         onlinePlayerMoveStrategy.processPlayerMove(moves, gameAdapter, accessor, moveCoordsDto);
 
-        assertNotEquals(gameBoardToTest, readyGame.getGameBoard());
-        assertNotEquals(currentPlayerTurnToTest, readyGame.getCurrentPlayerTurn());
+        // THEN
+        assertNotEquals(gameBoardToTest, game.getGameBoard());
+        assertNotEquals(currentPlayerTurnToTest, game.getCurrentPlayerTurn());
         assertEquals(1, moves.getProcessedMovesIndices().size());
         assertEquals(1, moves.getProcessedMovesPawns().size());
     }
 
     @Test
+    @DisplayName("Should Throw Error When Player Pressed Occupied Field In Online Game")
     public void onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed() {
-        var testUser = userFactory.createUser("onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed", "test");
-        userDatabaseService.saveUser(testUser);
+        // GIVEN
+        String MOVE_PROCESSOR_STRATEGY_TEST_FOUR = "moveProcessorStrategyTestFour";
+        var testUser = testsHelper.buildTestUser(MOVE_PROCESSOR_STRATEGY_TEST_FOUR);
+        var game = testsHelper.buildGameWithCustomGameBoard(MOVE_PROCESSOR_STRATEGY_TEST_FOUR, 5, 5, testUser, "XXXOOOXXX");
 
-        Game game = new GameBuilder(3, 3)
-                .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed")
-                .build();
-
-        gameDatabaseService.save(game);
-
-        List<PlayerDto> playerDtoList = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.LOCAL.name());
-            playerDtoList.add(playerDto);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.AI.name());
-            playerDtoList.add(playerDto);
-        }
-
-        var gameDto = new GameDto();
-        gameDto.setPlayers(playerDtoList);
-
-        gameBuilderService.buildCallerPlayer(testUser, game, PlayerType.LOCAL);
-        gameBuilderService.buildLocalPlayers(game, gameDto);
-
-        gameDatabaseService.save(game);
-        var readyGame = gameDatabaseService.findByInviteCode("onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed");
-
-        var spyGame = spy(readyGame);
-        when(spyGame.getGameBoard()).thenReturn("XXXOOOXXX");
-
-        var gameAdapter = new GameAdapter(spyGame);
+        var gameAdapter = new GameAdapter(game);
 
         var moves = new PlayerMoveResponseDto();
         moves.setCurrentPlayerMove('X');
@@ -329,11 +208,9 @@ public class MoveProcessorStrategyTest {
         moveCoordsDto.setX(0);
         moveCoordsDto.setY(0);
 
-        var accessor = mock(SimpMessageHeaderAccessor.class);
-        var principal = mock(Principal.class);
-        when(principal.getName()).thenReturn("onlinePlayerMoveStrategyTestCaseOccupiedFieldPressed");
-        when(accessor.getUser()).thenReturn(principal);
+        var accessor = testsHelper.mockAccessor(MOVE_PROCESSOR_STRATEGY_TEST_FOUR);
 
+        // WHEN + THEN
         var exception = assertThrows(IllegalArgumentException.class, () -> {
             onlinePlayerMoveStrategy.processPlayerMove(null, gameAdapter, accessor, moveCoordsDto);
         });
@@ -342,45 +219,16 @@ public class MoveProcessorStrategyTest {
     }
 
     @Test
+    @DisplayName("Should Throw Error When Is Not Caller Turn")
     public void onlinePlayerMoveStrategyTestCaseInvalidPlayerTurn() {
-        var testUser = userFactory.createUser("onlinePlayerMoveStrategyTest", "test");
-        userDatabaseService.saveUser(testUser);
+        // GIVEN
+        String MOVE_PROCESSOR_STRATEGY_TEST_FIVE = "moveProcessorStrategyTestFive";
+        var testUser = testsHelper.buildTestUser(MOVE_PROCESSOR_STRATEGY_TEST_FIVE);
+        var game = testsHelper.buildGameWithCustomGameBoard(MOVE_PROCESSOR_STRATEGY_TEST_FIVE, 5, 5, testUser, "---------");
 
-        Game game = new GameBuilder(3, 3)
-                .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("onlinePlayerMoveStrategyTest")
-                .build();
+        game.setCurrentPlayerTurn(5);
 
-        gameDatabaseService.save(game);
-
-        List<PlayerDto> playerDtoList = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.LOCAL.name());
-            playerDtoList.add(playerDto);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.AI.name());
-            playerDtoList.add(playerDto);
-        }
-
-        var gameDto = new GameDto();
-        gameDto.setPlayers(playerDtoList);
-
-        gameBuilderService.buildCallerPlayer(testUser, game, PlayerType.LOCAL);
-        gameBuilderService.buildLocalPlayers(game, gameDto);
-
-        gameDatabaseService.save(game);
-        var readyGame = gameDatabaseService.findByInviteCode("onlinePlayerMoveStrategyTest");
-
-        var spyGame = spy(readyGame);
-        when(spyGame.getGameBoard()).thenReturn("---------");
-        when(spyGame.getCurrentPlayerTurn()).thenReturn(5);
-
-        var gameAdapter = new GameAdapter(spyGame);
+        var gameAdapter = new GameAdapter(game);
 
         var moves = new PlayerMoveResponseDto();
         moves.setCurrentPlayerMove('X');
@@ -389,10 +237,7 @@ public class MoveProcessorStrategyTest {
         moveCoordsDto.setX(0);
         moveCoordsDto.setY(0);
 
-        var accessor = mock(SimpMessageHeaderAccessor.class);
-        var principal = mock(Principal.class);
-        when(principal.getName()).thenReturn("onlinePlayerMoveStrategyTest");
-        when(accessor.getUser()).thenReturn(principal);
+        var accessor = testsHelper.mockAccessor(MOVE_PROCESSOR_STRATEGY_TEST_FIVE);
 
         var exception = assertThrows(IllegalArgumentException.class, () -> {
             onlinePlayerMoveStrategy.processPlayerMove(null, gameAdapter, accessor, moveCoordsDto);

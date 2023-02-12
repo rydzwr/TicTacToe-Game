@@ -105,6 +105,23 @@ public class ServiceTestsHelper {
         return gameDto;
     }
 
+    public GameDto buildGameDto(int gameSize, int gameDifficulty, int onlinePlayersCount) {
+        List<PlayerDto> playerDtoList = new ArrayList<>();
+
+        for (int i = 0; i < onlinePlayersCount; i++) {
+            var playerDto = new PlayerDto();
+            playerDto.setPlayerType(PlayerType.ONLINE.name());
+            playerDtoList.add(playerDto);
+        }
+
+        var gameDto = new GameDto();
+
+        gameDto.setGameSize(gameSize);
+        gameDto.setGameDifficulty(gameDifficulty);
+        gameDto.setPlayers(playerDtoList);
+        return gameDto;
+    }
+
     public SimpMessageHeaderAccessor mockAccessor(String callerName) {
         var accessor = mock(SimpMessageHeaderAccessor.class);
         var principal = mock(Principal.class);
@@ -150,6 +167,16 @@ public class ServiceTestsHelper {
 
     public Game buildEmptyGame(String inviteCode, GameDto gameDto) {
         var testGame = new GameBuilder(gameDto.getGameSize(), gameDto.getGameDifficulty())
+                .setGameState(GameState.IN_PROGRESS)
+                .setInviteCode(inviteCode)
+                .build();
+
+        gameDatabaseService.save(testGame);
+        return gameDatabaseService.findByInviteCode(inviteCode);
+    }
+
+    public Game buildEmptyGame(String inviteCode, int gameSize, int gameDifficulty) {
+        var testGame = new GameBuilder(gameSize, gameDifficulty)
                 .setGameState(GameState.IN_PROGRESS)
                 .setInviteCode(inviteCode)
                 .build();

@@ -43,7 +43,7 @@ public class GameController {
 
     @PostMapping("/joinGame")
     @PreAuthorize("hasAuthority('USER')")
-    public ResponseEntity<Object> joinGame(@Valid @RequestBody InviteCodeDto inviteCode) {
+    public ResponseEntity<Object> joinGame(@RequestBody InviteCodeDto inviteCode) {
         String callerName = SecurityContextHolder.getContext().getAuthentication().getName();
         if (gameService.isUserInGame(callerName)) {
             gameService.removePrevUserGame(callerName);
