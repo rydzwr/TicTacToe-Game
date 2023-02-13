@@ -85,7 +85,7 @@ public class GameServiceTest {
         // GIVEN
         String GAME_SERVICE_TEST_FOUR = "gameServiceTestFour";
         var testUser = testsHelper.buildTestUser(GAME_SERVICE_TEST_FOUR);
-        testsHelper.buildGameWithCaller(testUser);
+        testsHelper.buildGameWithCaller(testUser, GAME_SERVICE_TEST_FOUR);
 
         // WHEN
         var toTest = gameService.isUserInGame(GAME_SERVICE_TEST_FOUR);

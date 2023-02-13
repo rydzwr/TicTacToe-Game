@@ -6,19 +6,26 @@
   <component name="ChangeListManager">
     <list default="true" id="8e697bde-ed68-4dcf-ae5c-774d34f5675b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeGame - Frontend/TicTacToe-Frontend" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/constants/SecurityConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/security/src/main/java/com/rydzwr/tictactoe/security/constants/SecurityConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/ServiceTestsHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/ServiceTestsHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameStateStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/GameStateStrategyTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/MoveProcessorStrategyTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/strategy/MoveProcessorStrategyTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/GameServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/service/src/test/java/com/rydzwr/tictactoe/service/game/GameServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/ServiceTestsHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/ServiceTestsHelper.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/strategy/GameBuilderStrategyTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/strategy/GameStateStrategyTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/strategy/GameStateStrategyTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/strategy/MoveProcessorStrategyTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/strategy/MoveProcessorStrategyTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/GameServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/service/target/test-classes/com/rydzwr/tictactoe/service/game/GameServiceTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/config/WebSocketConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/config/WebSocketConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/test/java/com/rydzwr/tictactoe/web/WebTestsHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/test/java/com/rydzwr/tictactoe/web/WebTestsHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/test/java/com/rydzwr/tictactoe/web/controller/rest/GameControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/test/java/com/rydzwr/tictactoe/web/controller/rest/GameControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/test/java/com/rydzwr/tictactoe/web/controller/rest/UserControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/test/java/com/rydzwr/tictactoe/web/controller/rest/UserControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/test/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/web/src/test/java/com/rydzwr/tictactoe/web/controller/websocket/GameSocketControllerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/test/resources/application-dev.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/src/test/resources/application.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/rest/GameController.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/classes/com/rydzwr/tictactoe/web/controller/rest/GameController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/target/test-classes/application-dev.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/target/test-classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/target/test-classes/com/rydzwr/tictactoe/web/WebTestsHelper.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/test-classes/com/rydzwr/tictactoe/web/WebTestsHelper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/target/test-classes/com/rydzwr/tictactoe/web/controller/rest/GameControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/test-classes/com/rydzwr/tictactoe/web/controller/rest/GameControllerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/web/target/test-classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/web/target/test-classes/com/rydzwr/tictactoe/web/controller/websocket/GameSocketControllerTest.class" afterDir="false" />
     </list>
     <list id="06e6b9c0-d537-4d4b-bc6b-e75b20f1172b" name="Changes by gmakosa" comment="" />
     <option name="SHOW_DIALOG" value="false" />
@@ -93,79 +100,57 @@
       <recent name="com.rydzwr.tictactoe.service" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.GameControllerTest.joinGameTest">
-    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.application.Application" />
-      <module name="application" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.application.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
+  <component name="RunManager" selected="JUnit.All in web (1)">
+    <configuration name="All in service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="service" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameControllerTest.continueGameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in web (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="web" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.web.controller.rest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.web.controller.rest" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.web.controller.rest.GameControllerTest" />
-      <option name="METHOD_NAME" value="continueGameTest" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameControllerTest.continueGameTestBadRequestCase" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="All in web" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="web" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.web.controller.rest.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.web.controller.rest" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.web.controller.rest.GameControllerTest" />
-      <option name="METHOD_NAME" value="continueGameTestBadRequestCase" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameControllerTest.getInviteCodeTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GameSocketControllerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="web" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.web.controller.rest.*" />
+          <option name="PATTERN" value="com.rydzwr.tictactoe.web.controller.websocket.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.web.controller.rest" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.web.controller.rest.GameControllerTest" />
-      <option name="METHOD_NAME" value="getInviteCodeTest" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.web.controller.websocket" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.web.controller.websocket.GameSocketControllerTest" />
+      <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GameControllerTest.joinGameTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="GameSocketControllerTest.testSend" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="web" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.rydzwr.tictactoe.web.controller.rest.*" />
+          <option name="PATTERN" value="com.rydzwr.tictactoe.web.controller.websocket.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.web.controller.rest" />
-      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.web.controller.rest.GameControllerTest" />
-      <option name="METHOD_NAME" value="joinGameTest" />
+      <option name="PACKAGE_NAME" value="com.rydzwr.tictactoe.web.controller.websocket" />
+      <option name="MAIN_CLASS_NAME" value="com.rydzwr.tictactoe.web.controller.websocket.GameSocketControllerTest" />
+      <option name="METHOD_NAME" value="testSend" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -173,11 +158,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.GameControllerTest.joinGameTest" />
-        <item itemvalue="Application.Application" />
-        <item itemvalue="JUnit.GameControllerTest.continueGameTestBadRequestCase" />
-        <item itemvalue="JUnit.GameControllerTest.continueGameTest" />
-        <item itemvalue="JUnit.GameControllerTest.getInviteCodeTest" />
+        <item itemvalue="JUnit.All in web (1)" />
+        <item itemvalue="JUnit.All in service" />
+        <item itemvalue="JUnit.GameSocketControllerTest.testSend" />
+        <item itemvalue="JUnit.GameSocketControllerTest" />
+        <item itemvalue="JUnit.All in web" />
       </list>
     </recent_temporary>
   </component>
@@ -204,79 +189,6 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java</url>
-          <line>94</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java</url>
-          <line>95</line>
-          <option name="timeStamp" value="23" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java</url>
-          <line>96</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java</url>
-          <line>98</line>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java</url>
-          <line>99</line>
-          <option name="timeStamp" value="26" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java</url>
-          <line>101</line>
-          <option name="timeStamp" value="27" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java</url>
-          <line>103</line>
-          <option name="timeStamp" value="28" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/service/src/main/java/com/rydzwr/tictactoe/service/game/GameService.java</url>
-          <line>104</line>
-          <option name="timeStamp" value="29" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="31" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java</url>
-          <line>48</line>
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/web/src/main/java/com/rydzwr/tictactoe/web/controller/rest/GameController.java</url>
-          <line>53</line>
-          <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/web/src/test/java/com/rydzwr/tictactoe/web/controller/rest/GameControllerTest.java</url>
-          <line>189</line>
-          <properties class="com.rydzwr.tictactoe.web.controller.rest.GameControllerTest" method="joinGameTest">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="JUnit">
         <watch expression="moveCoordsDto" />
@@ -286,5 +198,10 @@
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
     <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/TicTacToeGame$GameSocketControllerTest_testSend.ic" NAME="GameSocketControllerTest.testSend Coverage Results" MODIFIED="1676301034062" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.rydzwr.tictactoe.web.controller.websocket.*</FILTER>
+    </SUITE>
   </component>
 </project>

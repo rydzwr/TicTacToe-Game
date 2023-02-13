@@ -1,11 +1,14 @@
 package com.rydzwr.tictactoe.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rydzwr.tictactoe.database.constants.GameState;
 import com.rydzwr.tictactoe.database.constants.PlayerType;
+import com.rydzwr.tictactoe.database.model.Game;
 import com.rydzwr.tictactoe.database.model.User;
 import com.rydzwr.tictactoe.service.dto.incoming.GameDto;
 import com.rydzwr.tictactoe.service.dto.incoming.PlayerDto;
 import com.rydzwr.tictactoe.service.game.GameBuilderService;
+import com.rydzwr.tictactoe.service.game.builder.GameBuilder;
 import com.rydzwr.tictactoe.service.game.database.GameDatabaseService;
 import com.rydzwr.tictactoe.service.game.database.PlayerDatabaseService;
 import com.rydzwr.tictactoe.service.security.database.UserDatabaseService;
@@ -16,6 +19,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.stereotype.Service;
 import org.springframework.test.web.servlet.MockMvc;
@@ -25,6 +29,7 @@ import java.util.Base64;
 import java.util.List;
 
 import static org.mockito.Mockito.mock;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.securityContext;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -96,7 +101,7 @@ public class WebTestsHelper {
         mockMvc.perform(
                         get("/api/login")
                                 .servletPath("/api/login")
-                                .headers(getBasicAuthHeader("test", "test123")))
+                                .headers(getBasicAuthHeader(userName, "test123")))
                 .andDo(result -> {
                     var parser = new JSONObject(result.getResponse().getContentAsString());
                     results[0] = parser.getString("access_token");
@@ -106,34 +111,6 @@ public class WebTestsHelper {
         return results[0];
     }
 
-    public String createAndLoginTestUser(MockMvc mockMvc, Authentication auth, String userName) throws Exception {
-        final String[] results = new String[2];
-
-        String passwordValue = "test123";
-        final String requestBody = "{\"name\":\"" + userName + "\",\"password\":\"" + passwordValue + "\"}";
-
-        // REGISTERING NEW USER TO DB
-        mockMvc.perform(
-                        post("/api/user/register")
-                                .servletPath("/api/user/register")
-                                .content(requestBody)
-                                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful());
-
-        // LOGGING AFTER SUCCESSFUL REGISTER
-        mockMvc.perform(
-                        get("/api/login")
-                                .servletPath("/api/login")
-                                .with(SecurityMockMvcRequestPostProcessors.authentication(auth))
-                .headers(getBasicAuthHeader("test", "test123")))
-                .andDo(result -> {
-                    var parser = new JSONObject(result.getResponse().getContentAsString());
-                    results[0] = parser.getString("access_token");
-                    results[1] = parser.getString("role");
-                });
-
-        return results[0];
-    }
 
     public String createAndLoginTestUserWithOnlineGame(MockMvc mockMvc, String userName, int gameSize, int gameDifficulty, int onlinePlayersCount, int aiPlayersCount) throws Exception {
         var accessToken = createAndLoginTestUser(mockMvc, userName);
@@ -173,44 +150,6 @@ public class WebTestsHelper {
         return accessToken;
     }
 
-    public String createAndLoginTestUserWithOnlineGame(MockMvc mockMvc, Authentication auth, String userName, int gameSize, int gameDifficulty, int onlinePlayersCount, int aiPlayersCount) throws Exception {
-        var accessToken = createAndLoginTestUser(mockMvc, userName);
-
-        List<PlayerDto> playerDtoList = new ArrayList<>();
-
-        for (int i = 0; i < onlinePlayersCount; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.ONLINE.name());
-            playerDtoList.add(playerDto);
-        }
-
-        for (int i = 0; i < aiPlayersCount; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.AI.name());
-            playerDtoList.add(playerDto);
-        }
-
-        var gameDto = new GameDto();
-
-        gameDto.setGameSize(gameSize);
-        gameDto.setGameDifficulty(gameDifficulty);
-        gameDto.setPlayers(playerDtoList);
-
-        var mapper = new ObjectMapper();
-
-        String json = mapper.writeValueAsString(gameDto);
-
-        mockMvc.perform(
-                        post("/api/game/createGame")
-                                .servletPath("/api/game/createGame")
-                                .with(SecurityMockMvcRequestPostProcessors.authentication(auth))
-                                .headers(createBearerHeader(accessToken))
-                                .content(json)
-                                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful());
-
-        return accessToken;
-    }
 
     public String createAndLoginTestUserWithLocalGame(MockMvc mockMvc, String userName, int gameSize, int gameDifficulty, int localPlayersCount, int aiPlayersCount) throws Exception {
         var accessToken = createAndLoginTestUser(mockMvc, userName);
@@ -240,6 +179,34 @@ public class WebTestsHelper {
                 .andExpect(status().is2xxSuccessful()).andReturn();
 
         return result.getResponse().getContentAsString();
+    }
+
+    public String initDatabase(String userName, String inviteCode, int gameSize, int gameDifficulty, int localPlayersCount) {
+        var user = userFactory.createUser(userName, "test");
+        userDatabaseService.saveUser(user);
+
+        Game game = new GameBuilder(gameSize, gameDifficulty)
+                .setGameState(GameState.IN_PROGRESS)
+                .setInviteCode(inviteCode)
+                .build();
+
+        gameDatabaseService.save(game);
+
+        List<PlayerDto> playerDtoList = new ArrayList<>();
+
+        for (int i = 0; i < localPlayersCount; i++) {
+            var playerDto = new PlayerDto();
+            playerDto.setPlayerType(PlayerType.ONLINE.name());
+            playerDtoList.add(playerDto);
+        }
+
+        var gameDto = new GameDto();
+        gameDto.setPlayers(playerDtoList);
+
+        gameBuilderService.buildCallerPlayer(user, game, PlayerType.ONLINE);
+
+        gameDatabaseService.save(game);
+        return inviteCode;
     }
 
     private HttpHeaders getBasicAuthHeader(String name, String password) {

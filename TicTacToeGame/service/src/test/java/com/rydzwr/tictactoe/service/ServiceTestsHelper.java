@@ -130,10 +130,10 @@ public class ServiceTestsHelper {
         return accessor;
     }
 
-    public Game buildGameWithCaller(User caller) {
+    public Game buildGameWithCaller(User caller, String name) {
         Game game = new GameBuilder(3, 3)
                 .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode("isUserInGameTestCaseTrue")
+                .setInviteCode(name)
                 .build();
 
         gameDatabaseService.save(game);
