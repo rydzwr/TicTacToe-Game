@@ -181,34 +181,6 @@ public class WebTestsHelper {
         return result.getResponse().getContentAsString();
     }
 
-    public String initDatabase(String userName, String inviteCode, int gameSize, int gameDifficulty, int localPlayersCount) {
-        var user = userFactory.createUser(userName, "test");
-        userDatabaseService.saveUser(user);
-
-        Game game = new GameBuilder(gameSize, gameDifficulty)
-                .setGameState(GameState.IN_PROGRESS)
-                .setInviteCode(inviteCode)
-                .build();
-
-        gameDatabaseService.save(game);
-
-        List<PlayerDto> playerDtoList = new ArrayList<>();
-
-        for (int i = 0; i < localPlayersCount; i++) {
-            var playerDto = new PlayerDto();
-            playerDto.setPlayerType(PlayerType.ONLINE.name());
-            playerDtoList.add(playerDto);
-        }
-
-        var gameDto = new GameDto();
-        gameDto.setPlayers(playerDtoList);
-
-        gameBuilderService.buildCallerPlayer(user, game, PlayerType.ONLINE);
-
-        gameDatabaseService.save(game);
-        return inviteCode;
-    }
-
     private HttpHeaders getBasicAuthHeader(String name, String password) {
         String valueToEncode = name + ":" + password;
         String encodedValue = Base64.getEncoder().encodeToString(valueToEncode.getBytes());
