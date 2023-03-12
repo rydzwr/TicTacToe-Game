@@ -1,7 +1,6 @@
 package com.rydzwr.tictactoe.web.controller.websocket;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,14 +14,12 @@ import com.rydzwr.tictactoe.service.dto.outgoing.gameState.PlayerMoveResponseDto
 import com.rydzwr.tictactoe.web.WebTestConfig;
 import com.rydzwr.tictactoe.web.WebTestsHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.http.HttpHeaders;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompFrameHandler;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -33,7 +30,6 @@ import org.springframework.test.context.TestPropertySource;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.junit.Assert.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 import org.junit.jupiter.api.Test;
@@ -51,7 +47,6 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.concurrent.*;
 
 
@@ -63,8 +58,6 @@ import java.util.concurrent.*;
 public class GameSocketControllerTest {
     @Autowired
     private UserRepository userRepository;
-
-    static final String HEADER_STRING = AUTHORIZATION;
     private MockMvc mockMvc;
     private WebSocketStompClient stompClient;
     @Autowired
@@ -74,10 +67,6 @@ public class GameSocketControllerTest {
     public static final String WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT = "/app/gameMove";
     public final String WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT = "/topic/gameBoard";
     public final String WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT = "/topic/gameState";
-    public final String WEB_SOCKET_AWAITING_PLAYERS_ENDPOINT = "/topic/awaitingPlayers";
-
-    private final String SOCKET_URL = "ws://localhost:5000/game?token=";
-
     private CompletableFuture<PlayerMoveResponseDto> gameBoardTopic$;
     private CompletableFuture<GameStateDto> gameStateTopic$;
     private CompletableFuture<Integer> awaitingPlayersTopic$;
@@ -151,28 +140,13 @@ public class GameSocketControllerTest {
         stompSession.subscribe(WEB_SOCKET_TOPIC_GAME_BOARD_ENDPOINT, new GameBoardTopicFrameHandler());
         stompSession.subscribe(WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateTopicFrameHandler());
 
+        movePlayer(stompSession, 0,0);
+        movePlayer(stompSession, 2,0);
+        movePlayer(stompSession, 0,1);
+        movePlayer(stompSession, 2,1);
 
-        var moveCoordsDto = new MoveCoordsDto(0, 0);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto);              // PLAYER ONE
-        gameBoardTopic$.get(1, SECONDS);
-
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto2 = new MoveCoordsDto(2, 0);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto2);             // PLAYER TWO
-        gameBoardTopic$.get(1, SECONDS);
-
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto3 = new MoveCoordsDto(0, 1);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto3);             // PLAYER ONE
-        gameBoardTopic$.get(1, SECONDS);
-
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto4 = new MoveCoordsDto(2, 1);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto4);             // PLAYER TWO
-        gameBoardTopic$.get(1, SECONDS);
-
-        var moveCoordsDto5 = new MoveCoordsDto(0, 2);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto5);             // PLAYER ONE ( WINNER )
+        var moveCoordsDto = new MoveCoordsDto(0, 2);
+        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto);
 
         var toTest = gameStateTopic$.get(5, SECONDS);
 
@@ -195,47 +169,17 @@ public class GameSocketControllerTest {
         stompSession.subscribe(WEB_SOCKET_TOPIC_GAME_STATE_ENDPOINT, new GameStateTopicFrameHandler());
 
 
-        var moveCoordsDto = new MoveCoordsDto(0, 0);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto);              // PLAYER ONE
-        gameBoardTopic$.get(1, SECONDS);
+        movePlayer(stompSession, 0,0);
+        movePlayer(stompSession, 1,1);
+        movePlayer(stompSession, 0,1);
+        movePlayer(stompSession, 2,1);
+        movePlayer(stompSession, 1,2);
+        movePlayer(stompSession, 0,2);
+        movePlayer(stompSession, 2,0);
+        movePlayer(stompSession, 1,0);
 
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto2 = new MoveCoordsDto(1, 1);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto2);             // PLAYER TWO
-        gameBoardTopic$.get(1, SECONDS);
-
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto3 = new MoveCoordsDto(0, 1);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto3);             // PLAYER ONE
-        gameBoardTopic$.get(1, SECONDS);
-
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto4 = new MoveCoordsDto(2, 1);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto4);             // PLAYER TWO
-        gameBoardTopic$.get(1, SECONDS);
-
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto5 = new MoveCoordsDto(1, 2);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto5);             // PLAYER ONE
-        gameBoardTopic$.get(1, SECONDS);
-
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto6 = new MoveCoordsDto(0, 2);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto6);             // PLAYER TWO
-        gameBoardTopic$.get(1, SECONDS);
-
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto7 = new MoveCoordsDto(2, 0);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto7);             // PLAYER ONE
-        gameBoardTopic$.get(1, SECONDS);
-
-        gameBoardTopic$ = new CompletableFuture<>();
-        var moveCoordsDto8 = new MoveCoordsDto(1, 0);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto8);             // PLAYER TWO
-        gameBoardTopic$.get(1, SECONDS);
-
-        var moveCoordsDto9 = new MoveCoordsDto(2, 2);
-        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto9);             // PLAYER ONE
+        var moveCoordsDto = new MoveCoordsDto(2, 2);
+        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto);             // PLAYER ONE
 
         var toTest = gameStateTopic$.get(5, SECONDS);
 
@@ -249,6 +193,7 @@ public class GameSocketControllerTest {
 
     private StompSession initWSConnection(String userName) throws Exception {
         var accessToken = testsHelper.createAndLoginTestUserWithLocalGame(mockMvc, userName, 3, 3, 1, 0);
+        String SOCKET_URL = "ws://localhost:5000/game?token=";
         final String URL = SOCKET_URL + accessToken;
 
         var stompSession = stompClient.connectAsync(URL, createWebSocketHeader(accessToken), new StompSessionHandlerAdapter() {
@@ -346,4 +291,12 @@ public class GameSocketControllerTest {
         headers.add("Authorization", TOKEN_PREFIX + token);
         return headers;
     }
+
+    private void movePlayer(StompSession stompSession, int x, int y) throws ExecutionException, InterruptedException, TimeoutException {
+        gameBoardTopic$ = new CompletableFuture<>();
+        var moveCoordsDto = new MoveCoordsDto(x, y);
+        stompSession.send(WEB_SOCKET_TOPIC_GAME_MOVE_ENDPOINT, moveCoordsDto);
+        gameBoardTopic$.get(1, SECONDS);
+    }
+
 }

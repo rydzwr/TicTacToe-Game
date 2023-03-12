@@ -13,12 +13,7 @@ public class GameDtoTest {
     @Test
     public void countAIPlayers_ReturnsCorrectCount() {
         // given
-        var gameDto = new GameDto();
-        List<PlayerDto> players = new ArrayList<>();
-        players.add(new PlayerDto(PlayerType.AI.name()));
-        players.add(new PlayerDto(PlayerType.AI.name()));
-        players.add(new PlayerDto(PlayerType.LOCAL.name()));
-        gameDto.setPlayers(players);
+        var gameDto = createGameDto(PlayerType.LOCAL);
 
         // when
         int aiPlayersCount = gameDto.countAIPlayers();
@@ -30,17 +25,23 @@ public class GameDtoTest {
     @Test
     public void getHumanGameSlots_ReturnsCorrectCount() {
         // given
-        GameDto gameDto = new GameDto();
-        List<PlayerDto> players = new ArrayList<>();
-        players.add(new PlayerDto(PlayerType.AI.name()));
-        players.add(new PlayerDto(PlayerType.AI.name()));
-        players.add(new PlayerDto(PlayerType.ONLINE.name()));
-        gameDto.setPlayers(players);
+        var gameDto = createGameDto(PlayerType.ONLINE);
 
         // when
         int humanGameSlots = gameDto.getHumanGameSlots();
 
         // then
         Assertions.assertEquals(1, humanGameSlots);
+    }
+
+    private GameDto createGameDto(PlayerType playerType) {
+        GameDto gameDto = new GameDto();
+        List<PlayerDto> players = new ArrayList<>();
+        players.add(new PlayerDto(PlayerType.AI.name()));
+        players.add(new PlayerDto(PlayerType.AI.name()));
+        players.add(new PlayerDto(playerType.name()));
+        gameDto.setPlayers(players);
+
+        return gameDto;
     }
 }

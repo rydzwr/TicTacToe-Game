@@ -12,15 +12,10 @@ public class CheckWinAlgorithmTest {
     public void checkWin_returnsTrue_HorizontalWins() {
         var algorithm = new CheckWinAlgorithm();
 
-        var game = new Game();
-        game.setGameBoard("XXX------");
-        game.setGameSize(3);
-        game.setDifficulty(3);
+        final String gameBoard = "XXX------";
+        var gameAdapter = createGameAdapter(gameBoard);
 
-        var gameAdapter = new GameAdapter(game);
-        var moveCoordsDto = new MoveCoordsDto();
-        moveCoordsDto.setX(0);
-        moveCoordsDto.setY(2);
+        var moveCoordsDto = new MoveCoordsDto(0,2);
 
         boolean result = algorithm.checkWin(gameAdapter, moveCoordsDto);
 
@@ -30,15 +25,11 @@ public class CheckWinAlgorithmTest {
     @Test
     public void checkWin_returnsTrue_VerticalWins() {
         var algorithm = new CheckWinAlgorithm();
-        var game = new Game();
-        game.setGameBoard("X--X--X--");
-        game.setGameSize(3);
-        game.setDifficulty(3);
 
-        var gameAdapter = new GameAdapter(game);
-        var moveCoordsDto = new MoveCoordsDto();
-        moveCoordsDto.setX(2);
-        moveCoordsDto.setY(0);
+        final String gameBoard = "X--X--X--";
+        var gameAdapter = createGameAdapter(gameBoard);
+
+        var moveCoordsDto = new MoveCoordsDto(2,0);
 
         boolean result = algorithm.checkWin(gameAdapter, moveCoordsDto);
 
@@ -49,15 +40,10 @@ public class CheckWinAlgorithmTest {
     public void checkWin_returnsTrue_FirstDiagonalWins() {
         var algorithm = new CheckWinAlgorithm();
 
-        var game = new Game();
-        game.setGameBoard("X---X---X");
-        game.setGameSize(3);
-        game.setDifficulty(3);
+        final String gameBoard = "X---X---X";
+        var gameAdapter = createGameAdapter(gameBoard);
 
-        var gameAdapter = new GameAdapter(game);
-        var moveCoordsDto = new MoveCoordsDto();
-        moveCoordsDto.setX(2);
-        moveCoordsDto.setY(2);
+        var moveCoordsDto = new MoveCoordsDto(2,2);
 
         boolean result = algorithm.checkWin(gameAdapter, moveCoordsDto);
 
@@ -68,18 +54,23 @@ public class CheckWinAlgorithmTest {
     public void checkWin_returnsTrue_SecondDiagonalWins() {
         var algorithm = new CheckWinAlgorithm();
 
-        var game = new Game();
-        game.setGameBoard("--X--X--X");
-        game.setGameSize(3);
-        game.setDifficulty(3);
+        final String gameBoard = "--X--X--X";
+        var gameAdapter = createGameAdapter(gameBoard);
 
-        var gameAdapter = new GameAdapter(game);
-        var moveCoordsDto = new MoveCoordsDto();
-        moveCoordsDto.setX(0);
-        moveCoordsDto.setY(0);
+        var moveCoordsDto = new MoveCoordsDto(0,0);
 
         boolean result = algorithm.checkWin(gameAdapter, moveCoordsDto);
 
         Assertions.assertTrue(result);
+    }
+
+    private GameAdapter createGameAdapter(String gameBoard) {
+
+        var game = new Game();
+        game.setGameBoard(gameBoard);
+        game.setGameSize(3);
+        game.setDifficulty(3);
+
+        return new GameAdapter(game);
     }
 }
